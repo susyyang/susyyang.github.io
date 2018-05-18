@@ -332,6 +332,322 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/15/Mysql/MySQL表设计demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/15/Mysql/MySQL表设计demo/" itemprop="url">MySQL表设计demo</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-15T09:28:17+08:00">
+                2019-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB-MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">DB_MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB-MySQL/实战demo/" itemprop="url" rel="index">
+                    <span itemprop="name">实战demo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h2><p>创建数据库:tmall<br>并且将数据库的编码设置为utf8，便于存放中文</p>
+<pre><code>DROP DATABASE IF EXISTS tmall;
+CREATE DATABASE tmall DEFAULT CHARACTER SET utf8;
+</code></pre><h2 id="表结构分析"><a href="#表结构分析" class="headerlink" title="表结构分析"></a>表结构分析</h2><p>一共需要用到的9张表，以及表之间的关系。接下来，对每张表做介绍，并讲解表与表之间的关系：</p>
+<pre><code>这里插入一张表结构图，
+</code></pre><p>各个表的介绍</p>
+<table>
+<thead>
+<tr>
+<th>表名</th>
+<th>中文含义</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Category</td>
+<td>分类表</td>
+<td>存放分类信息，如女装，平板电视，沙发等</td>
+</tr>
+<tr>
+<td>Property</td>
+<td>属性表</td>
+<td>存放属性信息，如颜色，重量，品牌，厂商，型号等</td>
+</tr>
+<tr>
+<td>Product</td>
+<td>产品表</td>
+<td>存放产品信息，如LED40EC平板电视机，海尔EC6005热水器</td>
+</tr>
+<tr>
+<td>PropertyValue</td>
+<td>属性值表</td>
+<td>存放属性值信息，如重量是900g,颜色是粉红色</td>
+</tr>
+<tr>
+<td>ProductImage</td>
+<td>产品图片表</td>
+<td>存放产品图片信息，如产品页显示的5个图片</td>
+</tr>
+<tr>
+<td>Review</td>
+<td>评论表</td>
+<td>存放评论信息，如买回来的蜡烛很好用，么么哒</td>
+</tr>
+<tr>
+<td>User</td>
+<td>用户表</td>
+<td>存放用户信息，如斩手狗，千手小粉红</td>
+</tr>
+<tr>
+<td>Order</td>
+<td>订单表</td>
+<td>存放订单信息，包括邮寄地址，电话号码等信息</td>
+</tr>
+<tr>
+<td>OrderItem</td>
+<td>订单项列表</td>
+<td>存放订单项信息，包括购买产品种类，数量等</td>
+</tr>
+</tbody>
+</table>
+<p>正确的分析表与表之间的关系的方法</p>
+<blockquote>
+<p>表与表之间的关系，基本上是3种<br>一对一<br>一对多<br>多对一<br>那么怎么判断关系到底是什么呢？<br>以分类和产品为例子，分类表里有多条数据，产品表里也有多条数据，那么他们的关系是多对多吗？ 从经验上讲，我们知道这个结果是不正确的。<br>正确的分析表与表之间的关系的方法是这样：<br>一个分类对应 多个 产品<br>一个产品对应 一个 分类<br>所以分类和产品之间的关系是一对多</p>
+</blockquote>
+<p>表关系<br>从最上面的表关系图中可以看到，有关系的表之间，都是一对多关系(反过来就是多对一关系)，并没有一对一关系，和多对多关系。<br>所以本表列出了所有的一对多关系<br>最后确定表关系如下：<br>| 一           | 多                 |<br>| ———– | —————– |<br>| Category-分类 | Product-产品        |<br>| Category-分类 | Property-属性       |<br>| Property-属性 | PropertyValue-属性值 |<br>| Product-产品  | PropertyValue-属性值 |<br>| Product-产品  | ProductImage-产品图片 |<br>| Product-产品  | Review-评价         |<br>| User-用户     | Order-订单          |<br>| Product-产品  | OrderItem-订单项     |<br>| User-用户     | OrderItem-订单项     |<br>| Order-订单    | OrderItem-订单项     |<br>| User-用户     | User-评价           |<br>| 等等          | ———–       |<br>| 等等          | ———–       |</p>
+<h2 id="建表create-table"><a href="#建表create-table" class="headerlink" title="建表create table"></a>建表create table</h2><p>建表顺序</p>
+<blockquote>
+<p>在建表过程中，会设置外键约束，所以表和表之间有依赖关系。 因此会先建立被外键指向的表，比如User,Category，然后再是其他表。</p>
+</blockquote>
+<p>建立用户表user</p>
+<pre><code>CREATE TABLE user (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) DEFAULT NULL,
+  password varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id) --设置主键
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre><p>建立分类表category</p>
+<pre><code>CREATE TABLE category (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) DEFAULT NULL, --用户名
+  PRIMARY KEY (id) --设置主键
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立属性表<br>注意：外键约束</p>
+<pre><code>CREATE TABLE property (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  cid int(11) DEFAULT NULL,--属性所属的分类的id，category id
+  name varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_property_category FOREIGN KEY (cid) REFERENCES category (id) --绑定外键
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre><p>建立产品表<br>注意：外键约束</p>
+<pre><code>CREATE TABLE product (
+
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) DEFAULT NULL, --名字
+  subTitle varchar(255) DEFAULT NULL, --标题
+  orignalPrice float DEFAULT NULL, --原价
+  promotePrice float DEFAULT NULL, --售价，现价
+  stock int(11) DEFAULT NULL, --库存
+  cid int(11) DEFAULT NULL, --产品所属分类
+  createDate datetime DEFAULT NULL, --创建日期
+  PRIMARY KEY (id), --id主键
+  CONSTRAINT fk_product_category FOREIGN KEY (cid) REFERENCES category (id) --绑定
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立属性值表<br>注意：两个外键</p>
+<pre><code>CREATE TABLE propertyvalue (
+  id int(11) NOT NULL AUTO_INCREMENT, --id
+  pid int(11) DEFAULT NULL, --属性值 所属 属性表的id
+  ptid int(11) DEFAULT NULL, --属性值 所属 产品表的id
+  value varchar(255) DEFAULT NULL, --属性值
+  PRIMARY KEY (id),--id主键
+  CONSTRAINT fk_propertyvalue_property FOREIGN KEY (ptid) REFERENCES property (id),--绑定
+  CONSTRAINT fk_propertyvalue_product FOREIGN KEY (pid) REFERENCES product (id)--绑定
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立产品图片表<br>type表示类型，产品图片分单个图片和详情图片两种<br>本表的外键pid，指向产品表的id字段</p>
+<pre><code>CREATE TABLE productimage (
+  id int(11) NOT NULL AUTO_INCREMENT,--id
+  pid int(11) DEFAULT NULL,--产品图片 所属 产品的id
+  type varchar(255) DEFAULT NULL, --类型
+  PRIMARY KEY (id),--id主键
+  CONSTRAINT fk_productimage_product FOREIGN KEY (pid) REFERENCES product (id)--绑定
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre><p>评价表<br>外键pid，指向产品表的id字段<br>外键uid，指向用户表的id字段</p>
+<pre><code>CREATE TABLE review (
+  id int(11) NOT NULL AUTO_INCREMENT,--id
+  content varchar(4000) DEFAULT NULL,--评论的内容
+  uid int(11) DEFAULT NULL,--评论 所属 用户的id
+  pid int(11) DEFAULT NULL,--评论 所属 产品的id
+  createDate datetime DEFAULT NULL, --评论创建时间
+  PRIMARY KEY (id), --id主键
+  CONSTRAINT fk_review_product FOREIGN KEY (pid) REFERENCES product (id),--绑定外键约束
+  CONSTRAINT fk_review_user FOREIGN KEY (uid) REFERENCES user (id) --绑定外键约束
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立订单表，字段比较多</p>
+<pre><code>CREATE TABLE order_ (
+  id int(11) NOT NULL AUTO_INCREMENT,--id
+  orderCode varchar(255) DEFAULT NULL,--订单号
+  address varchar(255) DEFAULT NULL,--收货地址
+  post varchar(255) DEFAULT NULL,--邮编
+  receiver varchar(255) DEFAULT NULL,--收件人
+  mobile varchar(255) DEFAULT NULL,--联系手机
+  userMessage varchar(255) DEFAULT NULL,--订单留言message
+  createDate datetime DEFAULT NULL,--订单创建日期
+  payDate datetime DEFAULT NULL,--支付日期
+  deliveryDate datetime DEFAULT NULL,--发货日期
+  confirmDate datetime DEFAULT NULL,--确认收货日期
+  uid int(11) DEFAULT NULL,--订单所属用户的id
+  status varchar(255) DEFAULT NULL,--订单状态
+  PRIMARY KEY (id),--id主键
+  CONSTRAINT fk_order_user FOREIGN KEY (uid) REFERENCES user (id)--绑定外键约束
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立订单项表</p>
+<pre><code>CREATE TABLE orderitem (
+  id int(11) NOT NULL AUTO_INCREMENT,--id
+  pid int(11) DEFAULT NULL,--该订单项 所属 产品的id
+  oid int(11) DEFAULT NULL,--该订单项，所属 订单的id
+  uid int(11) DEFAULT NULL,---该订单项，所属 用户的id
+  number int(11) DEFAULT NULL,--该订单项的数量，比如买了5台苹果6，x土豪。
+  PRIMARY KEY (id),--id主键
+  CONSTRAINT fk_orderitem_user FOREIGN KEY (uid) REFERENCES user (id),--绑定
+  CONSTRAINT fk_orderitem_product FOREIGN KEY (pid) REFERENCES product (id)--绑定
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/12/git/xxxx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1219,6 +1535,199 @@ dfkl dsfjkl dsfjk
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo框架之标签&分类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/09/git/Hexo框架之标签&分类/" itemprop="url">Hexo框架之标签&分类</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T17:56:18+08:00">
+                2018-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/hexo-nexT/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo-nexT</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>使用github pager + hexo + next主题创建的个人有几个问题</p>
+<pre><code>标签页面点击出现404
+分类页面点击出现404
+</code></pre><p>原因就是我们并没有创建标签页面和分类页面。</p>
+<h2 id="创建一级分类页面"><a href="#创建一级分类页面" class="headerlink" title="创建一级分类页面"></a>创建一级分类页面</h2><p>创建分类页面</p>
+<pre><code>gitbash命令行操作
+新建一个新的页面，页面就是page，名称categories。
+$ hexo new page categories
+打开hexo目录下source文件夹，这时里面出现了一个categories的目录；
+打开categories目录里面的index文件
+配置如下：
+title: 分类
+date: 2018-05-10 19:10:04
+type: &quot;categories&quot;
+</code></pre><p>修改主题themes的主题配置文件</p>
+<pre><code>打开主题配置文件，注意不是站点的配置文件。_config.yml
+配置如下：（注意空格）
+menu:
+   categories: /categories
+</code></pre><h2 id="分类页面之二级分类"><a href="#分类页面之二级分类" class="headerlink" title="分类页面之二级分类"></a>分类页面之二级分类</h2><p>文章书写设置（二级分类不需要手动创建分类页面）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title: 标题</span><br><span class="line">date: 2018-03-09 17:56:18</span><br><span class="line">categories:</span><br><span class="line">  - 一级分类</span><br><span class="line">  - 二级分类</span><br></pre></td></tr></table></figure>
+<p>菜单栏显示</p>
+<pre><code>二级分类页面，则不需要在categories下面再次创建page
+需要在侧边菜单栏显示二级分类页面，则：
+需要配置next主题配置文件，加上对应的项，例如
+Java: /categories/一级分类或二级分类
+</code></pre><p>注意这里有一个坑<br>​<br>    注意分类页面和标签页面的标题：分类&amp;标签 文件的编码格式<br>    必须是utf-8，不然就会出现乱码。</p>
+<h2 id="标签页面"><a href="#标签页面" class="headerlink" title="标签页面"></a>标签页面</h2><p>创建标签页面</p>
+<pre><code>hexo new page tags
+打开tags目录里面的index文件
+配置如下：
+title: 标签
+date: 2018-05-10 19:10:04
+type: &quot;tags&quot;
+</code></pre><p>修改主题themes的主题配置文件</p>
+<pre><code>打开主题配置文件，注意不是站点的配置文件。_config.yml
+配置如下：（注意空格）
+menu:
+   tags: /tags
+</code></pre><p>结束</p>
+<p>​<br>​    </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo框架之关于我页面/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1396,7 +1905,7 @@ about: 何方神圣
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo主题之nexT/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo主题next之头像图片等/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -1415,7 +1924,7 @@ about: 何方神圣
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/09/git/Hexo主题之nexT/" itemprop="url">Hexo主题之nexT</a></h1>
+                <a class="post-title-link" href="/2018/03/09/git/Hexo主题next之头像图片等/" itemprop="url">Hexo主题next之头像图片等</a></h1>
         
 
         <div class="post-meta">
@@ -1500,18 +2009,27 @@ about: 何方神圣
       
         
           
-            <h1 id="下载-amp-安装"><a href="#下载-amp-安装" class="headerlink" title="下载&amp;安装"></a>下载&amp;安装</h1><h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><pre><code>从github上下载安装包
-或者使用gitbash从github上clone
-</code></pre><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>解压之后，放在hexo路径下的theme文件夹下
-将解压后的文件重命名为next（必须）
-打开站点的配置文件＿config.yml
-将主题theme的值改为next
-</code></pre><h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><pre><code>打开hexo路径下，打开gitbash
-执行命令hexo clean
-执行命令hexo g
-打开本地服务hexo s 或者hexo server -p 8070（更改被占用的默认端口，改为8070）
-浏览器打开localhost：8070；查看新的主题效果，符合预期，则可以提交github。
-执行命令hexo d；完成提交github。
+            <h2 id="设置-头像"><a href="#设置-头像" class="headerlink" title="设置 头像"></a>设置 头像</h2><p>修改<strong> 主题配置文件 </strong> </p>
+<pre><code>增加或修改字段avatar， 值设置成头像的链接地址。
+其中，头像的链接地址可以是：
+站内地址：/uploads/avatar.png
+互联网地址：http://example.com/avatar.png
+</code></pre><h2 id="设置背景动画"><a href="#设置背景动画" class="headerlink" title="设置背景动画"></a>设置背景动画</h2><p>NexT 自带两种背景动画效果</p>
+<pre><code>canvas_nest
+和
+three_waves
+只能开启其中一种
+</code></pre><p>配置主题配置文件</p>
+<pre><code># canvas_nest
+canvas_nest: true //开启动画
+canvas_nest: false //关闭动画
+
+# three_waves
+three_waves: true //开启动画
+three_waves: false //关闭动画
+</code></pre><h2 id="站点建立时间"><a href="#站点建立时间" class="headerlink" title="站点建立时间"></a>站点建立时间</h2><p>个时间将在站点的底部显示，例如 © 2013 - 2015。</p>
+<pre><code>配置主题配置文件，添加。
+since: 2013
 </code></pre>
           
         
@@ -1850,7 +2368,7 @@ hexo p
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo主题next之头像图片等/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo主题之nexT/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -1869,7 +2387,7 @@ hexo p
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/09/git/Hexo主题next之头像图片等/" itemprop="url">Hexo主题next之头像图片等</a></h1>
+                <a class="post-title-link" href="/2018/03/09/git/Hexo主题之nexT/" itemprop="url">Hexo主题之nexT</a></h1>
         
 
         <div class="post-meta">
@@ -1954,27 +2472,18 @@ hexo p
       
         
           
-            <h2 id="设置-头像"><a href="#设置-头像" class="headerlink" title="设置 头像"></a>设置 头像</h2><p>修改<strong> 主题配置文件 </strong> </p>
-<pre><code>增加或修改字段avatar， 值设置成头像的链接地址。
-其中，头像的链接地址可以是：
-站内地址：/uploads/avatar.png
-互联网地址：http://example.com/avatar.png
-</code></pre><h2 id="设置背景动画"><a href="#设置背景动画" class="headerlink" title="设置背景动画"></a>设置背景动画</h2><p>NexT 自带两种背景动画效果</p>
-<pre><code>canvas_nest
-和
-three_waves
-只能开启其中一种
-</code></pre><p>配置主题配置文件</p>
-<pre><code># canvas_nest
-canvas_nest: true //开启动画
-canvas_nest: false //关闭动画
-
-# three_waves
-three_waves: true //开启动画
-three_waves: false //关闭动画
-</code></pre><h2 id="站点建立时间"><a href="#站点建立时间" class="headerlink" title="站点建立时间"></a>站点建立时间</h2><p>个时间将在站点的底部显示，例如 © 2013 - 2015。</p>
-<pre><code>配置主题配置文件，添加。
-since: 2013
+            <h1 id="下载-amp-安装"><a href="#下载-amp-安装" class="headerlink" title="下载&amp;安装"></a>下载&amp;安装</h1><h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><pre><code>从github上下载安装包
+或者使用gitbash从github上clone
+</code></pre><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>解压之后，放在hexo路径下的theme文件夹下
+将解压后的文件重命名为next（必须）
+打开站点的配置文件＿config.yml
+将主题theme的值改为next
+</code></pre><h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><pre><code>打开hexo路径下，打开gitbash
+执行命令hexo clean
+执行命令hexo g
+打开本地服务hexo s 或者hexo server -p 8070（更改被占用的默认端口，改为8070）
+浏览器打开localhost：8070；查看新的主题效果，符合预期，则可以提交github。
+执行命令hexo d；完成提交github。
 </code></pre>
           
         
@@ -2023,7 +2532,7 @@ since: 2013
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo框架之标签&分类/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/06/java_SQL/Java_SQL包PreparedStatement/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -2042,200 +2551,7 @@ since: 2013
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/09/git/Hexo框架之标签&分类/" itemprop="url">Hexo框架之标签&分类</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T17:56:18+08:00">
-                2018-03-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/hexo-nexT/" itemprop="url" rel="index">
-                    <span itemprop="name">hexo-nexT</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>使用github pager + hexo + next主题创建的个人有几个问题</p>
-<pre><code>标签页面点击出现404
-分类页面点击出现404
-</code></pre><p>原因就是我们并没有创建标签页面和分类页面。</p>
-<h2 id="创建一级分类页面"><a href="#创建一级分类页面" class="headerlink" title="创建一级分类页面"></a>创建一级分类页面</h2><p>创建分类页面</p>
-<pre><code>gitbash命令行操作
-新建一个新的页面，页面就是page，名称categories。
-$ hexo new page categories
-打开hexo目录下source文件夹，这时里面出现了一个categories的目录；
-打开categories目录里面的index文件
-配置如下：
-title: 分类
-date: 2018-05-10 19:10:04
-type: &quot;categories&quot;
-</code></pre><p>修改主题themes的主题配置文件</p>
-<pre><code>打开主题配置文件，注意不是站点的配置文件。_config.yml
-配置如下：（注意空格）
-menu:
-   categories: /categories
-</code></pre><h2 id="分类页面之二级分类"><a href="#分类页面之二级分类" class="headerlink" title="分类页面之二级分类"></a>分类页面之二级分类</h2><p>文章书写设置（二级分类不需要手动创建分类页面）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title: 标题</span><br><span class="line">date: 2018-03-09 17:56:18</span><br><span class="line">categories:</span><br><span class="line">  - 一级分类</span><br><span class="line">  - 二级分类</span><br></pre></td></tr></table></figure>
-<p>菜单栏显示</p>
-<pre><code>二级分类页面，则不需要在categories下面再次创建page
-需要在侧边菜单栏显示二级分类页面，则：
-需要配置next主题配置文件，加上对应的项，例如
-Java: /categories/一级分类或二级分类
-</code></pre><p>注意这里有一个坑<br>​<br>    注意分类页面和标签页面的标题：分类&amp;标签 文件的编码格式<br>    必须是utf-8，不然就会出现乱码。</p>
-<h2 id="标签页面"><a href="#标签页面" class="headerlink" title="标签页面"></a>标签页面</h2><p>创建标签页面</p>
-<pre><code>hexo new page tags
-打开tags目录里面的index文件
-配置如下：
-title: 标签
-date: 2018-05-10 19:10:04
-type: &quot;tags&quot;
-</code></pre><p>修改主题themes的主题配置文件</p>
-<pre><code>打开主题配置文件，注意不是站点的配置文件。_config.yml
-配置如下：（注意空格）
-menu:
-   tags: /tags
-</code></pre><p>结束</p>
-<p>​<br>​    </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/06/Java/Java_SQL包PreparedStatement接口/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/06/Java/Java_SQL包PreparedStatement接口/" itemprop="url">Java_SQL包PreparedStatement接口</a></h1>
+                <a class="post-title-link" href="/2018/03/06/java_SQL/Java_SQL包PreparedStatement/" itemprop="url">Java_SQL包PreparedStatement接口</a></h1>
         
 
         <div class="post-meta">
@@ -2411,7 +2727,7 @@ ps.setInt(3, count);//3表示第三个参数
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/06/Java/Java_SQL包Statement接口/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/06/java_SQL/Java_SQL包Statement/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -2430,7 +2746,7 @@ ps.setInt(3, count);//3表示第三个参数
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/06/Java/Java_SQL包Statement接口/" itemprop="url">Java_SQL包Statement接口</a></h1>
+                <a class="post-title-link" href="/2018/03/06/java_SQL/Java_SQL包Statement/" itemprop="url">Java_SQL包Statement接口</a></h1>
         
 
         <div class="post-meta">
@@ -2768,6 +3084,159 @@ categories:
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/other-lang/JSon语法格式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/03/other-lang/JSon语法格式/" itemprop="url">JSon语法格式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T12:45:25+08:00">
+                2018-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/other-lang/" itemprop="url" rel="index">
+                    <span itemprop="name">other_lang</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/other-lang/JSon/" itemprop="url" rel="index">
+                    <span itemprop="name">JSon</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>JSon格式<br>简直对</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/other-lang/yml语法格式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2957,7 +3426,7 @@ hash: { name: Steve, foo: bar }
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/other-lang/JSon语法格式/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/java_SQL/Java_SQL包ResultSet/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -2976,7 +3445,7 @@ hash: { name: Steve, foo: bar }
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/03/other-lang/JSon语法格式/" itemprop="url">JSon语法格式</a></h1>
+                <a class="post-title-link" href="/2018/03/03/java_SQL/Java_SQL包ResultSet/" itemprop="url">Java_SQL包ResultSet接口</a></h1>
         
 
         <div class="post-meta">
@@ -2988,7 +3457,7 @@ hash: { name: Steve, foo: bar }
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T12:45:25+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T10:16:05+08:00">
                 2018-03-03
               </time>
             
@@ -3011,8 +3480,8 @@ hash: { name: Steve, foo: bar }
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/other-lang/" itemprop="url" rel="index">
-                    <span itemprop="name">other_lang</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
 
@@ -3022,8 +3491,8 @@ hash: { name: Steve, foo: bar }
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/other-lang/JSon/" itemprop="url" rel="index">
-                    <span itemprop="name">JSon</span>
+                  <a href="/categories/Java/SQL/" itemprop="url" rel="index">
+                    <span itemprop="name">SQL</span>
                   </a>
                 </span>
 
@@ -3061,7 +3530,28 @@ hash: { name: Steve, foo: bar }
       
         
           
-            <p>JSon格式<br>简直对</p>
+            <h2 id="Java-SQL（API）介绍"><a href="#Java-SQL（API）介绍" class="headerlink" title="Java_SQL（API）介绍"></a>Java_SQL（API）介绍</h2><p>public interface ResultSet接口</p>
+<blockquote>
+<p>表示数据库结果集的数据表，通常通过执行查询数据库的语句生成。<br>ResultSet 对象具有指向其当前数据行的光标。最初，光标被置于第一行之前。next 方法将光标移动到下一行；因为该方法在 ResultSet 对象没有下一行时返回 false，所以可以在 while 循环中使用它来迭代结果集。<br>默认的 ResultSet 对象不可更新，仅有一个向前移动的光标。因此，只能迭代它一次，并且只能按从第一行到最后一行的顺序进行。可以生成可滚动和/或可更新的 ResultSet 对象。<br>当生成 ResultSet 对象的 Statement 对象关闭、重新执行或用来从多个结果的序列获取下一个结果时，ResultSet 对象将自动关闭。<br>ResultSet 对象的列的编号、类型和属性由 ResultSet.getMetaData 方法返回的 ResulSetMetaData 对象提供。</p>
+</blockquote>
+<h2 id="resultSet使用"><a href="#resultSet使用" class="headerlink" title="resultSet使用"></a>resultSet使用</h2><p>最基本的ResultSet</p>
+<blockquote>
+<p>之所以说是最基本的ResultSet是因为，这个ResultSet他起到的作用就是完成了查询结果的存储功能，而且只能读去一次，不能够来回的滚动读取。这种结果集的创建方式如下：</p>
+</blockquote>
+<pre><code>Statement st = conn.CreateStatement
+ResultSet rs = Statement.excuteQuery(sqlStr); 
+由于这种结果集不支持，滚动的读去功能。
+所以，如果获得这样一个结果集，只能使用它里面的next()方法，逐个的读去数据。 
+</code></pre><p>可滚动的ResultSet类型</p>
+<blockquote>
+<p>这样的ResultSet对象可以完成对数据库中表的修改，但是我知道ResultSet只是相当于数据库中表的视图，所以并不时所有的ResultSet只要设置了可更新就能够完成更新的，能够完成更新的ResultSet的SQL语句必须要具备如下的属性：<br>a、只引用了单个表。<br>b、不含有join或者group by子句。<br>c、那些列中要包含主关键字。</p>
+</blockquote>
+<pre><code>具有上述条件的，可更新的ResultSet可以完成对数据的修改，可更新的结果集的创建方法是：
+
+Statement st = 
+createstatement(Result.TYPE_SCROLL_INSENSITIVE,Result.CONCUR_UPDATABLE) 
+</code></pre><p>可更新的ResultSet</p>
+<p>可保持的ResultSet</p>
 
           
         
@@ -3597,151 +4087,6 @@ ping 域名
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/01/java_net/Java网络编程TCP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/01/01/java_net/Java网络编程TCP/" itemprop="url">Java网络编程TCP</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-01T12:21:28+08:00">
-                2018-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java-net/" itemprop="url" rel="index">
-                    <span itemprop="name">Java_net</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/01/git/github基本操作/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4190,6 +4535,565 @@ ping 域名
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/java_net/Java网络通信之 Socket（javaAPI和简单示例）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/10/java_net/Java网络通信之 Socket（javaAPI和简单示例）/" itemprop="url">Java网络通信之 Socket（javaAPI和简单示例）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T08:50:01+08:00">
+                2017-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/net/" itemprop="url" rel="index">
+                    <span itemprop="name">net</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="public-class-DatagramSocketextends-Object-类"><a href="#public-class-DatagramSocketextends-Object-类" class="headerlink" title="public class DatagramSocketextends Object 类"></a>public class DatagramSocketextends Object 类</h2><p>此类表示用来发送和接收数据报包的套接字。 </p>
+<p>数据报套接字是包投递服务的发送或接收点。每个在数据报套接字上发送或接收的包都是单独编址和路由的。从一台机器发送到另一台机器的多个包可能选择不同的路由，也可能按不同的顺序到达。 </p>
+<p>在 DatagramSocket 上总是启用 UDP 广播发送。为了接收广播包，应该将 DatagramSocket 绑定到通配符地址。在某些实现中，将 DatagramSocket 绑定到一个更加具体的地址时广播包也可以被接收。 </p>
+<p>示例：<br>DatagramSocket s = new DatagramSocket(null);<br>s.bind(new InetSocketAddress(8888));<br>这等价于：<br>DatagramSocket s = new DatagramSocket(8888);<br>两个例子都能创建能够在 UDP 8888 端口上接收广播的 DatagramSocket。 </p>
+<p>构造方法</p>
+<ul>
+<li>DatagramSocket() 构造数据报套接字并将其绑定到本地主机上任何可用的端口。</li>
+<li>DatagramSocket(int port)  创建数据报套接字并将其绑定到本地主机上的指定端口。</li>
+<li>DatagramSocket(int port, InetAddress laddr)   创建数据报套接字，将其绑定到指定的本地地址。<br>常用方法</li>
+<li>int getPort() 返回此套接字的端口。 如果为连接，则返回-1。</li>
+<li>void send(DatagramPacket p) 从此套接字发送数据报包。 </li>
+<li>void receive(DatagramPacket p) 从此套接字接收数据报包。 </li>
+<li>int getLocalPort() 返回此套接字绑定的本地主机上的端口号。 </li>
+<li><p>void connect(SocketAddress addr) 将此套接字连接到远程套接字地址（IP 地址 + 端口号）。 </p>
+</li>
+<li><p>InetAddress getInetAddress() 返回此套接字连接的地址。 （对象）</p>
+</li>
+<li>InetAddress getLocalAddress() 获取套接字绑定的本地地址。 （对象）</li>
+</ul>
+<h2 id="public-final-class-Datagram-Packetextends-Object-类"><a href="#public-final-class-Datagram-Packetextends-Object-类" class="headerlink" title="public final class Datagram Packetextends Object 类"></a>public final class Datagram Packetextends Object 类</h2><p>此类表示数据报包。<br>数据报包用来实现无连接包投递服务。每条报文仅根据该包中包含的信息从一台机器路由到另一台机器。从一台机器发送到另一台机器的多个包可能选择不同的路由，也可能按不同的顺序到达。不对包投递做出保证。 </p>
+<h2 id="UDP接收端demo"><a href="#UDP接收端demo" class="headerlink" title="UDP接收端demo"></a>UDP接收端demo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.net;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.DatagramPacket;</span><br><span class="line"><span class="keyword">import</span> java.net.DatagramSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.InetAddress;</span><br><span class="line"><span class="keyword">import</span> java.net.SocketException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * udpsocket的接收端</span></span><br><span class="line"><span class="comment"> * 也就是socket的另一端。</span></span><br><span class="line"><span class="comment"> * 思路：</span></span><br><span class="line"><span class="comment"> * 1.定义一个udpsocket服务.通常会监听一个端口，其实就是给这个网络服务</span></span><br><span class="line"><span class="comment"> * 应用程序定义一个数字标识，方便用于区别哪些传输过来的数据归我处理。</span></span><br><span class="line"><span class="comment"> * 2.定义一个数据报，用于存储接收到的字节数据。</span></span><br><span class="line"><span class="comment"> * 因为数据包对象中有更多可以 提取字节数据中的不同数据信息。</span></span><br><span class="line"><span class="comment"> * 3.通过socket服务的receive方法，将收到的数据存入数据包中。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UDPSocketdemorece</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		DatagramSocket ds = <span class="keyword">new</span> DatagramSocket(<span class="number">9999</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//定义缓冲区。使用数组存储数据。缓冲区大小不宜太大。</span></span><br><span class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">		<span class="comment">//定义数据包</span></span><br><span class="line">		DatagramPacket dp = <span class="keyword">new</span> DatagramPacket(buf, buf.length);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//通过socket服务的receive方法，将收到的数据存入数据包中。</span></span><br><span class="line">		ds.receive(dp);</span><br><span class="line">		<span class="comment">//完成上面这一步，已经拿到装满数据的数据包了。（不一定装满）</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//通过数据包的方法获取其中的数据。</span></span><br><span class="line">		<span class="comment">//获取远程socket端的socket套接字ip+port</span></span><br><span class="line">		String s = dp.getSocketAddress().toString();</span><br><span class="line">		<span class="comment">//数据</span></span><br><span class="line">		String data = <span class="keyword">new</span> String(dp.getData(), <span class="number">0</span>, dp.getLength());</span><br><span class="line">		<span class="comment">//端口，获取的是远程发送端socket的port。发送端的port是9998</span></span><br><span class="line">		<span class="keyword">int</span> port = dp.getPort();</span><br><span class="line">		<span class="comment">//输出。输出如下：/127.0.0.1:9998/udp ge men wo lai le ha ha ha wo shi shui ni hao ma ?:9998</span></span><br><span class="line">		System.out.println(s+<span class="string">"/"</span>+data+<span class="string">":"</span>+port);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="UDP发送端demo"><a href="#UDP发送端demo" class="headerlink" title="UDP发送端demo"></a>UDP发送端demo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.net;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.net.DatagramPacket;</span><br><span class="line"><span class="keyword">import</span> java.net.DatagramSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.InetAddress;</span><br><span class="line"><span class="keyword">import</span> java.net.SocketException;</span><br><span class="line"><span class="keyword">import</span> java.net.UnknownHostException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 需求：通过udp传输方式，将一段文字数据发出去。</span></span><br><span class="line"><span class="comment"> * 思路：</span></span><br><span class="line"><span class="comment"> * 建立udpsocket服务</span></span><br><span class="line"><span class="comment"> * 提供数据，封装到数据包中</span></span><br><span class="line"><span class="comment"> * 发送</span></span><br><span class="line"><span class="comment"> * 关闭资源</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UDPSocketdemosend</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		<span class="comment">//1.建立udpsocket服务。datagramsocket。发送端端口9998</span></span><br><span class="line">		DatagramSocket ds = <span class="keyword">new</span> DatagramSocket(<span class="number">9998</span>);</span><br><span class="line">		<span class="comment">//2.确定数据，</span></span><br><span class="line">		<span class="keyword">byte</span>[] data = <span class="string">"udp ge men wo lai le ha ha ha wo shi shui ni hao ma ?"</span>.getBytes();</span><br><span class="line">		<span class="comment">//3.将数据打包，确定接收端，接收端ip和port。接收端port是9999</span></span><br><span class="line">		DatagramPacket dp = </span><br><span class="line">				<span class="keyword">new</span> DatagramPacket(data, data.length,InetAddress.getByName(<span class="string">"127.0.0.1"</span>), <span class="number">9999</span>);</span><br><span class="line">		<span class="comment">//4.通过socket服务，发出去</span></span><br><span class="line">		ds.send(dp);</span><br><span class="line">		<span class="comment">//5.关闭资源</span></span><br><span class="line">		ds.close();</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/java_net/Java网络通讯之综述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/10/java_net/Java网络通讯之综述/" itemprop="url">Java网络通讯之综述</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T08:02:05+08:00">
+                2017-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/net/" itemprop="url" rel="index">
+                    <span itemprop="name">net</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="网络通讯要素"><a href="#网络通讯要素" class="headerlink" title="网络通讯要素"></a>网络通讯要素</h2><p>IP地址</p>
+<blockquote>
+<p>网络设备的标示<br>不易记忆，可用主机名<br>本地地址：127.0.0.1<br>本地主机名：localhost</p>
+</blockquote>
+<p>端口号</p>
+<blockquote>
+<p>用于标示进程的逻辑地址，不同进程的标示不同<br>有效端口号0~65535，其中0~1024系统保留端口</p>
+</blockquote>
+<p>传输协议</p>
+<blockquote>
+<p>传输协议就是通讯的规则<br>常见协议：TCP（传输层协议），UDP（传输层协议），IPv4（网络层协议），IPv6</p>
+</blockquote>
+<h2 id="TCP和UDP"><a href="#TCP和UDP" class="headerlink" title="TCP和UDP"></a>TCP和UDP</h2><p>UDP协议</p>
+<ul>
+<li>将数据及源和目的封装成数据包中，不需要建立连接。重点：<strong>无连接</strong></li>
+<li>每个数据报的大小在限制在64k内，分成多个包发出去。重点：<strong>最大64k</strong></li>
+<li>因无连接，是不可靠协议。重点：<strong>不可靠</strong></li>
+<li>不需要建立连接，速度快。重点：<strong>速度快</strong></li>
+</ul>
+<p>TCP协议</p>
+<ul>
+<li>建立连接，形成传输数据的通道。重点：<strong>面向连接</strong></li>
+<li>在连接中进行大数据量传输。重点：<strong>大数据量传输</strong></li>
+<li>通过三次握手完成连接，是可靠协议。重点：<strong>可靠</strong></li>
+<li>必须建立连接，效率会稍低。重点：<strong>效率相对较低</strong></li>
+</ul>
+<p>Socket（套接字，也称端，就是ip:port）</p>
+<ul>
+<li>Socket就是为网络服务提供的一种机制。重点：<strong>java实现网络通讯的方式的两端，相当于水龙头</strong></li>
+<li>通信的两端都有Socket。重点：<strong>端对端通讯</strong></li>
+<li>网络通信其实就是Socket间的通信。</li>
+<li>数据在两个Socket间通过IO传输。重点：<strong>io流是socket通讯的基础</strong></li>
+</ul>
+<p>socket实现（UDP协议传输）</p>
+<ul>
+<li>DatagramSocket与DatagramPacket</li>
+<li>建立发送端，接收端。</li>
+<li>建立数据包。</li>
+<li>调用Socket的发送接收方法。</li>
+<li>关闭Socket。</li>
+<li>发送端与接收端是两个独立的运行程序。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/java_net/Java网络通信之7层模型和4层模型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/10/java_net/Java网络通信之7层模型和4层模型/" itemprop="url">Java网络通信之7层模型和4层模型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T08:01:16+08:00">
+                2017-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/net/" itemprop="url" rel="index">
+                    <span itemprop="name">net</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="OSI七层模型"><a href="#OSI七层模型" class="headerlink" title="OSI七层模型"></a>OSI七层模型</h1><p>OSI（Open System Interconnection，开放系统互连）七层网络模型称为<strong>开放式系统互联参考模型 </strong>，是一个<strong>逻辑上的定义</strong>，一个规范，它把网络从逻辑上分为了7层。每一层都有相关、相对应的物理设备，比如路由器，交换机。OSI 七层模型是一种框架性的设计方法 ，建立七层模型的主要目的是为解决异种网络互连时所遇到的兼容性问题，其最主要的功能使就是帮助不同类型的主机实现数据传输。它的最大优点是将服务、接口和协议这三个概念明确地区分开来，通过七个层次化的结构模型使不同的系统不同的网络之间实现可靠的通讯。</p>
+<h2 id="物理层"><a href="#物理层" class="headerlink" title="物理层"></a>物理层</h2><p>主要定义物理设备标准，如网线的接口类型、光纤的接口类型、各种传输介质的传输速率等。它的主要作用是传输比特流（就是由1、0转化为电流强弱来进行传输,到达目的地后在转化为1、0，也就是我们常说的数模转换与模数转换）。这一层的数据叫做比特。</p>
+<h2 id="数据链路层"><a href="#数据链路层" class="headerlink" title="数据链路层"></a>数据链路层</h2><p>定义了如何让格式化数据以进行传输，以及如何让控制对物理介质的访问。这一层通常还提供错误检测和纠正，以确保数据的可靠传输。<br>不同的物理设备（网线，无线wifi，蓝牙）需要实现通信，需要数据链路层的协议实现。</p>
+<h2 id="网络层"><a href="#网络层" class="headerlink" title="网络层"></a>网络层</h2><p>在位于不同地理位置的网络中的两个主机系统之间提供连接和路径选择。Internet的发展使得从世界各站点访问信息的用户数大大增加，而网络层正是管理这种连接的层。<br>IP地址属于网络层协议。</p>
+<h2 id="传输层"><a href="#传输层" class="headerlink" title="传输层"></a>传输层</h2><p>定义了一些传输数据的协议和端口号（WWW端口80等），如：TCP（传输控制协议，传输效率低，可靠性强，用于传输可靠性要求高，数据量大的数据），UDP（用户数据报协议，与TCP特性恰恰相反，用于传输可靠性要求不高，数据量小的数据，如QQ聊天数据就是通过这种方式传输的）。 主要是将从下层接收的数据进行分段和传输，到达目的地址后再进行重组。常常把这一层数据叫做段。<br>网络端口号，属于传输层的。</p>
+<h2 id="会话层"><a href="#会话层" class="headerlink" title="会话层"></a>会话层</h2><p>通过传输层（端口号：传输端口与接收端口）建立数据传输的通路。主要在你的系统之间发起会话或者接受会话请求（设备之间需要互相认识可以是IP也可以是MAC或者是主机名） 　</p>
+<h2 id="表示层"><a href="#表示层" class="headerlink" title="表示层"></a>表示层</h2><p>可确保一个系统的应用层所发送的信息可以被另一个系统的应用层读取。例如，PC程序与另一台计算机进行通信，其中一台计算机使用扩展二一十进制交换码（EBCDIC），而另一台则使用美国信息交换标准码（ASCII）来表示相同的字符。如有必要，表示层会通过使用一种通格式来实现多种数据格式之间的转换。<br>不同操作系统之间可以通信。</p>
+<h2 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h2><p>是最靠近用户的OSI层。这一层为用户的应用程序（例如电子邮件、文件传输和终端仿真）提供网络服务。</p>
+<h2 id="一个很容易理解OSI-七层模型的例子："><a href="#一个很容易理解OSI-七层模型的例子：" class="headerlink" title="一个很容易理解OSI 七层模型的例子："></a>一个很容易理解OSI 七层模型的例子：</h2><p>OSI七层模式简单通俗理解</p>
+<p>这个模型推出的最开始，是因为美国人有两台机器之间进行通信的需求。</p>
+<p>需求1：<br>科学家要解决的第一个问题是，两个硬件之间怎么通信。具体就是一台发些比特流，然后另一台能收到。<br>于是，科学家发明了物理层：<br>主要定义物理设备标准，如网线的接口类型、光纤的接口类型、各种传输介质的传输速率等。它的主要作用是传输比特流(就是由1、0转化为电流强弱来进行传输，到达目的地后在转化为1、0，也就是我们常说的数模转换与模数转换)。这一层的数据叫做比特。</p>
+<p>需求2：<br>现在通过电线我能发数据流了，但是，我还希望通过无线电波，通过其它介质来传输。然后我还要保证传输过去的比特流是正确的，要有纠错功能。<br>于是，发明了数据链路层：<br>通过各种控制协议，将有差错的物理信道变为无差错的、能可靠传输数据帧的数据链路。</p>
+<p>需求3：<br>现在我可以在两台计算机之间发送数据了，那么如果我要在多台计算机之间发送数据呢？怎么找到我要发的那台？或者，A要给F发信息，中间要经过B，C，D,E，但是中间还有好多节点如K.J.Z.Y。我怎么选择最佳路径？这就是路由要做的事。<br>于是，发明了网络层。通过路由算法，为报文或分组通过通信子网选择最适当的路径。该层控制数据链路层与物理层之间的信息转发，建立、维持与终止网络的连接。具体的说，数据链路层的数据在这一层被转换为数据包，然后通过路径选择、分段组合、顺序、进/出路由等控制，将信息从一个网络设备传送到另一个网络设备。一般的，数据链路层是解决统一网络内节点之间的通信，而网络层主要解决不同子网之间的通信。例如路由选择问题。</p>
+<p>需求4：<br>现在我能发正确的发比特流数据到另一台计算机了，但是当我发大量数据时候，可能需要好长时间，例如一个视频格式的，网络会中断好多次（事实上，即使有了物理层和数据链路层，网络还是经常中断，只是中断的时间是毫秒级别的）。那么，我还须要保证传输大量文件时的准确性。于是，我要对发出去的数据进行封装。就像发快递一样，一个个地发。<br>于是，先发明了传输层。<br>向用户提供可靠的、端到端的差错和流量控制，保证报文的正确传输。提供建立、连接和拆除传输连接的功能。传输层在网络层基础上，提供“面向连接”和“面向无连接”两种服务。例如TCP，是用于发大量数据的，我发了1万个包出去，另一台电脑就要告诉我是否接受到了1万个包，如果缺了3个包，就告诉我是第1001，234，8888个包丢了，那我再发一次。这样，就能保证对方把这个视频完整接收了。<br>例如UDP，是用于发送少量数据的。我发20个包出去，一般不会丢包，所以，我不管你收到多少个。在多人互动游戏，也经常用UDP协议，因为一般都是简单的信息，而且有广播的需求。如果用TCP，效率就很低，因为它会不停地告诉主机我收到了20个包，或者我收到了18个包，再发我两个！如果同时有1万台计算机都这样做，那么用TCP反而会降低效率，还不如用UDP，主机发出去就算了，丢几个包你就卡一下，算了，下次再发包你再更新。</p>
+<p>需求5：<br>现在我们已经保证给正确的计算机，发送正确的封装过后的信息了。但是用户级别的体验好不好？难道我每次都要调用TCP去打包，然后调用IP协议去找路由，自己去发？当然不行，所以我们要建立一个自动收发包，自动寻址的功能。<br>于是，发明了会话层。会话层的作用就是建立和管理应用程序之间的通信。允许用户在两个实体设备之间建立、维持和终止会话，并支持它们之间的数据交换。例如提供单方向会话或双向同时会话，并管理会话中的发送顺序，以及会话所占用时间的长短。</p>
+<p>需求6：<br>现在我能保证应用程序自动收发包和寻址了。但是我要用Linux给window发包，两个系统语法不一致，就像安装包一样，exe是不能在linux下用的，shell在window下也是不能直接运行的。于是需要表示层，帮我们解决不同系统之间的通信语法问题。</p>
+<p>需求7：<br>OK，现在所有必要条件都准备好了，我们可以写个android程序，web程序去实现需求把。</p>
+<h1 id="TCP-IP四层模型"><a href="#TCP-IP四层模型" class="headerlink" title="TCP/IP四层模型"></a>TCP/IP四层模型</h1><blockquote>
+<p>1.链路层（数据链路层/网络接口层）：包括操作系统中的设备驱动程序、计算机中对应的网络接口卡<br>2.网络层（互联网层）：处理分组在网络中的活动，比如分组的选路。<br>3.运输层：主要为两台主机上的应用提供端到端的通信。<br>4.应用层：负责处理特定的应用程序细节。</p>
+</blockquote>
+<p><strong>TCP/IP与OSI最大的不同在于OSI是一个理论上的网络通信模型，而TCP/IP则是实际运行的网络协议。</strong></p>
+<p><strong>也就是说，七层通信模型相当于一个理论。四层模型就是具体的解决方案。</strong></p>
+<h2 id="网络层与运输层的区别"><a href="#网络层与运输层的区别" class="headerlink" title="网络层与运输层的区别"></a>网络层与运输层的区别</h2><p>在TCP/TP协议族中，<br>网络层IP提供的是一种不可靠的服务。它只是尽可能快地把分组从源节点送到目的节点，但不提供任何可靠性的保证。<br>Tcp在不可靠的ip层上，提供了一个可靠的运输层，为了提供这种可靠的服务，TCP采用了超时重传、发送和接受端到端的确认分组等机制。</p>
+<h2 id="TCP-IP协议族的分层"><a href="#TCP-IP协议族的分层" class="headerlink" title="TCP/IP协议族的分层"></a>TCP/IP协议族的分层</h2><p>应用层（对应的七层模型中的：应用层、表示层、会话层）</p>
+<blockquote>
+<p>FTP<br>HTTP<br>DNS<br>SMTP</p>
+</blockquote>
+<p>运输层（对应的七层模型中的：传输层）</p>
+<blockquote>
+<p>TCP<br>UDP</p>
+</blockquote>
+<p>网络层（对应的七层模型中的：网络层）</p>
+<blockquote>
+<p>IP</p>
+</blockquote>
+<p>链路层（对应的七层模型中的：数据链路层、物理层）</p>
+<blockquote>
+<p>ARP<br>RARP</p>
+</blockquote>
+<p><strong>学习java网络编程：混在传输层和网络层。属于底层。</strong><br><strong>学习web开发实践：是在应用层。是基于底层的，做好了封装。</strong></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/20/JavaEE/JavaEE概念dao-po-vo-bo-pojo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4485,6 +5389,163 @@ ping 域名
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之多态/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/01/Java/面向对象之多态/" itemprop="url">面向对象之多态</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
+                2016-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/面向对象/" itemprop="url" rel="index">
+                    <span itemprop="name">面向对象</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>二级分类<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/java_lang/Java语法01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4640,7 +5701,7 @@ ping 域名
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/Java数组/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Maven/Maven实战1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -4659,7 +5720,7 @@ ping 域名
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/01/01/Java/Java数组/" itemprop="url">Java数组</a></h1>
+                <a class="post-title-link" href="/2016/01/01/Maven/Maven实战1/" itemprop="url">Maven实战1</a></h1>
         
 
         <div class="post-meta">
@@ -4694,8 +5755,8 @@ ping 域名
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/Maven/" itemprop="url" rel="index">
+                    <span itemprop="name">Maven</span>
                   </a>
                 </span>
 
@@ -4705,8 +5766,8 @@ ping 域名
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/Java数组/" itemprop="url" rel="index">
-                    <span itemprop="name">Java数组</span>
+                  <a href="/categories/Maven/Maven实践/" itemprop="url" rel="index">
+                    <span itemprop="name">Maven实践</span>
                   </a>
                 </span>
 
@@ -4744,7 +5805,7 @@ ping 域名
       
         
           
-            <p>二级分类<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
+            <p>Maven实战1<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
@@ -4954,7 +6015,7 @@ ping 域名
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Maven/Maven实战1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Maven/Maven基础/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -4973,7 +6034,7 @@ ping 域名
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/01/01/Maven/Maven实战1/" itemprop="url">Maven实战1</a></h1>
+                <a class="post-title-link" href="/2016/01/01/Maven/Maven基础/" itemprop="url">Maven基础</a></h1>
         
 
         <div class="post-meta">
@@ -5019,8 +6080,8 @@ ping 域名
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Maven/Maven实践/" itemprop="url" rel="index">
-                    <span itemprop="name">Maven实践</span>
+                  <a href="/categories/Maven/Maven基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Maven基础</span>
                   </a>
                 </span>
 
@@ -5058,7 +6119,7 @@ ping 域名
       
         
           
-            <p>Maven实战1<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
+            <p>maven起源<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
@@ -5111,7 +6172,7 @@ ping 域名
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之封装/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Sublime_Text/Sublime_Text下载安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -5130,7 +6191,152 @@ ping 域名
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/01/01/Java/面向对象之封装/" itemprop="url">面向对象之封装</a></h1>
+                <a class="post-title-link" href="/2016/01/01/Sublime_Text/Sublime_Text下载安装/" itemprop="url">Sublime_Text下载安装</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
+                2016-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Sublime-Text/" itemprop="url" rel="index">
+                    <span itemprop="name">Sublime_Text</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="sublime下载安装"><a href="#sublime下载安装" class="headerlink" title="sublime下载安装"></a>sublime下载安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/Java数组/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/01/Java/Java数组/" itemprop="url">Java数组</a></h1>
         
 
         <div class="post-meta">
@@ -5176,8 +6382,8 @@ ping 域名
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/面向对象/" itemprop="url" rel="index">
-                    <span itemprop="name">面向对象</span>
+                  <a href="/categories/Java/Java数组/" itemprop="url" rel="index">
+                    <span itemprop="name">Java数组</span>
                   </a>
                 </span>
 
@@ -5425,7 +6631,7 @@ ping 域名
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Sublime_Text/Sublime_Text下载安装/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之封装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -5444,309 +6650,7 @@ ping 域名
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/01/01/Sublime_Text/Sublime_Text下载安装/" itemprop="url">Sublime_Text下载安装</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
-                2016-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Sublime-Text/" itemprop="url" rel="index">
-                    <span itemprop="name">Sublime_Text</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="sublime下载安装"><a href="#sublime下载安装" class="headerlink" title="sublime下载安装"></a>sublime下载安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Maven/Maven基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/01/Maven/Maven基础/" itemprop="url">Maven基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
-                2016-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Maven/" itemprop="url" rel="index">
-                    <span itemprop="name">Maven</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Maven/Maven基础/" itemprop="url" rel="index">
-                    <span itemprop="name">Maven基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>maven起源<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之多态/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/01/Java/面向对象之多态/" itemprop="url">面向对象之多态</a></h1>
+                <a class="post-title-link" href="/2016/01/01/Java/面向对象之封装/" itemprop="url">面向对象之封装</a></h1>
         
 
         <div class="post-meta">
@@ -5921,7 +6825,7 @@ ping 域名
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">38</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -5932,7 +6836,7 @@ ping 域名
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -5943,7 +6847,7 @@ ping 域名
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
