@@ -466,7 +466,7 @@
 <li>网络通信其实就是Socket间的通信。</li>
 <li>数据在两个Socket间通过IO传输。重点：<strong>io流是socket通讯的基础</strong></li>
 </ul>
-<p>socket实现（UDP协议传输）</p>
+<p>socket实现传输（UDP协议传输）</p>
 <ul>
 <li>DatagramSocket与DatagramPacket</li>
 <li>建立发送端，接收端。</li>
@@ -474,6 +474,16 @@
 <li>调用Socket的发送接收方法。</li>
 <li>关闭Socket。</li>
 <li>发送端与接收端是两个独立的运行程序。</li>
+</ul>
+<p>socket实现传输（TCP协议传输）</p>
+<ul>
+<li>Socket和ServerSocket（两个端socket，不一样的类）</li>
+<li>建立客户端和服务器端（server和client）</li>
+<li>建立连接后，通过Socket中的IO流进行数据的传输（io传输，tcp协议）</li>
+<li>关闭socket（关闭资源）</li>
+<li><p>同样，客户端与服务器端是两个独立的应用程序。（相互独立的两端）</p>
+</li>
+<li></li>
 </ul>
 
       
@@ -604,7 +614,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">39</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -626,7 +636,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
