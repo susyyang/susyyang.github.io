@@ -1535,6 +1535,372 @@ dfkl dsfjkl dsfjk
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo框架之标签&分类/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/09/git/Hexo框架之标签&分类/" itemprop="url">Hexo框架之标签&分类</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T17:56:18+08:00">
+                2018-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/hexo-nexT/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo-nexT</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>使用github pager + hexo + next主题创建的个人有几个问题</p>
+<pre><code>标签页面点击出现404
+分类页面点击出现404
+</code></pre><p>原因就是我们并没有创建标签页面和分类页面。</p>
+<h2 id="创建一级分类页面"><a href="#创建一级分类页面" class="headerlink" title="创建一级分类页面"></a>创建一级分类页面</h2><p>创建分类页面</p>
+<pre><code>gitbash命令行操作
+新建一个新的页面，页面就是page，名称categories。
+$ hexo new page categories
+打开hexo目录下source文件夹，这时里面出现了一个categories的目录；
+打开categories目录里面的index文件
+配置如下：
+title: 分类
+date: 2018-05-10 19:10:04
+type: &quot;categories&quot;
+</code></pre><p>修改主题themes的主题配置文件</p>
+<pre><code>打开主题配置文件，注意不是站点的配置文件。_config.yml
+配置如下：（注意空格）
+menu:
+   categories: /categories
+</code></pre><h2 id="分类页面之二级分类"><a href="#分类页面之二级分类" class="headerlink" title="分类页面之二级分类"></a>分类页面之二级分类</h2><p>文章书写设置（二级分类不需要手动创建分类页面）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title: 标题</span><br><span class="line">date: 2018-03-09 17:56:18</span><br><span class="line">categories:</span><br><span class="line">  - 一级分类</span><br><span class="line">  - 二级分类</span><br></pre></td></tr></table></figure>
+<p>菜单栏显示</p>
+<pre><code>二级分类页面，则不需要在categories下面再次创建page
+需要在侧边菜单栏显示二级分类页面，则：
+需要配置next主题配置文件，加上对应的项，例如
+Java: /categories/一级分类或二级分类
+</code></pre><p>注意这里有一个坑<br>​<br>    注意分类页面和标签页面的标题：分类&amp;标签 文件的编码格式<br>    必须是utf-8，不然就会出现乱码。</p>
+<h2 id="标签页面"><a href="#标签页面" class="headerlink" title="标签页面"></a>标签页面</h2><p>创建标签页面</p>
+<pre><code>hexo new page tags
+打开tags目录里面的index文件
+配置如下：
+title: 标签
+date: 2018-05-10 19:10:04
+type: &quot;tags&quot;
+</code></pre><p>修改主题themes的主题配置文件</p>
+<pre><code>打开主题配置文件，注意不是站点的配置文件。_config.yml
+配置如下：（注意空格）
+menu:
+   tags: /tags
+</code></pre><p>结束</p>
+<p>​<br>​    </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo主题next之头像图片等/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/09/git/Hexo主题next之头像图片等/" itemprop="url">Hexo主题next之头像图片等</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T17:56:18+08:00">
+                2018-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/hexo-nexT/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo-nexT</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="设置-头像"><a href="#设置-头像" class="headerlink" title="设置 头像"></a>设置 头像</h2><p>修改<strong> 主题配置文件 </strong> </p>
+<pre><code>增加或修改字段avatar， 值设置成头像的链接地址。
+其中，头像的链接地址可以是：
+站内地址：/uploads/avatar.png
+互联网地址：http://example.com/avatar.png
+</code></pre><h2 id="设置背景动画"><a href="#设置背景动画" class="headerlink" title="设置背景动画"></a>设置背景动画</h2><p>NexT 自带两种背景动画效果</p>
+<pre><code>canvas_nest
+和
+three_waves
+只能开启其中一种
+</code></pre><p>配置主题配置文件</p>
+<pre><code># canvas_nest
+canvas_nest: true //开启动画
+canvas_nest: false //关闭动画
+
+# three_waves
+three_waves: true //开启动画
+three_waves: false //关闭动画
+</code></pre><h2 id="站点建立时间"><a href="#站点建立时间" class="headerlink" title="站点建立时间"></a>站点建立时间</h2><p>个时间将在站点的底部显示，例如 © 2013 - 2015。</p>
+<pre><code>配置主题配置文件，添加。
+since: 2013
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo框架之关于我页面/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1712,7 +2078,7 @@ about: 何方神圣
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo主题next之头像图片等/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo主题之nexT/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -1731,7 +2097,7 @@ about: 何方神圣
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/09/git/Hexo主题next之头像图片等/" itemprop="url">Hexo主题next之头像图片等</a></h1>
+                <a class="post-title-link" href="/2018/03/09/git/Hexo主题之nexT/" itemprop="url">Hexo主题之nexT</a></h1>
         
 
         <div class="post-meta">
@@ -1816,27 +2182,18 @@ about: 何方神圣
       
         
           
-            <h2 id="设置-头像"><a href="#设置-头像" class="headerlink" title="设置 头像"></a>设置 头像</h2><p>修改<strong> 主题配置文件 </strong> </p>
-<pre><code>增加或修改字段avatar， 值设置成头像的链接地址。
-其中，头像的链接地址可以是：
-站内地址：/uploads/avatar.png
-互联网地址：http://example.com/avatar.png
-</code></pre><h2 id="设置背景动画"><a href="#设置背景动画" class="headerlink" title="设置背景动画"></a>设置背景动画</h2><p>NexT 自带两种背景动画效果</p>
-<pre><code>canvas_nest
-和
-three_waves
-只能开启其中一种
-</code></pre><p>配置主题配置文件</p>
-<pre><code># canvas_nest
-canvas_nest: true //开启动画
-canvas_nest: false //关闭动画
-
-# three_waves
-three_waves: true //开启动画
-three_waves: false //关闭动画
-</code></pre><h2 id="站点建立时间"><a href="#站点建立时间" class="headerlink" title="站点建立时间"></a>站点建立时间</h2><p>个时间将在站点的底部显示，例如 © 2013 - 2015。</p>
-<pre><code>配置主题配置文件，添加。
-since: 2013
+            <h1 id="下载-amp-安装"><a href="#下载-amp-安装" class="headerlink" title="下载&amp;安装"></a>下载&amp;安装</h1><h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><pre><code>从github上下载安装包
+或者使用gitbash从github上clone
+</code></pre><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>解压之后，放在hexo路径下的theme文件夹下
+将解压后的文件重命名为next（必须）
+打开站点的配置文件＿config.yml
+将主题theme的值改为next
+</code></pre><h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><pre><code>打开hexo路径下，打开gitbash
+执行命令hexo clean
+执行命令hexo g
+打开本地服务hexo s 或者hexo server -p 8070（更改被占用的默认端口，改为8070）
+浏览器打开localhost：8070；查看新的主题效果，符合预期，则可以提交github。
+执行命令hexo d；完成提交github。
 </code></pre>
           
         
@@ -2127,363 +2484,6 @@ hexo deploy
 或者
 hexo p
 </code></pre><p>结束…<br>​    </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo主题之nexT/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/09/git/Hexo主题之nexT/" itemprop="url">Hexo主题之nexT</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T17:56:18+08:00">
-                2018-03-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/hexo-nexT/" itemprop="url" rel="index">
-                    <span itemprop="name">hexo-nexT</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="下载-amp-安装"><a href="#下载-amp-安装" class="headerlink" title="下载&amp;安装"></a>下载&amp;安装</h1><h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><pre><code>从github上下载安装包
-或者使用gitbash从github上clone
-</code></pre><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>解压之后，放在hexo路径下的theme文件夹下
-将解压后的文件重命名为next（必须）
-打开站点的配置文件＿config.yml
-将主题theme的值改为next
-</code></pre><h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><pre><code>打开hexo路径下，打开gitbash
-执行命令hexo clean
-执行命令hexo g
-打开本地服务hexo s 或者hexo server -p 8070（更改被占用的默认端口，改为8070）
-浏览器打开localhost：8070；查看新的主题效果，符合预期，则可以提交github。
-执行命令hexo d；完成提交github。
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo框架之标签&分类/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/09/git/Hexo框架之标签&分类/" itemprop="url">Hexo框架之标签&分类</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T17:56:18+08:00">
-                2018-03-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/hexo-nexT/" itemprop="url" rel="index">
-                    <span itemprop="name">hexo-nexT</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>使用github pager + hexo + next主题创建的个人有几个问题</p>
-<pre><code>标签页面点击出现404
-分类页面点击出现404
-</code></pre><p>原因就是我们并没有创建标签页面和分类页面。</p>
-<h2 id="创建一级分类页面"><a href="#创建一级分类页面" class="headerlink" title="创建一级分类页面"></a>创建一级分类页面</h2><p>创建分类页面</p>
-<pre><code>gitbash命令行操作
-新建一个新的页面，页面就是page，名称categories。
-$ hexo new page categories
-打开hexo目录下source文件夹，这时里面出现了一个categories的目录；
-打开categories目录里面的index文件
-配置如下：
-title: 分类
-date: 2018-05-10 19:10:04
-type: &quot;categories&quot;
-</code></pre><p>修改主题themes的主题配置文件</p>
-<pre><code>打开主题配置文件，注意不是站点的配置文件。_config.yml
-配置如下：（注意空格）
-menu:
-   categories: /categories
-</code></pre><h2 id="分类页面之二级分类"><a href="#分类页面之二级分类" class="headerlink" title="分类页面之二级分类"></a>分类页面之二级分类</h2><p>文章书写设置（二级分类不需要手动创建分类页面）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title: 标题</span><br><span class="line">date: 2018-03-09 17:56:18</span><br><span class="line">categories:</span><br><span class="line">  - 一级分类</span><br><span class="line">  - 二级分类</span><br></pre></td></tr></table></figure>
-<p>菜单栏显示</p>
-<pre><code>二级分类页面，则不需要在categories下面再次创建page
-需要在侧边菜单栏显示二级分类页面，则：
-需要配置next主题配置文件，加上对应的项，例如
-Java: /categories/一级分类或二级分类
-</code></pre><p>注意这里有一个坑<br>​<br>    注意分类页面和标签页面的标题：分类&amp;标签 文件的编码格式<br>    必须是utf-8，不然就会出现乱码。</p>
-<h2 id="标签页面"><a href="#标签页面" class="headerlink" title="标签页面"></a>标签页面</h2><p>创建标签页面</p>
-<pre><code>hexo new page tags
-打开tags目录里面的index文件
-配置如下：
-title: 标签
-date: 2018-05-10 19:10:04
-type: &quot;tags&quot;
-</code></pre><p>修改主题themes的主题配置文件</p>
-<pre><code>打开主题配置文件，注意不是站点的配置文件。_config.yml
-配置如下：（注意空格）
-menu:
-   tags: /tags
-</code></pre><p>结束</p>
-<p>​<br>​    </p>
 
           
         
@@ -4535,7 +4535,7 @@ ping 域名
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/java_net/Java网络通讯之 Socket（客户端和服务端相互发送数据）TCP/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/java_net/Java网络通讯之Socket（浏览器可以访问的serverSocket服务端）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -4554,7 +4554,7 @@ ping 域名
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/10/java_net/Java网络通讯之 Socket（客户端和服务端相互发送数据）TCP/" itemprop="url">Java网络通讯之 Socket（客户端和服务端相互发送数据）TCP</a></h1>
+                <a class="post-title-link" href="/2017/12/10/java_net/Java网络通讯之Socket（浏览器可以访问的serverSocket服务端）/" itemprop="url">Java网络通讯之Socket（浏览器可以访问的serverSocket服务端）</a></h1>
         
 
         <div class="post-meta">
@@ -4566,7 +4566,176 @@ ping 域名
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T08:55:55+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T17:51:08+08:00">
+                2017-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/net/" itemprop="url" rel="index">
+                    <span itemprop="name">net</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>socket类理解</p>
+<ul>
+<li>套接字，ip+port</li>
+<li>可以存储数据（水泵，往里面灌水）</li>
+<li>可以取出数据（水龙头，打开接水）</li>
+<li>socket可以理解为一辆车。</li>
+<li>存储数据outputstream（车的上货区域）</li>
+<li>读取数据inputstream（车的卸货区域）</li>
+<li>面向对象的思维。</li>
+</ul>
+<h2 id="TCP客户端"><a href="#TCP客户端" class="headerlink" title="TCP客户端"></a>TCP客户端</h2><p>直接在浏览器地址栏输入访问地址</p>
+<pre><code>http://10.4.19.90:9966/
+</code></pre><p>浏览器会显示</p>
+<blockquote>
+<p>客户端你好…..</p>
+</blockquote>
+<h2 id="TCP服务端serverSocket（服务端）demo"><a href="#TCP服务端serverSocket（服务端）demo" class="headerlink" title="TCP服务端serverSocket（服务端）demo"></a>TCP服务端serverSocket（服务端）demo</h2><p>接收客户端socket连接，接收数据，本地保存客户端发过来的jpg图片<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.netcs;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.PrintWriter;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 需求：一个可以随时接收客户端访问的server服务端</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Serverdemo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">//serversocket对象</span></span><br><span class="line">		ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">9966</span>);</span><br><span class="line">		</span><br><span class="line">		Socket socket = ss.accept();</span><br><span class="line">		<span class="comment">//打印远程连接的客户端的ip</span></span><br><span class="line">		System.out.println(socket.getInetAddress().getHostAddress());</span><br><span class="line">		<span class="comment">//定义控制台输出打印对象</span></span><br><span class="line">		PrintWriter out = </span><br><span class="line">				<span class="keyword">new</span> PrintWriter(socket.getOutputStream(),<span class="keyword">true</span>);</span><br><span class="line">		<span class="comment">//放入简单字符数据</span></span><br><span class="line">		</span><br><span class="line">		out.println(<span class="string">"&lt;font color='red' size='15'&gt;客户端你好.....&lt;/font&gt;"</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//关闭连接的客户端socket</span></span><br><span class="line">		socket.close();</span><br><span class="line">		ss.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/java_net/Java网络通讯之Socket（TCP上传图片）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/10/java_net/Java网络通讯之Socket（TCP上传图片）/" itemprop="url">Java网络通讯之Socket（TCP上传图片）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T16:20:07+08:00">
                 2017-12-10
               </time>
             
@@ -4658,9 +4827,16 @@ ping 域名
 <li><strong>socket编程</strong>，就可以这样理解。</li>
 <li>重点掌握的类就是socket类</li>
 </ul>
-<p>注意：下面的例子代码，可以一个在eclipse执行，另一个在windows控制台执行。<br>在windows控制台执行的java类，通过javac编译，java命令执行。（去掉该类的包声明代码package com.net;）</p>
-<h2 id="TCP客户端（发送一次数据，接收一次数据）demo"><a href="#TCP客户端（发送一次数据，接收一次数据）demo" class="headerlink" title="TCP客户端（发送一次数据，接收一次数据）demo"></a>TCP客户端（发送一次数据，接收一次数据）demo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.net;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"><span class="keyword">import</span> java.net.UnknownHostException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPclient2</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> UnknownHostException, IOException </span>&#123;</span><br><span class="line">		Socket s = <span class="keyword">new</span> Socket(<span class="string">"192.168.133.1"</span>, <span class="number">9998</span>);</span><br><span class="line">		<span class="comment">//获取输出流对象，可以理解为打开水泵，准备往里面灌水了。</span></span><br><span class="line">		OutputStream out = s.getOutputStream();</span><br><span class="line">		out.write(<span class="string">"服务端，你好，我是客户端，接收我的请求信息"</span>.getBytes());</span><br><span class="line">		</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 处理服务器端发过来的数据</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		<span class="comment">//获取输入流对象，可以理解为打开进水的水龙头</span></span><br><span class="line">		InputStream in = s.getInputStream();</span><br><span class="line">		<span class="comment">//缓冲区</span></span><br><span class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">		<span class="comment">//读取输入流到缓冲区中（这里已知，缓冲区足够大，可以放得下输入流）</span></span><br><span class="line">		<span class="keyword">int</span> len = in.read(buf);</span><br><span class="line">		String st = <span class="keyword">new</span> String(buf, <span class="number">0</span>,len);</span><br><span class="line">		System.out.println(st);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//关闭客户端socket资源</span></span><br><span class="line">		s.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="TCP服务端serverSocket（）demo"><a href="#TCP服务端serverSocket（）demo" class="headerlink" title="TCP服务端serverSocket（）demo"></a>TCP服务端serverSocket（）demo</h2><p>接收客户端socket连接，并且在服务端处理客户端socket发送的数据<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.net;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 演示tcp的传输的客户端和服务端的交互。互相发送处理数据。</span></span><br><span class="line"><span class="comment"> * 需求：客户端给服务器发送数据，服务端收到后，给客户端反馈信息。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPserver2</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">//创建serverSocket对象</span></span><br><span class="line">		ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">9998</span>);</span><br><span class="line">		<span class="comment">//服务端socket先接收客户端信息，处理数据。</span></span><br><span class="line">		Socket s = ss.accept();</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 打印输出：表示客户端socket已经连接上了</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		System.out.println(<span class="string">"connected........"</span>);</span><br><span class="line">		<span class="comment">//打开客户端socket对象的输入流</span></span><br><span class="line">		InputStream in = s.getInputStream();</span><br><span class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">		<span class="comment">//读取输入流到缓冲区中（这里已知，缓冲区足够大，可以放得下输入流）</span></span><br><span class="line">		<span class="keyword">int</span> len = in.read(buf);</span><br><span class="line">		<span class="comment">//数组，创建string对象。</span></span><br><span class="line">		String st = <span class="keyword">new</span> String(buf,<span class="number">0</span>,len);</span><br><span class="line">		<span class="comment">//控制台打印输出</span></span><br><span class="line">		System.out.println(st);</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 发送反馈信息给客户端</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//获取输出流对象（通过socket获取）。socket对象可以理解为一个在客户端和服务端跑来跑去的车或快递员。</span></span><br><span class="line">		<span class="comment">//获取的输出流outputstream对象，可以理解为，车上的上货区域。同样inputstream对象，就是卸货区域。</span></span><br><span class="line">		OutputStream out = s.getOutputStream();</span><br><span class="line">		<span class="comment">//写数据进去</span></span><br><span class="line">		out.write(<span class="string">"你好，信息收到。我是服务端，你已经可以跟我连接上了。"</span>.getBytes());</span><br><span class="line">		<span class="comment">//关闭资源</span></span><br><span class="line">		s.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>fileoutputstream理解</p>
+<ul>
+<li>往文件系统里面写数据</li>
+<li>写数据，需要一个文件对象，文件对象就是一个完整的路径，包括路径+文件<br>fileinputstream理解</li>
+<li>从文件系统读取数据</li>
+<li>读取数据，需要一个文件对象，文件对象就是一个完整的路径，包括路径+文件</li>
+</ul>
+<p>注意：下面的例子代码，可以一个在eclipse执行，另一个在windows控制台执行。<br><strong>在windows控制台执行的java类，通过javac编译，java命令执行。（去掉该类的包声明代码package com.net;）</strong></p>
+<h2 id="TCP客户端（上传jpg图片）demo"><a href="#TCP客户端（上传jpg图片）demo" class="headerlink" title="TCP客户端（上传jpg图片）demo"></a>TCP客户端（上传jpg图片）demo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.netjpg;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileInputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"><span class="keyword">import</span> java.net.UnknownHostException;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 需求：上传图片</span></span><br><span class="line"><span class="comment"> * 具体：客户端上传图片到服务端</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 客户端</span></span><br><span class="line"><span class="comment"> * 1.socket端对象</span></span><br><span class="line"><span class="comment"> * 2.读取客户端已有的图片资源</span></span><br><span class="line"><span class="comment"> * 3.通过socket输出流将数据发送给服务器端</span></span><br><span class="line"><span class="comment"> * 4.读取服务器端的返回的数据</span></span><br><span class="line"><span class="comment"> * 5.关闭io</span></span><br><span class="line"><span class="comment"> * 6.关闭socket</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PicClient</span> </span>&#123;</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> UnknownHostException, Exception </span>&#123;</span><br><span class="line">			<span class="comment">/**</span></span><br><span class="line"><span class="comment">			 * 获取socket对象，socket对象包括的参数：远程主机的ip，远程server服务的端口</span></span><br><span class="line"><span class="comment">			 */</span></span><br><span class="line">			Socket s = <span class="keyword">new</span> Socket(<span class="string">"192.168.133.1"</span>,<span class="number">9997</span>);</span><br><span class="line">			<span class="comment">/**</span></span><br><span class="line"><span class="comment">			 * 下面的操作是，客户端读取本地jpg图片数据的io操作。</span></span><br><span class="line"><span class="comment">			 */</span></span><br><span class="line">			<span class="comment">//文件对象，需要操作的本地路径(d盘目录下的jpg图片)</span></span><br><span class="line">			File file = <span class="keyword">new</span> File(<span class="string">"d:\\eclipse_workspace_2018_mar\\image\\client\\clientimagedidi.jpg"</span>);</span><br><span class="line">			<span class="comment">/**</span></span><br><span class="line"><span class="comment">			 * 文件输出流对象fileoutputstream</span></span><br><span class="line"><span class="comment">			 * 任何数据需要读取，或者写入，都是以某种文件格式来进行的，这样才能持久保存。</span></span><br><span class="line"><span class="comment">			 * 例如txt，jpg，doc，mp4等等各种文件</span></span><br><span class="line"><span class="comment">			 */</span></span><br><span class="line">			FileInputStream fis = <span class="keyword">new</span> FileInputStream(file);</span><br><span class="line">			<span class="comment">/**</span></span><br><span class="line"><span class="comment">			 * 前面有个文件对象，这里就可以处理文件对象了。</span></span><br><span class="line"><span class="comment">			 * 于客户端socket来说，就是把文件对象输出发送出去。放入socket的上货区域outputstream</span></span><br><span class="line"><span class="comment">			 * 获取outputstream对象</span></span><br><span class="line"><span class="comment">			 */</span></span><br><span class="line">			OutputStream out = s.getOutputStream();</span><br><span class="line">			<span class="comment">//缓冲区</span></span><br><span class="line">			<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">			<span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">			<span class="comment">//循环读取，直到文件对象fis读取完毕，</span></span><br><span class="line">			<span class="keyword">while</span> ((len = fis.read(buf))!= -<span class="number">1</span>) &#123;</span><br><span class="line">				out.write(buf, <span class="number">0</span>, len);</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">//告诉服务端，数据已经写完</span></span><br><span class="line">			s.shutdownOutput();</span><br><span class="line">			<span class="comment">//并且在客户端控制台，输出已经写入完成</span></span><br><span class="line">			System.out.println(<span class="string">"图片上传完成，等待服务器响应....."</span>);</span><br><span class="line">			<span class="comment">/**</span></span><br><span class="line"><span class="comment">			 * 下面是，获取socket卸货区域inputstream的数据，</span></span><br><span class="line"><span class="comment">			 */</span></span><br><span class="line">			InputStream in = s.getInputStream();</span><br><span class="line">			<span class="comment">//缓冲区</span></span><br><span class="line">			<span class="keyword">byte</span>[] bufin = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">			<span class="comment">//已知服务器端返回的数据很短，buf一次就可以装得下。</span></span><br><span class="line">			<span class="keyword">int</span> num = in.read(bufin);</span><br><span class="line">			<span class="comment">//缓冲区数组的数据，转化成string字符串</span></span><br><span class="line">			String st = <span class="keyword">new</span> String(bufin,<span class="number">0</span>,num);</span><br><span class="line">			<span class="comment">//控制台打印输出</span></span><br><span class="line">			System.out.println(st);</span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="TCP服务端serverSocket（上传图片的服务端）demo"><a href="#TCP服务端serverSocket（上传图片的服务端）demo" class="headerlink" title="TCP服务端serverSocket（上传图片的服务端）demo"></a>TCP服务端serverSocket（上传图片的服务端）demo</h2><p>接收客户端socket连接，接收数据，本地保存客户端发过来的jpg图片<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.netjpg;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.File;</span><br><span class="line"><span class="keyword">import</span> java.io.FileOutputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PicServer</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">//创建serverSocket对象</span></span><br><span class="line">		ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">9997</span>);</span><br><span class="line">		<span class="comment">//服务端socket先接收客户端信息，处理数据。相当于获取到跑来跑去的socket对象</span></span><br><span class="line">		Socket s = ss.accept();</span><br><span class="line">		<span class="comment">//打开卸货区域inputstream</span></span><br><span class="line">		InputStream in = s.getInputStream();</span><br><span class="line">		<span class="comment">//创建文件对象，路径+文件名称</span></span><br><span class="line">		File file = </span><br><span class="line">				<span class="keyword">new</span> File(<span class="string">"d:\\eclipse_workspace_2018_mar\\image\\server\\serverimagedidi.jpg"</span>); </span><br><span class="line">		<span class="comment">//通过文件对象，创建文件输出流。文件对象作为构造函数的参数，用于接收文件输出流。</span></span><br><span class="line">		FileOutputStream fos = <span class="keyword">new</span> FileOutputStream(file);</span><br><span class="line">		<span class="comment">//缓冲区</span></span><br><span class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">int</span> len = <span class="number">0</span>;</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 循环读取数据</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		<span class="keyword">while</span> ((len=in.read(buf)) != -<span class="number">1</span>) &#123;</span><br><span class="line">			</span><br><span class="line">			fos.write(buf,<span class="number">0</span>,len);</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 打开上货区域outputstream，写入字符，告诉客户端，“上传成功”</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		OutputStream out = s.getOutputStream();</span><br><span class="line">		out.write(<span class="string">"上传成功"</span>.getBytes());</span><br><span class="line">		<span class="comment">//关闭文件输出流</span></span><br><span class="line">		fos.close();</span><br><span class="line">		<span class="comment">//关闭socket</span></span><br><span class="line">		s.close();</span><br><span class="line">		<span class="comment">//关闭serversocket</span></span><br><span class="line">		ss.close();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -4709,7 +4885,7 @@ ping 域名
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/java_net/Java网络通讯之 Socket（javaAPI和简单示例）TCP/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/java_net/Java网络通讯之Socket（javaAPI和简单示例）TCP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -4728,7 +4904,7 @@ ping 域名
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/10/java_net/Java网络通讯之 Socket（javaAPI和简单示例）TCP/" itemprop="url">Java网络通讯之 Socket（javaAPI和简单示例）TCP</a></h1>
+                <a class="post-title-link" href="/2017/12/10/java_net/Java网络通讯之Socket（javaAPI和简单示例）TCP/" itemprop="url">Java网络通讯之 Socket（javaAPI和简单示例）TCP</a></h1>
         
 
         <div class="post-meta">
@@ -4896,7 +5072,7 @@ ping 域名
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/java_net/Java网络通讯之 Socket（javaAPI和简单示例）UDP/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/java_net/Java网络通讯之Socket（客户端和服务端相互发送数据）TCP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -4915,7 +5091,181 @@ ping 域名
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/10/java_net/Java网络通讯之 Socket（javaAPI和简单示例）UDP/" itemprop="url">Java网络通讯之 Socket（javaAPI和简单示例）UDP</a></h1>
+                <a class="post-title-link" href="/2017/12/10/java_net/Java网络通讯之Socket（客户端和服务端相互发送数据）TCP/" itemprop="url">Java网络通讯之 Socket（客户端和服务端相互发送数据）TCP</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T08:55:55+08:00">
+                2017-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/net/" itemprop="url" rel="index">
+                    <span itemprop="name">net</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>socket类理解</p>
+<ul>
+<li>套接字，ip+port</li>
+<li>可以存储数据（水泵，往里面灌水）</li>
+<li>可以取出数据（水龙头，打开接水）</li>
+<li>socket可以理解为一辆车。</li>
+<li>存储数据outputstream（车的上货区域）</li>
+<li>读取数据inputstream（车的卸货区域）</li>
+<li>面向对象的思维。</li>
+</ul>
+<p>serverSocket类理解</p>
+<ul>
+<li>创建于服务端。</li>
+<li>可以通过accept方法，获取客户端发过来的socket对象。从而实现连接。</li>
+<li>通过打开socket对象的<strong>上货区域和卸货区域</strong>也就是inputstream和outputstream对象，读取或存入数据到socket中。</li>
+<li>所以java编程，就是对于socket编程，对于socket数据存入和读取的操作。这个操作都是通过IO流的方式来处理的。</li>
+<li><strong>socket编程</strong>，就可以这样理解。</li>
+<li>重点掌握的类就是socket类</li>
+</ul>
+<p>注意：下面的例子代码，可以一个在eclipse执行，另一个在windows控制台执行。<br>在windows控制台执行的java类，通过javac编译，java命令执行。（去掉该类的包声明代码package com.net;）</p>
+<h2 id="TCP客户端（发送一次数据，接收一次数据）demo"><a href="#TCP客户端（发送一次数据，接收一次数据）demo" class="headerlink" title="TCP客户端（发送一次数据，接收一次数据）demo"></a>TCP客户端（发送一次数据，接收一次数据）demo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.net;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"><span class="keyword">import</span> java.net.UnknownHostException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPclient2</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> UnknownHostException, IOException </span>&#123;</span><br><span class="line">		Socket s = <span class="keyword">new</span> Socket(<span class="string">"192.168.133.1"</span>, <span class="number">9998</span>);</span><br><span class="line">		<span class="comment">//获取输出流对象，可以理解为打开水泵，准备往里面灌水了。</span></span><br><span class="line">		OutputStream out = s.getOutputStream();</span><br><span class="line">		out.write(<span class="string">"服务端，你好，我是客户端，接收我的请求信息"</span>.getBytes());</span><br><span class="line">		</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 处理服务器端发过来的数据</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		<span class="comment">//获取输入流对象，可以理解为打开进水的水龙头</span></span><br><span class="line">		InputStream in = s.getInputStream();</span><br><span class="line">		<span class="comment">//缓冲区</span></span><br><span class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">		<span class="comment">//读取输入流到缓冲区中（这里已知，缓冲区足够大，可以放得下输入流）</span></span><br><span class="line">		<span class="keyword">int</span> len = in.read(buf);</span><br><span class="line">		String st = <span class="keyword">new</span> String(buf, <span class="number">0</span>,len);</span><br><span class="line">		System.out.println(st);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//关闭客户端socket资源</span></span><br><span class="line">		s.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="TCP服务端serverSocket（）demo"><a href="#TCP服务端serverSocket（）demo" class="headerlink" title="TCP服务端serverSocket（）demo"></a>TCP服务端serverSocket（）demo</h2><p>接收客户端socket连接，并且在服务端处理客户端socket发送的数据<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.net;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 演示tcp的传输的客户端和服务端的交互。互相发送处理数据。</span></span><br><span class="line"><span class="comment"> * 需求：客户端给服务器发送数据，服务端收到后，给客户端反馈信息。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPserver2</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">//创建serverSocket对象</span></span><br><span class="line">		ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">9998</span>);</span><br><span class="line">		<span class="comment">//服务端socket先接收客户端信息，处理数据。</span></span><br><span class="line">		Socket s = ss.accept();</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 打印输出：表示客户端socket已经连接上了</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		System.out.println(<span class="string">"connected........"</span>);</span><br><span class="line">		<span class="comment">//打开客户端socket对象的输入流</span></span><br><span class="line">		InputStream in = s.getInputStream();</span><br><span class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">		<span class="comment">//读取输入流到缓冲区中（这里已知，缓冲区足够大，可以放得下输入流）</span></span><br><span class="line">		<span class="keyword">int</span> len = in.read(buf);</span><br><span class="line">		<span class="comment">//数组，创建string对象。</span></span><br><span class="line">		String st = <span class="keyword">new</span> String(buf,<span class="number">0</span>,len);</span><br><span class="line">		<span class="comment">//控制台打印输出</span></span><br><span class="line">		System.out.println(st);</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 发送反馈信息给客户端</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//获取输出流对象（通过socket获取）。socket对象可以理解为一个在客户端和服务端跑来跑去的车或快递员。</span></span><br><span class="line">		<span class="comment">//获取的输出流outputstream对象，可以理解为，车上的上货区域。同样inputstream对象，就是卸货区域。</span></span><br><span class="line">		OutputStream out = s.getOutputStream();</span><br><span class="line">		<span class="comment">//写数据进去</span></span><br><span class="line">		out.write(<span class="string">"你好，信息收到。我是服务端，你已经可以跟我连接上了。"</span>.getBytes());</span><br><span class="line">		<span class="comment">//关闭资源</span></span><br><span class="line">		s.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/java_net/Java网络通讯之Socket（javaAPI和简单示例）UDP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/10/java_net/Java网络通讯之Socket（javaAPI和简单示例）UDP/" itemprop="url">Java网络通讯之 Socket（javaAPI和简单示例）UDP</a></h1>
         
 
         <div class="post-meta">
@@ -5069,7 +5419,7 @@ ping 域名
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/java_net/Java网络通讯之 IP（javaAPI和简单示例）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/java_net/Java网络通讯之IP（javaAPI和简单示例）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -5088,7 +5438,7 @@ ping 域名
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/12/10/java_net/Java网络通讯之 IP（javaAPI和简单示例）/" itemprop="url">Java网络通讯之 IP（javaAPI和简单示例）</a></h1>
+                <a class="post-title-link" href="/2017/12/10/java_net/Java网络通讯之IP（javaAPI和简单示例）/" itemprop="url">Java网络通讯之 IP（javaAPI和简单示例）</a></h1>
         
 
         <div class="post-meta">
@@ -5641,6 +5991,188 @@ ping 域名
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/window_dos/windows网络net配置config远程连接telnet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/window_dos/windows网络net配置config远程连接telnet/" itemprop="url">windows网络net配置config远程连接telnet</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/windows/" itemprop="url" rel="index">
+                    <span itemprop="name">windows</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/windows/net/" itemprop="url" rel="index">
+                    <span itemprop="name">net</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="查看本机ip地址"><a href="#查看本机ip地址" class="headerlink" title="查看本机ip地址"></a>查看本机ip地址</h2><p>测试环境：</p>
+<blockquote>
+<p>测试环境校园内局域网ip段<br>笔记本电脑win8系统64位。<br>网线接口（以太网接口禁用）<br>无线网接口通过校园wifi连接互联网。<br>笔记本电脑系统，未搭载其他虚拟机系统。</p>
+</blockquote>
+<p>dos命令</p>
+<blockquote>
+<p>ipconfig<br>ipconfig -all</p>
+</blockquote>
+<p>输出如下<br>可以获知本机ip地址为：10.4.19.90<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">C:\Users\Administrator&gt;ipconfig</span><br><span class="line"></span><br><span class="line">Windows IP 配置</span><br><span class="line"></span><br><span class="line">无线局域网适配器 本地连接* 3:</span><br><span class="line"></span><br><span class="line">   媒体状态  . . . . . . . . . . . . : 媒体已断开</span><br><span class="line">   连接特定的 DNS 后缀 . . . . . . . :</span><br><span class="line"></span><br><span class="line">无线局域网适配器 WLAN 1:</span><br><span class="line"></span><br><span class="line">   连接特定的 DNS 后缀 . . . . . . . :</span><br><span class="line">   IPv6 地址 . . . . . . . . . . . . : 2001:250:3c02:500:390f:ea0a:b580:3</span><br><span class="line">   本地链接 IPv6 地址. . . . . . . . : fe80::494:e18e:4068:22b0%17</span><br><span class="line">   IPv4 地址 . . . . . . . . . . . . : 10.4.19.90</span><br><span class="line">   子网掩码  . . . . . . . . . . . . : 255.255.240.0</span><br><span class="line">   默认网关. . . . . . . . . . . . . : fe80::a81:f40f:fc96:2002%17</span><br><span class="line">                                       fe80::a81:f40f:fc96:2000%17</span><br><span class="line">                                       fe80::a81:f40f:fc96:2001%17</span><br><span class="line">                                       10.4.16.1</span><br><span class="line"></span><br><span class="line">隧道适配器 isatap.&#123;4CB4237D-xxxx-4E59-xxxx-E4996xxxx6B1&#125;:</span><br><span class="line"></span><br><span class="line">   媒体状态  . . . . . . . . . . . . : 媒体已断开</span><br><span class="line">   连接特定的 DNS 后缀 . . . . . . . :</span><br></pre></td></tr></table></figure></p>
+<h1 id="ip网段"><a href="#ip网段" class="headerlink" title="ip网段"></a>ip网段</h1><h2 id="局域网ip地址段（内网ip）"><a href="#局域网ip地址段（内网ip）" class="headerlink" title="局域网ip地址段（内网ip）"></a>局域网ip地址段（内网ip）</h2><p>内网也就是局域网，内网的计算机以NAT（网络地址转换）协议，通过一个公共的网关访问Internet。内网的计算机可向Internet上的其他计算机发送连接请求，但Internet上其他的计算机无法向内网的计算机发送连接请求。</p>
+<p>NAT（Network Address Translator）是网络地址转换，它实现内网的IP地址与公网的地址之间的相互转换，将大量的内网IP地址转换为一个或少量的公网IP地址，减少对公网IP地址的占用。NAT的最典型应用是：在一个局域网内，只需要一台计算机连接上Internet，就可以利用NAT共享Internet连接，使局域网内其他计算机也可以上网。使用NAT协议，局域网内的计算机可以访问Internet上的计算机，但Internet上的计算机无法访问局域网内的计算机。</p>
+<p>所有ISP（Internet服务提供商）提供的内网Internet接入方式，几乎都是基于NAT协议的。</p>
+<h2 id="内网保留地址"><a href="#内网保留地址" class="headerlink" title="内网保留地址"></a>内网保留地址</h2><p>Internet设计者保留了IPv4地址空间的一部份供专用地址使用,专用地址空间中的IPv4地址叫专用地址,这些地址永远不会被当做公用地址来分配,所以专用地址永远不会与公用地址重复.<br>IPv4专用地址如下：<br>| IP等级    | IP位置                        | 默认子网掩码             |<br>| ——- | ————————— | —————— |<br>| Class A | 10.0.0.0-10.255.255.255     | 默认子网掩码:255.0.0.0   |<br>| Class B | 172.16.0.0-172.31.255.255   | 默认子网掩码:255.240.0.0 |<br>| Class C | 192.168.0.0-192.168.255.255 | 默认子网掩码:255.255.0.0 |<br>内网是可以上网的.内网需要一台服务器或路由器做网关,通过它来上网</p>
+<h2 id="ping通ip地址"><a href="#ping通ip地址" class="headerlink" title="ping通ip地址"></a>ping通ip地址</h2><p>ping是ICMP协议，并不是通常所说的 TCP/UDP 端口。<br>Ping命令使用的是ICMP协议，ICMP不像http，FTP应用层有传输层的端口号。ping是网络层网际层操作，不使用端口号。<br>利用“ping”命令可以检查网络是否连通，可以很好地帮助我们分析和判定网络故障。<br>应用格式：</p>
+<ul>
+<li>ping空格IP地址</li>
+<li>ping空格域名</li>
+</ul>
+<p>可以ping的地址有</p>
+<ul>
+<li>局域网（内网的ip地址）（ping 10.4.19.55）内网ip段</li>
+<li>互联网服务器主机域名（ping hao123.com）</li>
+<li>互联网服务器主机的ip（ping 185.199.109.153）github站点</li>
+<li>本机127.0.0.1</li>
+<li>本机内网ip（ping ）</li>
+</ul>
+<h1 id="windows远程连接"><a href="#windows远程连接" class="headerlink" title="windows远程连接"></a>windows远程连接</h1><h2 id="telnet协议"><a href="#telnet协议" class="headerlink" title="telnet协议"></a>telnet协议</h2><p>Telnet协议是TCP/IP协议族中的一员，是Internet远程登陆服务的标准协议和主要方式。<br>Telnet服务虽然也属于客户机/服务器模型的服务，但它更大的意义在于实现了基于Telnet协议的远程登录。<br>telnet的默认端口号为25。</p>
+<h2 id="telnet服务端"><a href="#telnet服务端" class="headerlink" title="telnet服务端"></a>telnet服务端</h2><p>windows开启telnet服务端。<br>控制面板-&gt;程序功能 -&gt;启用或关闭windows功能-&gt;勾选telnet服务端<br>勾选之后，需要重新启动电脑，服务生效。</p>
+<p>然后，内网计算机可以使用远程连接到此计算机。</p>
+<h2 id="telnet客户端"><a href="#telnet客户端" class="headerlink" title="telnet客户端"></a>telnet客户端</h2><p>未完</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/20/JavaEE/JavaEE概念dao-po-vo-bo-pojo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -5936,7 +6468,7 @@ ping 域名
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之封装/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/java_lang/Java语法01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -5955,7 +6487,7 @@ ping 域名
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/01/01/Java/面向对象之封装/" itemprop="url">面向对象之封装</a></h1>
+                <a class="post-title-link" href="/2016/01/01/java_lang/Java语法01/" itemprop="url">Java语法01</a></h1>
         
 
         <div class="post-meta">
@@ -5990,8 +6522,8 @@ ping 域名
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/Java-lang/" itemprop="url" rel="index">
+                    <span itemprop="name">Java_lang</span>
                   </a>
                 </span>
 
@@ -6001,8 +6533,8 @@ ping 域名
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/面向对象/" itemprop="url" rel="index">
-                    <span itemprop="name">面向对象</span>
+                  <a href="/categories/Java-lang/a/" itemprop="url" rel="index">
+                    <span itemprop="name">a</span>
                   </a>
                 </span>
 
@@ -6040,169 +6572,10 @@ ping 域名
       
         
           
-            <p>二级分类<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
+            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/Java数组/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/01/Java/Java数组/" itemprop="url">Java数组</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
-                2016-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/Java数组/" itemprop="url" rel="index">
-                    <span itemprop="name">Java数组</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>二级分类<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
           
         
       
@@ -6395,7 +6768,7 @@ ping 域名
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之多态/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/Java数组/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -6414,7 +6787,7 @@ ping 域名
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/01/01/Java/面向对象之多态/" itemprop="url">面向对象之多态</a></h1>
+                <a class="post-title-link" href="/2016/01/01/Java/Java数组/" itemprop="url">Java数组</a></h1>
         
 
         <div class="post-meta">
@@ -6460,477 +6833,8 @@ ping 域名
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/面向对象/" itemprop="url" rel="index">
-                    <span itemprop="name">面向对象</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>二级分类<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Maven/Maven基础/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/01/Maven/Maven基础/" itemprop="url">Maven基础</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
-                2016-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Maven/" itemprop="url" rel="index">
-                    <span itemprop="name">Maven</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Maven/Maven基础/" itemprop="url" rel="index">
-                    <span itemprop="name">Maven基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>maven起源<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/java_lang/Java语法01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/01/java_lang/Java语法01/" itemprop="url">Java语法01</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
-                2016-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java-lang/" itemprop="url" rel="index">
-                    <span itemprop="name">Java_lang</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java-lang/a/" itemprop="url" rel="index">
-                    <span itemprop="name">a</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/Java基本数据类型/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/01/Java/Java基本数据类型/" itemprop="url">Java基本数据类型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
-                2016-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/数据类型/" itemprop="url" rel="index">
-                    <span itemprop="name">数据类型</span>
+                  <a href="/categories/Java/Java数组/" itemprop="url" rel="index">
+                    <span itemprop="name">Java数组</span>
                   </a>
                 </span>
 
@@ -7178,6 +7082,320 @@ ping 域名
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之封装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/01/Java/面向对象之封装/" itemprop="url">面向对象之封装</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
+                2016-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/面向对象/" itemprop="url" rel="index">
+                    <span itemprop="name">面向对象</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>二级分类<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之多态/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/01/Java/面向对象之多态/" itemprop="url">面向对象之多态</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
+                2016-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/面向对象/" itemprop="url" rel="index">
+                    <span itemprop="name">面向对象</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>二级分类<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之继承/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -7322,6 +7540,320 @@ ping 域名
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/Java基本数据类型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/01/Java/Java基本数据类型/" itemprop="url">Java基本数据类型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
+                2016-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/数据类型/" itemprop="url" rel="index">
+                    <span itemprop="name">数据类型</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>二级分类<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Maven/Maven基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/01/Maven/Maven基础/" itemprop="url">Maven基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
+                2016-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Maven/" itemprop="url" rel="index">
+                    <span itemprop="name">Maven</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Maven/Maven基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Maven基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>maven起源<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
@@ -7372,7 +7904,7 @@ ping 域名
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -7383,7 +7915,7 @@ ping 域名
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -7394,7 +7926,7 @@ ping 域名
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
