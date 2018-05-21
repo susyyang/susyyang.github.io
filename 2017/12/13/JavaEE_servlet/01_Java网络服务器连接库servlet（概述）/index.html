@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java,net,tomcat,servlet," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Servlet是什么？ Java Servlet是运行在web服务器或应用服务器上的程序，它是作为来自web浏览器或者其他http客户端的请求和http服务器上的数据库或应用程序之间的中间层。 使用Servlet可以收集来自网页表单的用户输入，呈现来自数据库或者其他源的记录，还可以动态的创建网页。连接用户操作（输入）与后端服务器（或者数据库）的中间层。 Servlet是运行在服务器端的Java程序">
+<meta name="keywords" content="java,net,tomcat,servlet">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01_Java网络服务器连接库servlet（概述）">
+<meta property="og:url" content="http://yoursite.com/2017/12/13/JavaEE_servlet/01_Java网络服务器连接库servlet（概述）/index.html">
+<meta property="og:site_name" content="Mr.Yang">
+<meta property="og:description" content="Servlet是什么？ Java Servlet是运行在web服务器或应用服务器上的程序，它是作为来自web浏览器或者其他http客户端的请求和http服务器上的数据库或应用程序之间的中间层。 使用Servlet可以收集来自网页表单的用户输入，呈现来自数据库或者其他源的记录，还可以动态的创建网页。连接用户操作（输入）与后端服务器（或者数据库）的中间层。 Servlet是运行在服务器端的Java程序">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-21T12:31:21.670Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="01_Java网络服务器连接库servlet（概述）">
+<meta name="twitter:description" content="Servlet是什么？ Java Servlet是运行在web服务器或应用服务器上的程序，它是作为来自web浏览器或者其他http客户端的请求和http服务器上的数据库或应用程序之间的中间层。 使用Servlet可以收集来自网页表单的用户输入，呈现来自数据库或者其他源的记录，还可以动态的创建网页。连接用户操作（输入）与后端服务器（或者数据库）的中间层。 Servlet是运行在服务器端的Java程序">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/13/JavaEE_servlet/01_Java网络服务器连接库servlet（概述）/"/>
+
+
+
+
+
+  <title>01_Java网络服务器连接库servlet（概述） | Mr.Yang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Yang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/Java" rel="section">
+            
+            Java基础
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_lang">
+          <a href="/categories/Java-lang" rel="section">
+            
+            Java语法
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_set">
+          <a href="/categories/Java-set" rel="section">
+            
+            Java集合
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_thread">
+          <a href="/categories/Java-thread" rel="section">
+            
+            Java多线程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_net">
+          <a href="/categories/Java-net" rel="section">
+            
+            Java网络
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-spring_boot">
+          <a href="/categories/Spring-boot" rel="section">
+            
+            Springboot
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-git">
+          <a href="/categories/git" rel="section">
+            
+            git
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-other_lang">
+          <a href="/categories/other-lang" rel="section">
+            
+            其他小语种
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sublime">
+          <a href="/categories/Sublime-Text" rel="section">
+            
+            Sublime_Text
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maven">
+          <a href="/categories/Maven" rel="section">
+            
+            Maven
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            时间线
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/13/JavaEE_servlet/01_Java网络服务器连接库servlet（概述）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">01_Java网络服务器连接库servlet（概述）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T09:23:24+08:00">
+                2017-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaEE/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaEE</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaEE/servlet/" itemprop="url" rel="index">
+                    <span itemprop="name">servlet</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Servlet是什么？"><a href="#Servlet是什么？" class="headerlink" title="Servlet是什么？"></a>Servlet是什么？</h2><ul>
+<li>Java Servlet是运行在web服务器或应用服务器上的程序，它是作为来自web浏览器或者其他http客户端的请求和http服务器上的数据库或应用程序之间的中间层。</li>
+<li>使用Servlet可以收集来自网页表单的用户输入，呈现来自数据库或者其他源的记录，还可以动态的创建网页。连接用户操作（输入）与后端服务器（或者数据库）的中间层。</li>
+<li>Servlet是运行在服务器端的Java程序，是Sun公司提供的一套规范（接口），用来处理客户端请求，响应给浏览器的动态资源，servlet的实质依然是java代码。</li>
+<li>Java Servlet通常情况下与使用CGI实现的程序可以达到异曲同工的效果。但是相比CGI，Servlet有以下优势：<ul>
+<li>性能明显更好</li>
+<li>Servlet在web服务器端的空间地址内执行。这样它就没有必要再创建单独的进程来处理每个客户端的请求。</li>
+<li>Servlet是独立于平台的，因为它们是用java编写的框架。</li>
+<li>服务器上的java安全管理器执行了一系列限制，以保护服务器计算机上的资源，因此Servlet是可信的。</li>
+<li>Java类库的全部功能对Servlet来说都是可用的。它可以通过socket和RMI机制与applets、数据库或其他软件交互。<br>servlet规范：包括三个技术点</li>
+<li>servlet技术</li>
+<li>filter技术（过滤器）</li>
+<li>listener技术（监听器）<br>servlet需要放在servlet容器中，才能正常运行，通常我们可以使用tomcat容器。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Servlet的任务"><a href="#Servlet的任务" class="headerlink" title="Servlet的任务"></a>Servlet的任务</h2><ul>
+<li>读取客户端（浏览器或客户端）发送的显示的数据。包括浏览器网页上的html表单，或者也可以是来自applet或自定义的http客户端程序的表单。</li>
+<li><strong>读取客户端（浏览器或客户端）发送的隐式的http请求数据。包括cookies、媒体类型和浏览器能理解的压缩格式等等。</strong></li>
+<li><strong>处理数据并生成结果。这个过程可能需要访问数据库，执行RMI或者CORBA调用，调用web服务，或者直接计算得出对应的响应。</strong></li>
+<li><strong>发送显示的数据（即文档）到客户端（客户端或浏览器）。该文档的格式可以是多样的，包括文本文件（html或xml）、二进制文件（图像）、Excel表格文件。</strong></li>
+<li><strong>发送隐式的http响应到客户端（客户端或浏览器），包括告诉浏览器或其他客户端被返回的文档类型（例如html）、设置cookies和缓存参数，以及其他类似的任务。</strong></li>
+</ul>
+<h2 id="Servlet包"><a href="#Servlet包" class="headerlink" title="Servlet包"></a>Servlet包</h2><ul>
+<li><strong>JavaServlet是</strong>运行在带有java servlet规范的解释器的<strong>web服务器上的java类。</strong></li>
+<li>Servlet可以使用javax.servlet和javax.servlet.http包创建，它是java企业版的标准组成部分，java企业版是支持大型开发项目的java类库的扩展版本。</li>
+<li>这些类实现java servlet和JSP规范。本教程中，二者相应的版本是java servlet 2.5 和JSP2.1。</li>
+<li>Java Servlet就像任何其他类一样已经被创建和编译。在您安装Servlet包并且添加到您的计算机上的classpath类路径中之后，就可以通过JDK的java编译器或其他编译器来编译servlet。</li>
+</ul>
+<h2 id="servlet入门操作"><a href="#servlet入门操作" class="headerlink" title="servlet入门操作"></a>servlet入门操作</h2><p>配置servlet</p>
+<ul>
+<li>jdk（下载，安装，设置环境变量，控制台验证）</li>
+<li>eclipse开发工具（设置rumtimeenrironment，设置运行时环境）</li>
+<li>tomcat服务器配置servlet。参照tomcat相关配置。</li>
+</ul>
+<h2 id="servlet生命周期（面试喜欢问）"><a href="#servlet生命周期（面试喜欢问）" class="headerlink" title="servlet生命周期（面试喜欢问）"></a>servlet生命周期（面试喜欢问）</h2><ul>
+<li>定义&amp;理解<ul>
+<li>servlet何时创建：默认第一次访问servlet时创建该对象；</li>
+<li>servlet声明周期可被定义为从创建直到毁灭的整个过程，包括以下几个过程：<ul>
+<li>servlet通过init( )方法进行初始化；</li>
+<li>servlet通过service( )方法来处理客户端请求；</li>
+<li>servlet通过destory( )方法终止。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>init( )方法（初始化方法）<ul>
+<li>init( )方法被设计成只调用一次，它在第一次创建servlet时被调用，在后续每次用户请求时不再调用。因此init( )用于一次性初始化。 </li>
+<li>servlet创建于用户第一次调用对应于该servlet的URL时。</li>
+<li>当用户调用一个servlet时，就会创建一个servlet实例，每一个用户请求都会产生一个新的线程，适当的时候移交给doGet( )或doPost( )方法。init( ) 方法简单地创建或加载一些数据，这些数据将被用于servlet的整个生命周期。</li>
+</ul>
+</li>
+<li>service( )方法（处理客户端请求的方法）<ul>
+<li>service( )方法是实际执行任务的主要方法。servlet容器（即web服务器）调用service( )方法来处理客户端（客户端或浏览器）的请求，并把格式化的响应写回给客户端。</li>
+<li>每次服务器接收到一个servlet请求时，服务器会产生一个新的线程并调用服务。</li>
+<li>service( )方法检查http请求类型（get&amp;post&amp;put&amp;delete等），并在适当的时候调用doGet( )，doPost( )，doPut( )，doDelete( )等方法。</li>
+<li>service( )方法由容器调用，service方法在适当的时候调用doGet( )，doPost( )，doPut( )，doDelete( )方法，所以，您不用对service( )方法做任何动作，只需要根据来自客户端请求类型来重写doGet( )或者doPost( )方法。</li>
+<li>doGet( )或者doPost( )方法是每次服务请求中最常用的方法。</li>
+<li>destory( )方法（servlet生命周期结束调用）</li>
+</ul>
+</li>
+</ul>
+<h2 id="servlet运行过程"><a href="#servlet运行过程" class="headerlink" title="servlet运行过程"></a>servlet运行过程</h2><p>servlet程序是由web服务器（tomcat等）调用，web服务器收到客户端（浏览器）请求后，进行一下操作：</p>
+<ul>
+<li>1、web服务器首先检查是否已经加载了该servlet的实例对象，如果是，进行第4步；如果否，进行第2步。</li>
+<li>2、加载并创建该servlet的实例对象。</li>
+<li>3、调用该servlet实例对象的的init( )方法。一个项目对应一个servlet对象。</li>
+<li>4、创建一个用于封装http请求消息的HttpServletRequest对象和一个http响应消息的HttpServletResponse对象，然后调用servlet的service( )方法并将请求和响应对象作为参数，传递进去。</li>
+<li>5、web应用程序被停止或重新启动之前，servlet引擎将卸载servlet实例，并在卸载之前调用servlet的destory( )方法。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java/" rel="tag"># java</a>
+          
+            <a href="/tags/net/" rel="tag"># net</a>
+          
+            <a href="/tags/tomcat/" rel="tag"># tomcat</a>
+          
+            <a href="/tags/servlet/" rel="tag"># servlet</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/13/JavaEE_tomcat/02_Java服务器容器tomcat（配置）/" rel="next" title="02_Java服务器容器tomcat（配置）">
+                <i class="fa fa-chevron-left"></i> 02_Java服务器容器tomcat（配置）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/13/JavaEE_tomcat/01_Java服务器容器tomcat（概述）/" rel="prev" title="01_Java服务器容器tomcat（概述）">
+                01_Java服务器容器tomcat（概述） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/jiayou.png"
+                alt="Susy Yang" />
+            
+              <p class="site-author-name" itemprop="name">Susy Yang</p>
+              <p class="site-description motion-element" itemprop="description">today</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">52</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/susy-yang-sy" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet是什么？"><span class="nav-number">1.</span> <span class="nav-text">Servlet是什么？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet的任务"><span class="nav-number">2.</span> <span class="nav-text">Servlet的任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Servlet包"><span class="nav-number">3.</span> <span class="nav-text">Servlet包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#servlet入门操作"><span class="nav-number">4.</span> <span class="nav-text">servlet入门操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#servlet生命周期（面试喜欢问）"><span class="nav-number">5.</span> <span class="nav-text">servlet生命周期（面试喜欢问）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#servlet运行过程"><span class="nav-number">6.</span> <span class="nav-text">servlet运行过程</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Susy Yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
