@@ -332,7 +332,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/15/Mysql/MySQL表设计demo/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/09/Spring_boot/Springboot与Spring/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -351,7 +351,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/12/15/Mysql/MySQL表设计demo/" itemprop="url">MySQL表设计demo</a></h1>
+                <a class="post-title-link" href="/2018/05/09/Spring_boot/Springboot与Spring/" itemprop="url">Springboot与Spring</a></h1>
         
 
         <div class="post-meta">
@@ -363,8 +363,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-15T09:28:17+08:00">
-                2019-12-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-09T17:56:18+08:00">
+                2018-05-09
               </time>
             
 
@@ -386,19 +386,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DB-MySQL/" itemprop="url" rel="index">
-                    <span itemprop="name">DB_MySQL</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DB-MySQL/实战demo/" itemprop="url" rel="index">
-                    <span itemprop="name">实战demo</span>
+                  <a href="/categories/Spring-boot/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring_boot</span>
                   </a>
                 </span>
 
@@ -436,171 +425,11 @@
       
         
           
-            <h2 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h2><p>创建数据库:tmall<br>并且将数据库的编码设置为utf8，便于存放中文</p>
-<pre><code>DROP DATABASE IF EXISTS tmall;
-CREATE DATABASE tmall DEFAULT CHARACTER SET utf8;
-</code></pre><h2 id="表结构分析"><a href="#表结构分析" class="headerlink" title="表结构分析"></a>表结构分析</h2><p>一共需要用到的9张表，以及表之间的关系。接下来，对每张表做介绍，并讲解表与表之间的关系：</p>
-<pre><code>这里插入一张表结构图，
-</code></pre><p>各个表的介绍</p>
-<table>
-<thead>
-<tr>
-<th>表名</th>
-<th>中文含义</th>
-<th>介绍</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Category</td>
-<td>分类表</td>
-<td>存放分类信息，如女装，平板电视，沙发等</td>
-</tr>
-<tr>
-<td>Property</td>
-<td>属性表</td>
-<td>存放属性信息，如颜色，重量，品牌，厂商，型号等</td>
-</tr>
-<tr>
-<td>Product</td>
-<td>产品表</td>
-<td>存放产品信息，如LED40EC平板电视机，海尔EC6005热水器</td>
-</tr>
-<tr>
-<td>PropertyValue</td>
-<td>属性值表</td>
-<td>存放属性值信息，如重量是900g,颜色是粉红色</td>
-</tr>
-<tr>
-<td>ProductImage</td>
-<td>产品图片表</td>
-<td>存放产品图片信息，如产品页显示的5个图片</td>
-</tr>
-<tr>
-<td>Review</td>
-<td>评论表</td>
-<td>存放评论信息，如买回来的蜡烛很好用，么么哒</td>
-</tr>
-<tr>
-<td>User</td>
-<td>用户表</td>
-<td>存放用户信息，如斩手狗，千手小粉红</td>
-</tr>
-<tr>
-<td>Order</td>
-<td>订单表</td>
-<td>存放订单信息，包括邮寄地址，电话号码等信息</td>
-</tr>
-<tr>
-<td>OrderItem</td>
-<td>订单项列表</td>
-<td>存放订单项信息，包括购买产品种类，数量等</td>
-</tr>
-</tbody>
-</table>
-<p>正确的分析表与表之间的关系的方法</p>
+            <p>Spring Boot是最近这几年才火起来的，那么它到底与Spring有啥区别呢？<br>想了解区别，其实就是Spring Boot提供了哪些特征：</p>
 <blockquote>
-<p>表与表之间的关系，基本上是3种<br>一对一<br>一对多<br>多对一<br>那么怎么判断关系到底是什么呢？<br>以分类和产品为例子，分类表里有多条数据，产品表里也有多条数据，那么他们的关系是多对多吗？ 从经验上讲，我们知道这个结果是不正确的。<br>正确的分析表与表之间的关系的方法是这样：<br>一个分类对应 多个 产品<br>一个产品对应 一个 分类<br>所以分类和产品之间的关系是一对多</p>
+<p>Spring Boot可以建立独立的Spring应用程序；<br>内嵌了如Tomcat，Jetty和Undertow这样的容器，也就是说可以直接跑起来，用不着再做部署工作了。<br>无需再像Spring那样搞一堆繁琐的xml文件的配置；<br>可以自动配置Spring；<br>提供了一些现有的功能，如量度工具，表单数据验证以及一些外部配置这样的一些第三方功能；<br>提供的POM可以简化Maven的配置；</p>
 </blockquote>
-<p>表关系<br>从最上面的表关系图中可以看到，有关系的表之间，都是一对多关系(反过来就是多对一关系)，并没有一对一关系，和多对多关系。<br>所以本表列出了所有的一对多关系<br>最后确定表关系如下：<br>| 一           | 多                 |<br>| ———– | —————– |<br>| Category-分类 | Product-产品        |<br>| Category-分类 | Property-属性       |<br>| Property-属性 | PropertyValue-属性值 |<br>| Product-产品  | PropertyValue-属性值 |<br>| Product-产品  | ProductImage-产品图片 |<br>| Product-产品  | Review-评价         |<br>| User-用户     | Order-订单          |<br>| Product-产品  | OrderItem-订单项     |<br>| User-用户     | OrderItem-订单项     |<br>| Order-订单    | OrderItem-订单项     |<br>| User-用户     | User-评价           |<br>| 等等          | ———–       |<br>| 等等          | ———–       |</p>
-<h2 id="建表create-table"><a href="#建表create-table" class="headerlink" title="建表create table"></a>建表create table</h2><p>建表顺序</p>
-<blockquote>
-<p>在建表过程中，会设置外键约束，所以表和表之间有依赖关系。 因此会先建立被外键指向的表，比如User,Category，然后再是其他表。</p>
-</blockquote>
-<p>建立用户表user</p>
-<pre><code>CREATE TABLE user (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  name varchar(255) DEFAULT NULL,
-  password varchar(255) DEFAULT NULL,
-  PRIMARY KEY (id) --设置主键
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-</code></pre><p>建立分类表category</p>
-<pre><code>CREATE TABLE category (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  name varchar(255) DEFAULT NULL, --用户名
-  PRIMARY KEY (id) --设置主键
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-</code></pre><p>建立属性表<br>注意：外键约束</p>
-<pre><code>CREATE TABLE property (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  cid int(11) DEFAULT NULL,--属性所属的分类的id，category id
-  name varchar(255) DEFAULT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT fk_property_category FOREIGN KEY (cid) REFERENCES category (id) --绑定外键
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-</code></pre><p>建立产品表<br>注意：外键约束</p>
-<pre><code>CREATE TABLE product (
 
-  id int(11) NOT NULL AUTO_INCREMENT,
-  name varchar(255) DEFAULT NULL, --名字
-  subTitle varchar(255) DEFAULT NULL, --标题
-  orignalPrice float DEFAULT NULL, --原价
-  promotePrice float DEFAULT NULL, --售价，现价
-  stock int(11) DEFAULT NULL, --库存
-  cid int(11) DEFAULT NULL, --产品所属分类
-  createDate datetime DEFAULT NULL, --创建日期
-  PRIMARY KEY (id), --id主键
-  CONSTRAINT fk_product_category FOREIGN KEY (cid) REFERENCES category (id) --绑定
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-</code></pre><p>建立属性值表<br>注意：两个外键</p>
-<pre><code>CREATE TABLE propertyvalue (
-  id int(11) NOT NULL AUTO_INCREMENT, --id
-  pid int(11) DEFAULT NULL, --属性值 所属 属性表的id
-  ptid int(11) DEFAULT NULL, --属性值 所属 产品表的id
-  value varchar(255) DEFAULT NULL, --属性值
-  PRIMARY KEY (id),--id主键
-  CONSTRAINT fk_propertyvalue_property FOREIGN KEY (ptid) REFERENCES property (id),--绑定
-  CONSTRAINT fk_propertyvalue_product FOREIGN KEY (pid) REFERENCES product (id)--绑定
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-</code></pre><p>建立产品图片表<br>type表示类型，产品图片分单个图片和详情图片两种<br>本表的外键pid，指向产品表的id字段</p>
-<pre><code>CREATE TABLE productimage (
-  id int(11) NOT NULL AUTO_INCREMENT,--id
-  pid int(11) DEFAULT NULL,--产品图片 所属 产品的id
-  type varchar(255) DEFAULT NULL, --类型
-  PRIMARY KEY (id),--id主键
-  CONSTRAINT fk_productimage_product FOREIGN KEY (pid) REFERENCES product (id)--绑定
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-</code></pre><p>评价表<br>外键pid，指向产品表的id字段<br>外键uid，指向用户表的id字段</p>
-<pre><code>CREATE TABLE review (
-  id int(11) NOT NULL AUTO_INCREMENT,--id
-  content varchar(4000) DEFAULT NULL,--评论的内容
-  uid int(11) DEFAULT NULL,--评论 所属 用户的id
-  pid int(11) DEFAULT NULL,--评论 所属 产品的id
-  createDate datetime DEFAULT NULL, --评论创建时间
-  PRIMARY KEY (id), --id主键
-  CONSTRAINT fk_review_product FOREIGN KEY (pid) REFERENCES product (id),--绑定外键约束
-  CONSTRAINT fk_review_user FOREIGN KEY (uid) REFERENCES user (id) --绑定外键约束
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-</code></pre><p>建立订单表，字段比较多</p>
-<pre><code>CREATE TABLE order_ (
-  id int(11) NOT NULL AUTO_INCREMENT,--id
-  orderCode varchar(255) DEFAULT NULL,--订单号
-  address varchar(255) DEFAULT NULL,--收货地址
-  post varchar(255) DEFAULT NULL,--邮编
-  receiver varchar(255) DEFAULT NULL,--收件人
-  mobile varchar(255) DEFAULT NULL,--联系手机
-  userMessage varchar(255) DEFAULT NULL,--订单留言message
-  createDate datetime DEFAULT NULL,--订单创建日期
-  payDate datetime DEFAULT NULL,--支付日期
-  deliveryDate datetime DEFAULT NULL,--发货日期
-  confirmDate datetime DEFAULT NULL,--确认收货日期
-  uid int(11) DEFAULT NULL,--订单所属用户的id
-  status varchar(255) DEFAULT NULL,--订单状态
-  PRIMARY KEY (id),--id主键
-  CONSTRAINT fk_order_user FOREIGN KEY (uid) REFERENCES user (id)--绑定外键约束
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-</code></pre><p>建立订单项表</p>
-<pre><code>CREATE TABLE orderitem (
-  id int(11) NOT NULL AUTO_INCREMENT,--id
-  pid int(11) DEFAULT NULL,--该订单项 所属 产品的id
-  oid int(11) DEFAULT NULL,--该订单项，所属 订单的id
-  uid int(11) DEFAULT NULL,---该订单项，所属 用户的id
-  number int(11) DEFAULT NULL,--该订单项的数量，比如买了5台苹果6，x土豪。
-  PRIMARY KEY (id),--id主键
-  CONSTRAINT fk_orderitem_user FOREIGN KEY (uid) REFERENCES user (id),--绑定
-  CONSTRAINT fk_orderitem_product FOREIGN KEY (pid) REFERENCES product (id)--绑定
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
-</code></pre>
           
         
       
@@ -742,151 +571,6 @@ CREATE DATABASE tmall DEFAULT CHARACTER SET utf8;
         
           
             
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/09/Spring_boot/Springboot与Spring/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/05/09/Spring_boot/Springboot与Spring/" itemprop="url">Springboot与Spring</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-09T17:56:18+08:00">
-                2018-05-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Spring-boot/" itemprop="url" rel="index">
-                    <span itemprop="name">Spring_boot</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Spring Boot是最近这几年才火起来的，那么它到底与Spring有啥区别呢？<br>想了解区别，其实就是Spring Boot提供了哪些特征：</p>
-<blockquote>
-<p>Spring Boot可以建立独立的Spring应用程序；<br>内嵌了如Tomcat，Jetty和Undertow这样的容器，也就是说可以直接跑起来，用不着再做部署工作了。<br>无需再像Spring那样搞一堆繁琐的xml文件的配置；<br>可以自动配置Spring；<br>提供了一些现有的功能，如量度工具，表单数据验证以及一些外部配置这样的一些第三方功能；<br>提供的POM可以简化Maven的配置；</p>
-</blockquote>
-
           
         
       
@@ -1097,168 +781,6 @@ CREATE DATABASE tmall DEFAULT CHARACTER SET utf8;
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/git/gitbash安装配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/12/git/gitbash安装配置/" itemprop="url">gitbash安装配置</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T15:09:08+08:00">
-                2018-03-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/gitbash/" itemprop="url" rel="index">
-                    <span itemprop="name">gitbash</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>windows git 直接去官网就行，地址如下：<br><a href="https://git-scm.com" target="_blank" rel="noopener">https://git-scm.com</a><br>安装后，要进行配置：</p>
-<pre><code>git config --global user.name &quot;Your Name&quot;
-git config --global user.email &quot;email@example.com&quot;
-</code></pre><p>注意 git config 命令的 –global 参数，用了这个参数，表示你这台机器上所有的 Git 仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和 Email 地址。</p>
-<h2 id="在项目根目录下进行单独配置"><a href="#在项目根目录下进行单独配置" class="headerlink" title="在项目根目录下进行单独配置"></a>在项目根目录下进行单独配置</h2><pre><code>git config user.name &quot;Your Name&quot;
-git config user.email &quot;email@xx.com&quot;
-</code></pre><p>git config –list 查看当前配置, 在当前项目下面查看的配置是全局配置+当前项目的配置, 使用的时候会优先使用当前项目的配置</p>
-<pre><code>giti dsjk dfk dsfkl dfk 
-dfk ldf lkdf lk 
-dfkl dsfjkl dsfjk 
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/git/gitbash命令行操作/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1418,7 +940,7 @@ dfkl dsfjkl dsfjk
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/github/GitHub个人博客绑定域名/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/git/gitbash安装配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -1437,7 +959,7 @@ dfkl dsfjkl dsfjk
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/09/git/github/GitHub个人博客绑定域名/" itemprop="url">GitHub个人博客绑定域名</a></h1>
+                <a class="post-title-link" href="/2018/03/12/git/gitbash安装配置/" itemprop="url">gitbash安装配置</a></h1>
         
 
         <div class="post-meta">
@@ -1449,8 +971,8 @@ dfkl dsfjkl dsfjk
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T17:56:18+08:00">
-                2018-03-09
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T15:09:08+08:00">
+                2018-03-12
               </time>
             
 
@@ -1459,6 +981,39 @@ dfkl dsfjkl dsfjk
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/gitbash/" itemprop="url" rel="index">
+                    <span itemprop="name">gitbash</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -1489,19 +1044,16 @@ dfkl dsfjkl dsfjk
       
         
           
-            <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ol>
-<li>github个人博客，例如：<a href="http://username.github.io" target="_blank" rel="noopener">http://username.github.io</a></li>
-<li>可用的域名，可以到域名商购买，例如在阿里云万网。</li>
-</ol>
-<h2 id="开始设置"><a href="#开始设置" class="headerlink" title="开始设置"></a>开始设置</h2><p>登录阿里云的控制台；<br>进入阿里云dns云解析控制台项，这里有你已经购买的域名，此时还没有添加解析。非阿里云万网购买的域名，需要我们自己手动添加。<br>选择需要设置的域名，添加解析。填写服务器地址。<br>注意阿里云的域名需要</p>
-<pre><code>关于解析设置
-A解析类型的值：直接指向ip地址，也就是username.github.io的地址，是地址不是域名。
-CNAME解析类型的值：指向的就是username.github.io这个域名。
-设置完成之后，启用解析。
-
-等待十几分钟之后，通过cmd控制台命令：
-ping hobbits.top
-查看解析状态，
+            <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>windows git 直接去官网就行，地址如下：<br><a href="https://git-scm.com" target="_blank" rel="noopener">https://git-scm.com</a><br>安装后，要进行配置：</p>
+<pre><code>git config --global user.name &quot;Your Name&quot;
+git config --global user.email &quot;email@example.com&quot;
+</code></pre><p>注意 git config 命令的 –global 参数，用了这个参数，表示你这台机器上所有的 Git 仓库都会使用这个配置，当然也可以对某个仓库指定不同的用户名和 Email 地址。</p>
+<h2 id="在项目根目录下进行单独配置"><a href="#在项目根目录下进行单独配置" class="headerlink" title="在项目根目录下进行单独配置"></a>在项目根目录下进行单独配置</h2><pre><code>git config user.name &quot;Your Name&quot;
+git config user.email &quot;email@xx.com&quot;
+</code></pre><p>git config –list 查看当前配置, 在当前项目下面查看的配置是全局配置+当前项目的配置, 使用的时候会优先使用当前项目的配置</p>
+<pre><code>giti dsjk dfk dsfkl dfk 
+dfk ldf lkdf lk 
+dfkl dsfjkl dsfjk 
 </code></pre>
           
         
@@ -1727,6 +1279,138 @@ about: 何方神圣
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/github/GitHub个人博客绑定域名/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/09/git/github/GitHub个人博客绑定域名/" itemprop="url">GitHub个人博客绑定域名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T17:56:18+08:00">
+                2018-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h2><ol>
+<li>github个人博客，例如：<a href="http://username.github.io" target="_blank" rel="noopener">http://username.github.io</a></li>
+<li>可用的域名，可以到域名商购买，例如在阿里云万网。</li>
+</ol>
+<h2 id="开始设置"><a href="#开始设置" class="headerlink" title="开始设置"></a>开始设置</h2><p>登录阿里云的控制台；<br>进入阿里云dns云解析控制台项，这里有你已经购买的域名，此时还没有添加解析。非阿里云万网购买的域名，需要我们自己手动添加。<br>选择需要设置的域名，添加解析。填写服务器地址。<br>注意阿里云的域名需要</p>
+<pre><code>关于解析设置
+A解析类型的值：直接指向ip地址，也就是username.github.io的地址，是地址不是域名。
+CNAME解析类型的值：指向的就是username.github.io这个域名。
+设置完成之后，启用解析。
+
+等待十几分钟之后，通过cmd控制台命令：
+ping hobbits.top
+查看解析状态，
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo框架之标签&分类/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1873,6 +1557,293 @@ menu:
 </code></pre><p>结束</p>
 <p>​<br>​    </p>
 
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo主题之nexT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/09/git/Hexo主题之nexT/" itemprop="url">Hexo主题之nexT</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T17:56:18+08:00">
+                2018-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/git/hexo-nexT/" itemprop="url" rel="index">
+                    <span itemprop="name">hexo-nexT</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="下载-amp-安装"><a href="#下载-amp-安装" class="headerlink" title="下载&amp;安装"></a>下载&amp;安装</h1><h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><pre><code>从github上下载安装包
+或者使用gitbash从github上clone
+</code></pre><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>解压之后，放在hexo路径下的theme文件夹下
+将解压后的文件重命名为next（必须）
+打开站点的配置文件＿config.yml
+将主题theme的值改为next
+</code></pre><h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><pre><code>打开hexo路径下，打开gitbash
+执行命令hexo clean
+执行命令hexo g
+打开本地服务hexo s 或者hexo server -p 8070（更改被占用的默认端口，改为8070）
+浏览器打开localhost：8070；查看新的主题效果，符合预期，则可以提交github。
+执行命令hexo d；完成提交github。
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/github/Github密钥/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/09/git/github/Github密钥/" itemprop="url">Github密钥</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T17:56:18+08:00">
+                2018-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>gitbash执行命令：ssh-keygen<br>执行命令需要输入存放密钥的文件名，默认是id_rsa<br>还需要输入密钥的口令（当你使用密钥连接操作时需要使用到口令），可以为空。<br>生成密钥。<br>生成密钥的程序包含在MSysGit软件当中（windows上）。</p>
+<h2 id="git密钥"><a href="#git密钥" class="headerlink" title="git密钥"></a>git密钥</h2><p>git密钥用于本地git与远程git服务器（github）连接交互时身份认证。<br>密钥包含两部分</p>
+<pre><code>公钥：id_rsa.pub（用于服务器上）
+私钥：id_rsa（用于本地计算机）
+</code></pre>
           
         
       
@@ -2163,293 +2134,6 @@ hexo deploy
 hexo p
 </code></pre><p>结束…<br>​    </p>
 
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/github/Github密钥/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/09/git/github/Github密钥/" itemprop="url">Github密钥</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T17:56:18+08:00">
-                2018-03-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>gitbash执行命令：ssh-keygen<br>执行命令需要输入存放密钥的文件名，默认是id_rsa<br>还需要输入密钥的口令（当你使用密钥连接操作时需要使用到口令），可以为空。<br>生成密钥。<br>生成密钥的程序包含在MSysGit软件当中（windows上）。</p>
-<h2 id="git密钥"><a href="#git密钥" class="headerlink" title="git密钥"></a>git密钥</h2><p>git密钥用于本地git与远程git服务器（github）连接交互时身份认证。<br>密钥包含两部分</p>
-<pre><code>公钥：id_rsa.pub（用于服务器上）
-私钥：id_rsa（用于本地计算机）
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/Hexo主题之nexT/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/09/git/Hexo主题之nexT/" itemprop="url">Hexo主题之nexT</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T17:56:18+08:00">
-                2018-03-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/" itemprop="url" rel="index">
-                    <span itemprop="name">git</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/git/hexo-nexT/" itemprop="url" rel="index">
-                    <span itemprop="name">hexo-nexT</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="下载-amp-安装"><a href="#下载-amp-安装" class="headerlink" title="下载&amp;安装"></a>下载&amp;安装</h1><h2 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h2><pre><code>从github上下载安装包
-或者使用gitbash从github上clone
-</code></pre><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><pre><code>解压之后，放在hexo路径下的theme文件夹下
-将解压后的文件重命名为next（必须）
-打开站点的配置文件＿config.yml
-将主题theme的值改为next
-</code></pre><h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><pre><code>打开hexo路径下，打开gitbash
-执行命令hexo clean
-执行命令hexo g
-打开本地服务hexo s 或者hexo server -p 8070（更改被占用的默认端口，改为8070）
-浏览器打开localhost：8070；查看新的主题效果，符合预期，则可以提交github。
-执行命令hexo d；完成提交github。
-</code></pre>
           
         
       
@@ -4669,6 +4353,322 @@ ping 域名
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/20/Mysql/MySQL表设计demo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/20/Mysql/MySQL表设计demo/" itemprop="url">MySQL表设计demo</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T09:28:17+08:00">
+                2017-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MySQL/table/" itemprop="url" rel="index">
+                    <span itemprop="name">table</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h2><p>创建数据库:tmall<br>并且将数据库的编码设置为utf8，便于存放中文</p>
+<pre><code>DROP DATABASE IF EXISTS tmall;
+CREATE DATABASE tmall DEFAULT CHARACTER SET utf8;
+</code></pre><h2 id="表结构分析"><a href="#表结构分析" class="headerlink" title="表结构分析"></a>表结构分析</h2><p>一共需要用到的9张表，以及表之间的关系。接下来，对每张表做介绍，并讲解表与表之间的关系：</p>
+<pre><code>这里插入一张表结构图，
+</code></pre><p>各个表的介绍</p>
+<table>
+<thead>
+<tr>
+<th>表名</th>
+<th>中文含义</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Category</td>
+<td>分类表</td>
+<td>存放分类信息，如女装，平板电视，沙发等</td>
+</tr>
+<tr>
+<td>Property</td>
+<td>属性表</td>
+<td>存放属性信息，如颜色，重量，品牌，厂商，型号等</td>
+</tr>
+<tr>
+<td>Product</td>
+<td>产品表</td>
+<td>存放产品信息，如LED40EC平板电视机，海尔EC6005热水器</td>
+</tr>
+<tr>
+<td>PropertyValue</td>
+<td>属性值表</td>
+<td>存放属性值信息，如重量是900g,颜色是粉红色</td>
+</tr>
+<tr>
+<td>ProductImage</td>
+<td>产品图片表</td>
+<td>存放产品图片信息，如产品页显示的5个图片</td>
+</tr>
+<tr>
+<td>Review</td>
+<td>评论表</td>
+<td>存放评论信息，如买回来的蜡烛很好用，么么哒</td>
+</tr>
+<tr>
+<td>User</td>
+<td>用户表</td>
+<td>存放用户信息，如斩手狗，千手小粉红</td>
+</tr>
+<tr>
+<td>Order</td>
+<td>订单表</td>
+<td>存放订单信息，包括邮寄地址，电话号码等信息</td>
+</tr>
+<tr>
+<td>OrderItem</td>
+<td>订单项列表</td>
+<td>存放订单项信息，包括购买产品种类，数量等</td>
+</tr>
+</tbody>
+</table>
+<p>正确的分析表与表之间的关系的方法</p>
+<blockquote>
+<p>表与表之间的关系，基本上是3种<br>一对一<br>一对多<br>多对一<br>那么怎么判断关系到底是什么呢？<br>以分类和产品为例子，分类表里有多条数据，产品表里也有多条数据，那么他们的关系是多对多吗？ 从经验上讲，我们知道这个结果是不正确的。<br>正确的分析表与表之间的关系的方法是这样：<br>一个分类对应 多个 产品<br>一个产品对应 一个 分类<br>所以分类和产品之间的关系是一对多</p>
+</blockquote>
+<p>表关系<br>从最上面的表关系图中可以看到，有关系的表之间，都是一对多关系(反过来就是多对一关系)，并没有一对一关系，和多对多关系。<br>所以本表列出了所有的一对多关系<br>最后确定表关系如下：<br>| 一           | 多                 |<br>| ———– | —————– |<br>| Category-分类 | Product-产品        |<br>| Category-分类 | Property-属性       |<br>| Property-属性 | PropertyValue-属性值 |<br>| Product-产品  | PropertyValue-属性值 |<br>| Product-产品  | ProductImage-产品图片 |<br>| Product-产品  | Review-评价         |<br>| User-用户     | Order-订单          |<br>| Product-产品  | OrderItem-订单项     |<br>| User-用户     | OrderItem-订单项     |<br>| Order-订单    | OrderItem-订单项     |<br>| User-用户     | User-评价           |<br>| 等等          | ———–       |<br>| 等等          | ———–       |</p>
+<h2 id="建表create-table"><a href="#建表create-table" class="headerlink" title="建表create table"></a>建表create table</h2><p>建表顺序</p>
+<blockquote>
+<p>在建表过程中，会设置外键约束，所以表和表之间有依赖关系。 因此会先建立被外键指向的表，比如User,Category，然后再是其他表。</p>
+</blockquote>
+<p>建立用户表user</p>
+<pre><code>CREATE TABLE user (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) DEFAULT NULL,
+  password varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id) --设置主键
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre><p>建立分类表category</p>
+<pre><code>CREATE TABLE category (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) DEFAULT NULL, --用户名
+  PRIMARY KEY (id) --设置主键
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立属性表<br>注意：外键约束</p>
+<pre><code>CREATE TABLE property (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  cid int(11) DEFAULT NULL,--属性所属的分类的id，category id
+  name varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_property_category FOREIGN KEY (cid) REFERENCES category (id) --绑定外键
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre><p>建立产品表<br>注意：外键约束</p>
+<pre><code>CREATE TABLE product (
+
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) DEFAULT NULL, --名字
+  subTitle varchar(255) DEFAULT NULL, --标题
+  orignalPrice float DEFAULT NULL, --原价
+  promotePrice float DEFAULT NULL, --售价，现价
+  stock int(11) DEFAULT NULL, --库存
+  cid int(11) DEFAULT NULL, --产品所属分类
+  createDate datetime DEFAULT NULL, --创建日期
+  PRIMARY KEY (id), --id主键
+  CONSTRAINT fk_product_category FOREIGN KEY (cid) REFERENCES category (id) --绑定
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立属性值表<br>注意：两个外键</p>
+<pre><code>CREATE TABLE propertyvalue (
+  id int(11) NOT NULL AUTO_INCREMENT, --id
+  pid int(11) DEFAULT NULL, --属性值 所属 属性表的id
+  ptid int(11) DEFAULT NULL, --属性值 所属 产品表的id
+  value varchar(255) DEFAULT NULL, --属性值
+  PRIMARY KEY (id),--id主键
+  CONSTRAINT fk_propertyvalue_property FOREIGN KEY (ptid) REFERENCES property (id),--绑定
+  CONSTRAINT fk_propertyvalue_product FOREIGN KEY (pid) REFERENCES product (id)--绑定
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立产品图片表<br>type表示类型，产品图片分单个图片和详情图片两种<br>本表的外键pid，指向产品表的id字段</p>
+<pre><code>CREATE TABLE productimage (
+  id int(11) NOT NULL AUTO_INCREMENT,--id
+  pid int(11) DEFAULT NULL,--产品图片 所属 产品的id
+  type varchar(255) DEFAULT NULL, --类型
+  PRIMARY KEY (id),--id主键
+  CONSTRAINT fk_productimage_product FOREIGN KEY (pid) REFERENCES product (id)--绑定
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre><p>评价表<br>外键pid，指向产品表的id字段<br>外键uid，指向用户表的id字段</p>
+<pre><code>CREATE TABLE review (
+  id int(11) NOT NULL AUTO_INCREMENT,--id
+  content varchar(4000) DEFAULT NULL,--评论的内容
+  uid int(11) DEFAULT NULL,--评论 所属 用户的id
+  pid int(11) DEFAULT NULL,--评论 所属 产品的id
+  createDate datetime DEFAULT NULL, --评论创建时间
+  PRIMARY KEY (id), --id主键
+  CONSTRAINT fk_review_product FOREIGN KEY (pid) REFERENCES product (id),--绑定外键约束
+  CONSTRAINT fk_review_user FOREIGN KEY (uid) REFERENCES user (id) --绑定外键约束
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立订单表，字段比较多</p>
+<pre><code>CREATE TABLE order_ (
+  id int(11) NOT NULL AUTO_INCREMENT,--id
+  orderCode varchar(255) DEFAULT NULL,--订单号
+  address varchar(255) DEFAULT NULL,--收货地址
+  post varchar(255) DEFAULT NULL,--邮编
+  receiver varchar(255) DEFAULT NULL,--收件人
+  mobile varchar(255) DEFAULT NULL,--联系手机
+  userMessage varchar(255) DEFAULT NULL,--订单留言message
+  createDate datetime DEFAULT NULL,--订单创建日期
+  payDate datetime DEFAULT NULL,--支付日期
+  deliveryDate datetime DEFAULT NULL,--发货日期
+  confirmDate datetime DEFAULT NULL,--确认收货日期
+  uid int(11) DEFAULT NULL,--订单所属用户的id
+  status varchar(255) DEFAULT NULL,--订单状态
+  PRIMARY KEY (id),--id主键
+  CONSTRAINT fk_order_user FOREIGN KEY (uid) REFERENCES user (id)--绑定外键约束
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立订单项表</p>
+<pre><code>CREATE TABLE orderitem (
+  id int(11) NOT NULL AUTO_INCREMENT,--id
+  pid int(11) DEFAULT NULL,--该订单项 所属 产品的id
+  oid int(11) DEFAULT NULL,--该订单项，所属 订单的id
+  uid int(11) DEFAULT NULL,---该订单项，所属 用户的id
+  number int(11) DEFAULT NULL,--该订单项的数量，比如买了5台苹果6，x土豪。
+  PRIMARY KEY (id),--id主键
+  CONSTRAINT fk_orderitem_user FOREIGN KEY (uid) REFERENCES user (id),--绑定
+  CONSTRAINT fk_orderitem_product FOREIGN KEY (pid) REFERENCES product (id)--绑定
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/13/JavaEE_servlet/03_Java网络服务器连接库servlet（入门）demo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4700,7 +4700,7 @@ ping 域名
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T09:34:28+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T09:57:28+08:00">
                 2017-12-13
               </time>
             
@@ -4854,7 +4854,7 @@ ping 域名
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T09:23:24+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T09:40:44+08:00">
                 2017-12-13
               </time>
             
@@ -4938,6 +4938,184 @@ ping 域名
 <li>找到<strong>lib</strong>文件夹目录。</li>
 <li>里面包含很多jar包文件。其中<strong>servlet-api.jar</strong>就是servlet支持库。用的时候拷贝到项目中去。</li>
 </ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/13/JavaEE_tomcat/02_Java服务器容器tomcat（配置）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/13/JavaEE_tomcat/02_Java服务器容器tomcat（配置）/" itemprop="url">02_Java服务器容器tomcat（配置）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T09:23:24+08:00">
+                2017-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaEE/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaEE</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaEE/tomcat/" itemprop="url" rel="index">
+                    <span itemprop="name">tomcat</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="windows独立环境下"><a href="#windows独立环境下" class="headerlink" title="windows独立环境下"></a>windows独立环境下</h2><p>下载：从tomcat官网下载tomcat最新版本的tomcat。<br>一旦下载了tomcat（tomcat包是免安装版本的），解压到方便的位置。例如，在您的windows系统中，则可以解压在C:\Apache Tomcat v7.0。<br><em>可选步骤：在windows环境变量里设置环境变量。</em></p>
+<p>windows系统，独立环境下，Tomcat服务器启动方式：</p>
+<ul>
+<li>进入tomcat目录，双击startup.bat。mac平台双击startup.sh。</li>
+<li>进入控制台窗口，进入tomcat的bin目录下，运行startup.bat文件。</li>
+<li>验证：浏览器输入：<a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a></li>
+</ul>
+<p>windows系统，独立环境下，Tomcat服务器停止方式</p>
+<ul>
+<li>关闭tomcat运行窗口。</li>
+<li>tomcat下bin目录，运行shutdown.bat文件。</li>
+</ul>
+<p>设置ClASSPATH：</p>
+<ul>
+<li><strong>由于Servlet不是Java平台的标准组成部分，所以您需要为编译器指定Servlet类的路径。</strong></li>
+<li><strong>点击：计算机—&gt;属性—&gt;高级—&gt;环境变量—&gt;CLASSPATH，设置CLASSPATH的值。</strong></li>
+<li><strong>设置成：tomcat安装目录（D:\Apache Tomcat v7.0\lib\servlet-api.jar）</strong></li>
+</ul>
+<h2 id="eclipse开发工具中，tomcat环境搭建"><a href="#eclipse开发工具中，tomcat环境搭建" class="headerlink" title="eclipse开发工具中，tomcat环境搭建"></a>eclipse开发工具中，tomcat环境搭建</h2><p>已经配置好jdk。<br>已经安装好eclipse，能够正确运行。<br>进入：eclipse—&gt;preferences—&gt;server—&gt;runtime environment—&gt;add—&gt;选择tomcat版本。这里需要注意的是tomcat版本和javaEE版本是否支持。<br>选择next：<br>输入tomcat需要设置的名字（name）；<br>选择tomcat服务器的安装目录，这里选择的是已经在windows系统在独立安装好的tomcat路径。（当然，我们也可以在eclipse中临时下载和安装，参照下面一个步骤）<br><em>可选步骤：eclipse中下载安装tomcat，点击download and install</em><br>选择JRE：选择工作平台默认的JRE就可以了。<br>点击finish，配置完成。</p>
+<h2 id="eclipse项目中，引用设置好的tomcat服务器。"><a href="#eclipse项目中，引用设置好的tomcat服务器。" class="headerlink" title="eclipse项目中，引用设置好的tomcat服务器。"></a>eclipse项目中，引用设置好的tomcat服务器。</h2><p>Dynamic web project</p>
+<ul>
+<li>新建项目，点击target runtime，选择需要设置的tomcat服务器。<br>普通project</li>
+<li>未总结</li>
+</ul>
+<h2 id="win独立tomcat启动方式和eclipse中启动方式（区别联系）"><a href="#win独立tomcat启动方式和eclipse中启动方式（区别联系）" class="headerlink" title="win独立tomcat启动方式和eclipse中启动方式（区别联系）"></a>win独立tomcat启动方式和eclipse中启动方式（区别联系）</h2><p><strong>win独立的：</strong><br>进入目录：startup.bat文件<br>localhost:8080，验证成功<br>项目存放在webapp目录下面</p>
+<p><strong>eclipse中：</strong><br>eclipse中启动<br>localhost:8080，验证出现404<br>localhost:8080+项目，验证成功<br>项目存放在eclipse的工作空间<br>项目运行：eclipse工作空间.metadata目录下</p>
 
           
         
@@ -5337,184 +5515,6 @@ ping 域名
 <li>4、创建一个用于封装http请求消息的HttpServletRequest对象和一个http响应消息的HttpServletResponse对象，然后调用servlet的service( )方法并将请求和响应对象作为参数，传递进去。</li>
 <li>5、web应用程序被停止或重新启动之前，servlet引擎将卸载servlet实例，并在卸载之前调用servlet的destory( )方法。</li>
 </ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/13/JavaEE_tomcat/02_Java服务器容器tomcat（配置）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/13/JavaEE_tomcat/02_Java服务器容器tomcat（配置）/" itemprop="url">02_Java服务器容器tomcat（配置）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T09:23:24+08:00">
-                2017-12-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaEE/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaEE</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaEE/tomcat/" itemprop="url" rel="index">
-                    <span itemprop="name">tomcat</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="windows独立环境下"><a href="#windows独立环境下" class="headerlink" title="windows独立环境下"></a>windows独立环境下</h2><p>下载：从tomcat官网下载tomcat最新版本的tomcat。<br>一旦下载了tomcat（tomcat包是免安装版本的），解压到方便的位置。例如，在您的windows系统中，则可以解压在C:\Apache Tomcat v7.0。<br><em>可选步骤：在windows环境变量里设置环境变量。</em></p>
-<p>windows系统，独立环境下，Tomcat服务器启动方式：</p>
-<ul>
-<li>进入tomcat目录，双击startup.bat。mac平台双击startup.sh。</li>
-<li>进入控制台窗口，进入tomcat的bin目录下，运行startup.bat文件。</li>
-<li>验证：浏览器输入：<a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a></li>
-</ul>
-<p>windows系统，独立环境下，Tomcat服务器停止方式</p>
-<ul>
-<li>关闭tomcat运行窗口。</li>
-<li>tomcat下bin目录，运行shutdown.bat文件。</li>
-</ul>
-<p>设置ClASSPATH：</p>
-<ul>
-<li><strong>由于Servlet不是Java平台的标准组成部分，所以您需要为编译器指定Servlet类的路径。</strong></li>
-<li><strong>点击：计算机—&gt;属性—&gt;高级—&gt;环境变量—&gt;CLASSPATH，设置CLASSPATH的值。</strong></li>
-<li><strong>设置成：tomcat安装目录（D:\Apache Tomcat v7.0\lib\servlet-api.jar）</strong></li>
-</ul>
-<h2 id="eclipse开发工具中，tomcat环境搭建"><a href="#eclipse开发工具中，tomcat环境搭建" class="headerlink" title="eclipse开发工具中，tomcat环境搭建"></a>eclipse开发工具中，tomcat环境搭建</h2><p>已经配置好jdk。<br>已经安装好eclipse，能够正确运行。<br>进入：eclipse—&gt;preferences—&gt;server—&gt;runtime environment—&gt;add—&gt;选择tomcat版本。这里需要注意的是tomcat版本和javaEE版本是否支持。<br>选择next：<br>输入tomcat需要设置的名字（name）；<br>选择tomcat服务器的安装目录，这里选择的是已经在windows系统在独立安装好的tomcat路径。（当然，我们也可以在eclipse中临时下载和安装，参照下面一个步骤）<br><em>可选步骤：eclipse中下载安装tomcat，点击download and install</em><br>选择JRE：选择工作平台默认的JRE就可以了。<br>点击finish，配置完成。</p>
-<h2 id="eclipse项目中，引用设置好的tomcat服务器。"><a href="#eclipse项目中，引用设置好的tomcat服务器。" class="headerlink" title="eclipse项目中，引用设置好的tomcat服务器。"></a>eclipse项目中，引用设置好的tomcat服务器。</h2><p>Dynamic web project</p>
-<ul>
-<li>新建项目，点击target runtime，选择需要设置的tomcat服务器。<br>普通project</li>
-<li>未总结</li>
-</ul>
-<h2 id="win独立tomcat启动方式和eclipse中启动方式（区别联系）"><a href="#win独立tomcat启动方式和eclipse中启动方式（区别联系）" class="headerlink" title="win独立tomcat启动方式和eclipse中启动方式（区别联系）"></a>win独立tomcat启动方式和eclipse中启动方式（区别联系）</h2><p><strong>win独立的：</strong><br>进入目录：startup.bat文件<br>localhost:8080，验证成功<br>项目存放在webapp目录下面</p>
-<p><strong>eclipse中：</strong><br>eclipse中启动<br>localhost:8080，验证出现404<br>localhost:8080+项目，验证成功<br>项目存放在eclipse的工作空间<br>项目运行：eclipse工作空间.metadata目录下</p>
 
           
         
@@ -8027,161 +8027,6 @@ http://127.0.0.1:8080/
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/java_lang/Java语法01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/01/java_lang/Java语法01/" itemprop="url">Java语法01</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
-                2016-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java-lang/" itemprop="url" rel="index">
-                    <span itemprop="name">Java_lang</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java-lang/a/" itemprop="url" rel="index">
-                    <span itemprop="name">a</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Maven/Maven实战1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -8496,6 +8341,163 @@ http://127.0.0.1:8080/
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Maven/Maven基础/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/01/Maven/Maven基础/" itemprop="url">Maven基础</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
+                2016-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Maven/" itemprop="url" rel="index">
+                    <span itemprop="name">Maven</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Maven/Maven基础/" itemprop="url" rel="index">
+                    <span itemprop="name">Maven基础</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>maven起源<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之继承/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -8653,7 +8655,7 @@ http://127.0.0.1:8080/
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Maven/Maven基础/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/java_lang/Java语法01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -8672,7 +8674,7 @@ http://127.0.0.1:8080/
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/01/01/Maven/Maven基础/" itemprop="url">Maven基础</a></h1>
+                <a class="post-title-link" href="/2016/01/01/java_lang/Java语法01/" itemprop="url">Java语法01</a></h1>
         
 
         <div class="post-meta">
@@ -8707,8 +8709,8 @@ http://127.0.0.1:8080/
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Maven/" itemprop="url" rel="index">
-                    <span itemprop="name">Maven</span>
+                  <a href="/categories/Java-lang/" itemprop="url" rel="index">
+                    <span itemprop="name">Java_lang</span>
                   </a>
                 </span>
 
@@ -8718,8 +8720,8 @@ http://127.0.0.1:8080/
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Maven/Maven基础/" itemprop="url" rel="index">
-                    <span itemprop="name">Maven基础</span>
+                  <a href="/categories/Java-lang/a/" itemprop="url" rel="index">
+                    <span itemprop="name">a</span>
                   </a>
                 </span>
 
@@ -8757,12 +8759,10 @@ http://127.0.0.1:8080/
       
         
           
-            <p>maven起源<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
+            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
           
         
       
