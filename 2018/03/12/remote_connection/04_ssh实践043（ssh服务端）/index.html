@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ssh,gitbash," />
+  <meta name="keywords" content="ssh," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="gitbash生成ssh密钥gitbash命令窗口gitbash执行命令：ssh-keygen执行命令需要输入存放密钥的文件名，默认是id_rsa还需要输入密钥的口令（当你使用密钥连接操作时需要使用到口令），可以为空。生成密钥。生成密钥的程序包含在当前githash的当前目录下，或者windows默认目录users/admin/.ssh/中。（windows上）。git密钥包含两个部分：ssh公钥">
-<meta name="keywords" content="ssh,gitbash">
+<meta name="description" content="ssh服务端ubuntu服务器默认是安装了openssh。查看linux服务端shh版本12345678910111213141516 以ubuntu系统演示（非root用户演示） 登录云控制台    查看ssh版本ssh - VOpenSSH_7.2p2 Ubuntu-4ubuntu2.4, OpenSSL 1.0.2g  1 Mar 2016查看ssh状态sudo service sshd s">
+<meta name="keywords" content="ssh">
 <meta property="og:type" content="article">
-<meta property="og:title" content="04_ssh实践一">
-<meta property="og:url" content="http://yoursite.com/2018/03/12/remote_connection/04_ssh实践一/index.html">
+<meta property="og:title" content="04_ssh实践043（ssh服务端）">
+<meta property="og:url" content="http://yoursite.com/2018/03/12/remote_connection/04_ssh实践043（ssh服务端）/index.html">
 <meta property="og:site_name" content="Mr.Yang">
-<meta property="og:description" content="gitbash生成ssh密钥gitbash命令窗口gitbash执行命令：ssh-keygen执行命令需要输入存放密钥的文件名，默认是id_rsa还需要输入密钥的口令（当你使用密钥连接操作时需要使用到口令），可以为空。生成密钥。生成密钥的程序包含在当前githash的当前目录下，或者windows默认目录users/admin/.ssh/中。（windows上）。git密钥包含两个部分：ssh公钥">
+<meta property="og:description" content="ssh服务端ubuntu服务器默认是安装了openssh。查看linux服务端shh版本12345678910111213141516 以ubuntu系统演示（非root用户演示） 登录云控制台    查看ssh版本ssh - VOpenSSH_7.2p2 Ubuntu-4ubuntu2.4, OpenSSL 1.0.2g  1 Mar 2016查看ssh状态sudo service sshd s">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-25T08:34:06.853Z">
+<meta property="og:updated_time" content="2018-05-28T06:28:17.427Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="04_ssh实践一">
-<meta name="twitter:description" content="gitbash生成ssh密钥gitbash命令窗口gitbash执行命令：ssh-keygen执行命令需要输入存放密钥的文件名，默认是id_rsa还需要输入密钥的口令（当你使用密钥连接操作时需要使用到口令），可以为空。生成密钥。生成密钥的程序包含在当前githash的当前目录下，或者windows默认目录users/admin/.ssh/中。（windows上）。git密钥包含两个部分：ssh公钥">
+<meta name="twitter:title" content="04_ssh实践043（ssh服务端）">
+<meta name="twitter:description" content="ssh服务端ubuntu服务器默认是安装了openssh。查看linux服务端shh版本12345678910111213141516 以ubuntu系统演示（非root用户演示） 登录云控制台    查看ssh版本ssh - VOpenSSH_7.2p2 Ubuntu-4ubuntu2.4, OpenSSL 1.0.2g  1 Mar 2016查看ssh状态sudo service sshd s">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/12/remote_connection/04_ssh实践一/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/03/12/remote_connection/04_ssh实践043（ssh服务端）/"/>
 
 
 
 
 
-  <title>04_ssh实践一 | Mr.Yang</title>
+  <title>04_ssh实践043（ssh服务端） | Mr.Yang</title>
   
 
 
@@ -333,7 +333,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/04_ssh实践一/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/04_ssh实践043（ssh服务端）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -350,7 +350,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">04_ssh实践一</h1>
+          <h1 class="post-title" itemprop="name headline">04_ssh实践043（ssh服务端）</h1>
         
 
         <div class="post-meta">
@@ -433,25 +433,9 @@
       
 
       
-        <h2 id="gitbash生成ssh密钥"><a href="#gitbash生成ssh密钥" class="headerlink" title="gitbash生成ssh密钥"></a>gitbash生成ssh密钥</h2><p><strong>gitbash命令窗口</strong><br>gitbash执行命令：ssh-keygen<br>执行命令需要输入存放密钥的文件名，默认是id_rsa<br>还需要输入密钥的口令（当你使用密钥连接操作时需要使用到口令），可以为空。<br>生成密钥。<br>生成密钥的程序包含在当前githash的当前目录下，或者windows默认目录users/admin/.ssh/中。（windows上）。<br>git密钥包含两个部分：ssh公钥，ssh私钥。</p>
-<h2 id="puttygen工具生成ssh密钥"><a href="#puttygen工具生成ssh密钥" class="headerlink" title="puttygen工具生成ssh密钥"></a>puttygen工具生成ssh密钥</h2><p>下载puttygen工具</p>
-<blockquote>
-<p><a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" target="_blank" rel="noopener">https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html</a></p>
-</blockquote>
-<p>打开puttygen工具，<br>输入sshkey名字<strong>key comment</strong>（可选，默认）<br>输入sshkey密码<strong>key passphrase</strong>（为空的话，就是不设密码，与gitbash方式差不多）<br>点击按钮<strong>generate</strong><br>等待一会，就会自动生成ssh密钥<br>点击保存私钥<strong>save private key</strong>（选择保存路径和文件名，保存的文件以ppk结尾，里面包含私钥和公钥的字符串）<br>点击保存公钥<strong>save public key</strong>（选择保存路径和文件名，文件名以ppk结尾，里面只包含公钥的字符串）</p>
-<h2 id="ssh密钥简介"><a href="#ssh密钥简介" class="headerlink" title="ssh密钥简介"></a>ssh密钥简介</h2><p>许多Git服务器都使用SSH公钥进行认证。<br>为了向Git服务器提供SSH公钥，如果某系统用户尚未拥有密钥，必须事先为其生成一份。</p>
-<p>SSH密钥用于本地git与远程git服务器（例如github，coding，gitlab）连接交互时身份认证。<br>SSH密钥包含两部分</p>
-<pre><code>公钥：id_rsa.pub（用于远程服务器上）
-私钥：id_rsa（用于本地计算机）
-公钥和私钥就是两组字符串，可以存放在同一个文本文件中，也可以分开存储。
-gitbash是分开两个文件存储的；
-puttygen是在一个文件中存储的；
-</code></pre><h2 id="SSH密钥字符串介绍"><a href="#SSH密钥字符串介绍" class="headerlink" title="SSH密钥字符串介绍"></a>SSH密钥字符串介绍</h2><p>RSA加密算法的<strong>私钥字符串</strong>文件如下（gitbash执行ssh命令生成）：<br>begin xxxx key 开始<br>end xxxxx key 结束<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN RSA PRIVATE KEY-----</span><br><span class="line">Proc-Type: 4,ENCRYPTED</span><br><span class="line">DEK-Info: AES-128-CBC,476816ED08958476D0579D57A01FAF3D</span><br><span class="line"></span><br><span class="line">BvDVqKl9LN59z+WByXxxjVW1kjbZRpk8zBJbfC+8z/KbICOFidf3lpkawkOCJ43p</span><br><span class="line">+ahAdcVVMwD8S3pcBOLve7cRz6cg3gOMXcWThuzt1581xNYsvh/B2Vny9/beXwAX</span><br><span class="line">4ReB4L4jpEFt1YNEryBO/b7xpM312qOU7OaNnzkWHB2kdOJgBT5Y8mRyYpYgndAY</span><br><span class="line">jab25YRrbnjvB/OK04O+IEZo94ZBWDu7sk6zzAESarn8PF6MqZpD5rzhFIISNict</span><br><span class="line">PUTKiLWqkj2jBFssHizSEIaYhgR9dm+Agg8MnFfEJ0vOEOFx4gIARi8wkcMKlGCB</span><br><span class="line">WAF962muMfxAMAmHSsCcHhTX8rDrO6XFFcB06sR5psQAeOtqXAnFKYM4r0j884zH</span><br><span class="line">Tb6iiqTbVa0AV1da7+idxAqV7Y4+sk4EJhyjbv9HWppUIikyPESWBkjQwdIdLCMY</span><br><span class="line">f/2fHdd+jm7QRz4/Oo/bjAOtAuB66XNArmAdT4V4OCwfa4feHkgCobUe1bgBpBks</span><br><span class="line">IDBd+KGxASYs0abzI2XYuyJmXqDvKoP85aQLjPzXFpaQIP49E5wAIgATKvAdUzh5</span><br><span class="line">Rqad+YdrtES7cO+feB3metXIifScobBP/zupPUikqog02WygFlXASYQnpWTg/1Nt</span><br><span class="line">fNkjTp2/H/QSVAwR3e6jTBTKcHyu35BpZM97v3zt9/NlgG1dRU2BGJ38nRshwoVV</span><br><span class="line">EJMu3X9m5px0XtxpVZVuXuBrgQIvNp6cB9QjgRLpGg/n1sE4RyBbKuvfUjnEf6hC</span><br><span class="line">YIfZICv+Iqe+JHlNiv9EA66OaTO+sx0nOuw0GAP7TAM016BtW9/Zlv54m2Zk5hO8</span><br><span class="line">-----END RSA PRIVATE KEY-----</span><br></pre></td></tr></table></figure></p>
-<p>RSA加密算法的<strong>公钥字符串</strong>文件如下（gitbash）：<br>以ssh-rsa开头<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDQ65a1ywAHfi3UmnXl+GhPqvrkcRXyAdn23W5CMA4H3ts6TmMrbZGSCVf47YS77x+Kbegi/IV3/4WQ+H7MMMIoESqmlDhWQzHzWBLVfz4HMypJresHko3C+W3zujZyVpYYdesPMQgVj6tWjRZnK1lSM1OlaptIYwSTsHNagd+sTWVW509dftvG0zNwzsYshq+j/CM/APGg0yQx2+jop1YTDMsTCwhNVSKzoL3Q/mKEl3PVBavZ5sS0idMlcDwj2Fyj2XfnpZHOisYhBI6S/wcrnMuuHA1yHOuKTZiyJ8W0ftJ2TDa/uifAFc1f55gKXbUn64UbLVCNI3rBTzRVXz25 Administrator@BYONE-G8789</span><br></pre></td></tr></table></figure></p>
-<p>注意：对于程序员而言常见的远程服务器分成两种</p>
-<pre><code>代码托管的服务器（在项目推进的过程中，多人合作，需要一个服务器托管代码）
-生产环境的服务器（项目运行环境的后台服务器，部署以及更新迭代修复bug的服务器。）
-</code></pre>
+        <h2 id="ssh服务端"><a href="#ssh服务端" class="headerlink" title="ssh服务端"></a>ssh服务端</h2><p>ubuntu服务器默认是安装了openssh。<br>查看linux服务端shh版本<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> 以ubuntu系统演示（非root用户演示）</span><br><span class="line"> 登录云控制台</span><br><span class="line">    </span><br><span class="line">查看ssh版本</span><br><span class="line">ssh - V</span><br><span class="line">OpenSSH_7.2p2 Ubuntu-4ubuntu2.4, OpenSSL 1.0.2g  1 Mar 2016</span><br><span class="line"></span><br><span class="line">查看ssh状态</span><br><span class="line">sudo service sshd status</span><br><span class="line">    </span><br><span class="line">如果出现如下提示，表明本机器未安装ssh服务。</span><br><span class="line">Loaded: error (Reason: No such file or directory)</span><br><span class="line">安装ssh服务命令</span><br><span class="line">sudo apt-get install sshd</span><br><span class="line">启动ssh服务命令</span><br><span class="line">sudo service sshd start</span><br></pre></td></tr></table></figure></p>
+<p>注意：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OpenSSH是SSH（Secure SHell）协议的免费开源实现。SSH协议族可以用来进行远程控制， 或在计算机之间传送文件。</span><br><span class="line"></span><br><span class="line">OpenSSL 是一个安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     
@@ -470,8 +454,6 @@ puttygen是在一个文件中存储的；
           
             <a href="/tags/ssh/" rel="tag"># ssh</a>
           
-            <a href="/tags/gitbash/" rel="tag"># gitbash</a>
-          
         </div>
       
 
@@ -483,8 +465,8 @@ puttygen是在一个文件中存储的；
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/12/git/git/01_gitbash安装配置/" rel="next" title="01_gitbash安装配置">
-                <i class="fa fa-chevron-left"></i> 01_gitbash安装配置
+              <a href="/2018/03/12/remote_connection/04_ssh实践044（ssh客户端） /" rel="next" title="04_ssh实践044（ssh客户端）">
+                <i class="fa fa-chevron-left"></i> 04_ssh实践044（ssh客户端）
               </a>
             
           </div>
@@ -493,8 +475,8 @@ puttygen是在一个文件中存储的；
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/03/12/remote_connection/07_ssh实践三/" rel="prev" title="05_ssh实践三">
-                05_ssh实践三 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/12/remote_connection/04_ssh实践041（生成ssh密钥）/" rel="prev" title="04_ssh实践一（生成ssh密钥）">
+                04_ssh实践一（生成ssh密钥） <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -576,7 +558,7 @@ puttygen是在一个文件中存储的；
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -587,7 +569,7 @@ puttygen是在一个文件中存储的；
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -598,7 +580,7 @@ puttygen是在一个文件中存储的；
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -641,7 +623,7 @@ puttygen是在一个文件中存储的；
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gitbash生成ssh密钥"><span class="nav-number">1.</span> <span class="nav-text">gitbash生成ssh密钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#puttygen工具生成ssh密钥"><span class="nav-number">2.</span> <span class="nav-text">puttygen工具生成ssh密钥</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh密钥简介"><span class="nav-number">3.</span> <span class="nav-text">ssh密钥简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH密钥字符串介绍"><span class="nav-number">4.</span> <span class="nav-text">SSH密钥字符串介绍</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ssh服务端"><span class="nav-number">1.</span> <span class="nav-text">ssh服务端</span></a></li></ol></div>
             
 
           </div>

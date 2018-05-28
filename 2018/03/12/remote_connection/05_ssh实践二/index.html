@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="ssh,gitbash," />
+  <meta name="keywords" content="gitbash,ssh," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="准备工作注册登录腾讯云服务器腾讯云控制台：给云主机添加密钥（公钥部分）获取云主机的默认用户名和公网ip云主机安装SSH服务 以ubuntu系统演示 登录云控制台  查看ssh版本 ssh - V OpenSSH_7.2p2 Ubuntu-4ubuntu2.4, OpenSSL 1.0.2g  1 Mar 2016  查看ssh状态 sudo service sshd status  如果出现如下提">
-<meta name="keywords" content="ssh,gitbash">
+<meta name="description" content="SSH公钥使用（项目）远程服务器项目级别repo使用远程服务器（远程空间）添加密钥（github作为演示）  选择github上某一个仓库repository 选择settings 选择deploy keys ##就是添加部署公钥。 添加公钥（打开git密钥的其中一个.pub结尾文件，复制粘贴到github上。）  本地连接远程服务器（远程指的并不是距离上的远程，是一个软件层面的概念，非本机就是远">
+<meta name="keywords" content="gitbash,ssh">
 <meta property="og:type" content="article">
 <meta property="og:title" content="05_ssh实践二（连接腾讯云主机）">
 <meta property="og:url" content="http://yoursite.com/2018/03/12/remote_connection/05_ssh实践二/index.html">
 <meta property="og:site_name" content="Mr.Yang">
-<meta property="og:description" content="准备工作注册登录腾讯云服务器腾讯云控制台：给云主机添加密钥（公钥部分）获取云主机的默认用户名和公网ip云主机安装SSH服务 以ubuntu系统演示 登录云控制台  查看ssh版本 ssh - V OpenSSH_7.2p2 Ubuntu-4ubuntu2.4, OpenSSL 1.0.2g  1 Mar 2016  查看ssh状态 sudo service sshd status  如果出现如下提">
+<meta property="og:description" content="SSH公钥使用（项目）远程服务器项目级别repo使用远程服务器（远程空间）添加密钥（github作为演示）  选择github上某一个仓库repository 选择settings 选择deploy keys ##就是添加部署公钥。 添加公钥（打开git密钥的其中一个.pub结尾文件，复制粘贴到github上。）  本地连接远程服务器（远程指的并不是距离上的远程，是一个软件层面的概念，非本机就是远">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-25T11:34:29.999Z">
+<meta property="og:updated_time" content="2018-05-28T11:03:52.918Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="05_ssh实践二（连接腾讯云主机）">
-<meta name="twitter:description" content="准备工作注册登录腾讯云服务器腾讯云控制台：给云主机添加密钥（公钥部分）获取云主机的默认用户名和公网ip云主机安装SSH服务 以ubuntu系统演示 登录云控制台  查看ssh版本 ssh - V OpenSSH_7.2p2 Ubuntu-4ubuntu2.4, OpenSSL 1.0.2g  1 Mar 2016  查看ssh状态 sudo service sshd status  如果出现如下提">
+<meta name="twitter:description" content="SSH公钥使用（项目）远程服务器项目级别repo使用远程服务器（远程空间）添加密钥（github作为演示）  选择github上某一个仓库repository 选择settings 选择deploy keys ##就是添加部署公钥。 添加公钥（打开git密钥的其中一个.pub结尾文件，复制粘贴到github上。）  本地连接远程服务器（远程指的并不是距离上的远程，是一个软件层面的概念，非本机就是远">
 
 
 
@@ -433,24 +433,7 @@
       
 
       
-        <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>注册登录腾讯云服务器<br>腾讯云控制台：给云主机添加密钥（公钥部分）<br>获取云主机的<strong>默认用户名</strong>和<strong>公网ip</strong><br>云主机安装SSH服务</p>
-<pre><code>以ubuntu系统演示
-登录云控制台
-
-查看ssh版本
-ssh - V
-OpenSSH_7.2p2 Ubuntu-4ubuntu2.4, OpenSSL 1.0.2g  1 Mar 2016
-
-查看ssh状态
-sudo service sshd status
-
-如果出现如下提示，表明本机器未安装ssh服务。
-Loaded: error (Reason: No such file or directory)
-安装ssh服务命令
-sudo apt-get install sshd
-启动ssh服务命令
-sudo service sshd start
-</code></pre><h2 id="SSH公钥使用（项目）远程服务器项目级别repo使用"><a href="#SSH公钥使用（项目）远程服务器项目级别repo使用" class="headerlink" title="SSH公钥使用（项目）远程服务器项目级别repo使用"></a>SSH公钥使用（项目）远程服务器项目级别repo使用</h2><p>远程服务器（远程空间）添加密钥（github作为演示）</p>
+        <h2 id="SSH公钥使用（项目）远程服务器项目级别repo使用"><a href="#SSH公钥使用（项目）远程服务器项目级别repo使用" class="headerlink" title="SSH公钥使用（项目）远程服务器项目级别repo使用"></a>SSH公钥使用（项目）远程服务器项目级别repo使用</h2><p>远程服务器（远程空间）添加密钥（github作为演示）</p>
 <ul>
 <li>选择github上某一个仓库repository</li>
 <li>选择settings</li>
@@ -477,9 +460,9 @@ sudo service sshd start
       
         <div class="post-tags">
           
-            <a href="/tags/ssh/" rel="tag"># ssh</a>
-          
             <a href="/tags/gitbash/" rel="tag"># gitbash</a>
+          
+            <a href="/tags/ssh/" rel="tag"># ssh</a>
           
         </div>
       
@@ -492,8 +475,8 @@ sudo service sshd start
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/12/remote_connection/02_ssh密钥文件格式/" rel="next" title="05_ssh实践二">
-                <i class="fa fa-chevron-left"></i> 05_ssh实践二
+              <a href="/2018/03/12/remote_connection/07_git实践99（腾讯云git服务器）/" rel="next" title="07_综合实践">
+                <i class="fa fa-chevron-left"></i> 07_综合实践
               </a>
             
           </div>
@@ -502,8 +485,8 @@ sudo service sshd start
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/03/12/git/git/gitbash获取仓库（最佳实践）/" rel="prev" title="gitbash获取仓库（最佳实践）">
-                gitbash获取仓库（最佳实践） <i class="fa fa-chevron-right"></i>
+              <a href="/2018/03/12/remote_connection/02_ssh密钥文件格式/" rel="prev" title="05_ssh实践二">
+                05_ssh实践二 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -585,7 +568,7 @@ sudo service sshd start
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -596,7 +579,7 @@ sudo service sshd start
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -607,7 +590,7 @@ sudo service sshd start
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -650,7 +633,7 @@ sudo service sshd start
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#准备工作"><span class="nav-number">1.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH公钥使用（项目）远程服务器项目级别repo使用"><span class="nav-number">2.</span> <span class="nav-text">SSH公钥使用（项目）远程服务器项目级别repo使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SSH公钥使用（项目）远程服务器项目级别repo使用"><span class="nav-number">1.</span> <span class="nav-text">SSH公钥使用（项目）远程服务器项目级别repo使用</span></a></li></ol></div>
             
 
           </div>

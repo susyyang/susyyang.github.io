@@ -781,205 +781,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/25/remote_connection/02_ssh综述/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/25/remote_connection/02_ssh综述/" itemprop="url">ssh综述</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-25T09:20:19+08:00">
-                2018-04-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
-                    <span itemprop="name">remote_connection</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/ssh/" itemprop="url" rel="index">
-                    <span itemprop="name">ssh</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h2><p>加密</p>
-<blockquote>
-<p>将一段数据经过处理之后，输出为一段外人无法或者很难破译的数据。</p>
-</blockquote>
-<p>私钥加密 </p>
-<blockquote>
-<p>对称加密<br>所谓的私钥加密，是说加密方和解密方用的都是同一个key，这个key对于加密方和解密方来说是保密的，第三方是不能知道的。在第三方不知道私钥的情况下，是很难将加密的数据解密的。一般来说是加密方先产生私钥，然后通过一个安全的途径来告知解密方这个私钥。</p>
-</blockquote>
-<p>公钥加密</p>
-<blockquote>
-<p>公钥加密，是说解密的一方首先生成一对密钥，一个私钥一个公钥，私钥不会泄漏出去，而公钥则是可以任意的对外发布的。用公钥进行加密的数据，只能用私钥才能解密。加密方首先从解密方获取公钥，然后利用这个公钥进行加密，把数据发送给解密方。解密方利用私钥进行解密。如果解密的数据在传输的过程中被第三方截获，也不用担心，因为第三方没有私钥，没有办法进行解密。<br>公钥加密的问题还包括获取了公钥之后，加密方如何保证公钥来自于确定的一方，而不是某个冒充的机器。假设公钥不是来自我们信任的机器，那么就算我们用公钥加密也没有用，因为加密之后的数据是发送给了冒充的机器，该机器就可以利用它产生的私钥进行解密了。所以公钥加密里面比较重要的一步是身份认证。<br>需要说明一下，一般的私钥加密都会比公钥加密快，<strong>所以大数据量的加密一般都会使用私钥加密，而公钥加密会作为身份验证和交换私钥的一个手段。</strong></p>
-</blockquote>
-<p>数据一致性/完整性</p>
-<blockquote>
-<p>数据一致性说得是如何保证一段数据在传输的过程中没有遗漏、破坏或者修改过。一般来说，目前流行的做法是对数据进行hash，得到的hash值和数据一起传输，然后在收到数据的时候也对数据进行hash，将得到的hash值和传输过来的hash值进行比对，如果是不一样的，说明数据已经被修改过；如果是一样的，则说明极有可能是完整的。<br>目前流行的hash算法有MD5和SHA-1算法。</p>
-</blockquote>
-<p><strong>身份验证(远程连接的重点)</strong></p>
-<blockquote>
-<p>在SSH里面，这主要是通过公钥来完成的。首先客户端会有一个公钥列表，保存的是它信任的机器上面的公钥。<br>在开始SSH连接之后，服务器会发送过来一个公钥，然后客户端就会进行查找，如果这个公钥在这个列表里面，就说明这个机器是真的服务器。<br>实际的情况会复杂一些。实际上服务器不是真的发送公钥过来，因为这很容易被第三方盗取。</p>
-</blockquote>
-<h2 id="SSH2协议"><a href="#SSH2协议" class="headerlink" title="SSH2协议"></a>SSH2协议</h2><p>几个关键的key</p>
-<ul>
-<li>session key: 这个是用来作为secret key加密用的一个key，同时也作为每个ssh连接的标识ID。</li>
-<li>host key: 这个是用来作为server的身份验证用的。</li>
-<li>known-hosts: 这个是存在客户端的一个可信server的public key列表。</li>
-<li>user key: 这个是用来作为client的身份验证用的。<br>当server和client交换了session key之后，所有的数据都会使用这个session来进行私钥加密。</li>
-</ul>
-<p>详细SSH2协议：</p>
-<ul>
-<li>SSH2协议分为3个子协议，分别是SSH-TRANS, SSH-AUTH和SSH-CONN。</li>
-<li>其中SSH-TRANS是传输协议，定义了传输的包和加密通道，其他两个协议是建立在这个协议之上的。</li>
-<li><p>SSH-AUTH是SSH里面用于验证客户端身份的协议。我们在用ssh命令输入密码的那一步实际上就是在这个阶段。</p>
-<blockquote>
-<p>例子：ssh-keygen 生成密钥，输入的密码，就是用于验证客户端身份的。<br>虽然传输的是用户名和密码，但是由于这个协议建立在SSH-TRANS之上，所以内容都是加密的，可以放心的传输。</p>
-</blockquote>
-</li>
-<li><p>而SSH-CONN是真正的应用协议。在这里可以定义各种不同的协议，其中我们经常使用的scp、sftp还有正常的remote shell都是定义在这里的一种协议实现。这里的各种应用协议都要首先经过SSH-AUTH的验证之后才可以使用。</p>
-</li>
-<li>其中SSH-TRANS是基本的协议，SSH-AUTH和SSH-CONN都是通过这个协议来实现安全加密的。虽然在时序上，SSH-CONN发生在SSH-AUTH之后，但是SSH-CONN并不依赖于SSH-AUTH。</li>
-</ul>
-<h2 id="ssh-auth子协议详解"><a href="#ssh-auth子协议详解" class="headerlink" title="ssh-auth子协议详解"></a>ssh-auth子协议详解</h2><p> 在客户端的身份认证中，有3种预先定义好的方法可以用。</p>
-<pre><code>public key
-password
-hostbased
-</code></pre><p>最常用的：password就是一般的密码验证，而public key就是一般的无密码验证。<br>当服务器成功的验证了客户端的身份之后，就会开始客户端请求的服务(service)了。<br>需要注意的是，<strong>服务器的验证方式并不是说3种方式任选其一，而是可以组合的。</strong><br>也就是说，服务器可以要求客户端<strong>同时通过Password和public key两种方式的认证。</strong></p>
-<h2 id="SSH-CONN子协议详解"><a href="#SSH-CONN子协议详解" class="headerlink" title="SSH-CONN子协议详解"></a>SSH-CONN子协议详解</h2><p>在SSH-CONN里面最重要的就是Channel的机制了。<br>在SSH-CONN里面，和服务器的通信基本上都是通过建立channel来通信的。</p>
-<p>SSH协议自身定义如何负责多个channel之间消息的分发。<br>对于使用者来说只需要开多个channel就可以了。<br>比如说普通在ssh的客户端开启port forwarding的时候，就会开启一个shell channel和一个forwarding channel。 这一part对于程序员来说都是比较熟悉的。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/25/remote_connection/03_ssh远程连接命令/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1136,6 +937,205 @@ port表示要使用的端口
 <pre><code>远程主机已经添加公钥；并且本地机器存有对应的私钥
 ssh user@host
 </code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/25/remote_connection/02_ssh综述/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/25/remote_connection/02_ssh综述/" itemprop="url">ssh综述</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-25T09:20:19+08:00">
+                2018-04-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/ssh/" itemprop="url" rel="index">
+                    <span itemprop="name">ssh</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="几个概念"><a href="#几个概念" class="headerlink" title="几个概念"></a>几个概念</h2><p>加密</p>
+<blockquote>
+<p>将一段数据经过处理之后，输出为一段外人无法或者很难破译的数据。</p>
+</blockquote>
+<p>私钥加密 </p>
+<blockquote>
+<p>对称加密<br>所谓的私钥加密，是说加密方和解密方用的都是同一个key，这个key对于加密方和解密方来说是保密的，第三方是不能知道的。在第三方不知道私钥的情况下，是很难将加密的数据解密的。一般来说是加密方先产生私钥，然后通过一个安全的途径来告知解密方这个私钥。</p>
+</blockquote>
+<p>公钥加密</p>
+<blockquote>
+<p>公钥加密，是说解密的一方首先生成一对密钥，一个私钥一个公钥，私钥不会泄漏出去，而公钥则是可以任意的对外发布的。用公钥进行加密的数据，只能用私钥才能解密。加密方首先从解密方获取公钥，然后利用这个公钥进行加密，把数据发送给解密方。解密方利用私钥进行解密。如果解密的数据在传输的过程中被第三方截获，也不用担心，因为第三方没有私钥，没有办法进行解密。<br>公钥加密的问题还包括获取了公钥之后，加密方如何保证公钥来自于确定的一方，而不是某个冒充的机器。假设公钥不是来自我们信任的机器，那么就算我们用公钥加密也没有用，因为加密之后的数据是发送给了冒充的机器，该机器就可以利用它产生的私钥进行解密了。所以公钥加密里面比较重要的一步是身份认证。<br>需要说明一下，一般的私钥加密都会比公钥加密快，<strong>所以大数据量的加密一般都会使用私钥加密，而公钥加密会作为身份验证和交换私钥的一个手段。</strong></p>
+</blockquote>
+<p>数据一致性/完整性</p>
+<blockquote>
+<p>数据一致性说得是如何保证一段数据在传输的过程中没有遗漏、破坏或者修改过。一般来说，目前流行的做法是对数据进行hash，得到的hash值和数据一起传输，然后在收到数据的时候也对数据进行hash，将得到的hash值和传输过来的hash值进行比对，如果是不一样的，说明数据已经被修改过；如果是一样的，则说明极有可能是完整的。<br>目前流行的hash算法有MD5和SHA-1算法。</p>
+</blockquote>
+<p><strong>身份验证(远程连接的重点)</strong></p>
+<blockquote>
+<p>在SSH里面，这主要是通过公钥来完成的。首先客户端会有一个公钥列表，保存的是它信任的机器上面的公钥。<br>在开始SSH连接之后，服务器会发送过来一个公钥，然后客户端就会进行查找，如果这个公钥在这个列表里面，就说明这个机器是真的服务器。<br>实际的情况会复杂一些。实际上服务器不是真的发送公钥过来，因为这很容易被第三方盗取。</p>
+</blockquote>
+<h2 id="SSH2协议"><a href="#SSH2协议" class="headerlink" title="SSH2协议"></a>SSH2协议</h2><p>几个关键的key</p>
+<ul>
+<li>session key: 这个是用来作为secret key加密用的一个key，同时也作为每个ssh连接的标识ID。</li>
+<li>host key: 这个是用来作为server的身份验证用的。</li>
+<li>known-hosts: 这个是存在客户端的一个可信server的public key列表。</li>
+<li>user key: 这个是用来作为client的身份验证用的。<br>当server和client交换了session key之后，所有的数据都会使用这个session来进行私钥加密。</li>
+</ul>
+<p>详细SSH2协议：</p>
+<ul>
+<li>SSH2协议分为3个子协议，分别是SSH-TRANS, SSH-AUTH和SSH-CONN。</li>
+<li>其中SSH-TRANS是传输协议，定义了传输的包和加密通道，其他两个协议是建立在这个协议之上的。</li>
+<li><p>SSH-AUTH是SSH里面用于验证客户端身份的协议。我们在用ssh命令输入密码的那一步实际上就是在这个阶段。</p>
+<blockquote>
+<p>例子：ssh-keygen 生成密钥，输入的密码，就是用于验证客户端身份的。<br>虽然传输的是用户名和密码，但是由于这个协议建立在SSH-TRANS之上，所以内容都是加密的，可以放心的传输。</p>
+</blockquote>
+</li>
+<li><p>而SSH-CONN是真正的应用协议。在这里可以定义各种不同的协议，其中我们经常使用的scp、sftp还有正常的remote shell都是定义在这里的一种协议实现。这里的各种应用协议都要首先经过SSH-AUTH的验证之后才可以使用。</p>
+</li>
+<li>其中SSH-TRANS是基本的协议，SSH-AUTH和SSH-CONN都是通过这个协议来实现安全加密的。虽然在时序上，SSH-CONN发生在SSH-AUTH之后，但是SSH-CONN并不依赖于SSH-AUTH。</li>
+</ul>
+<h2 id="ssh-auth子协议详解"><a href="#ssh-auth子协议详解" class="headerlink" title="ssh-auth子协议详解"></a>ssh-auth子协议详解</h2><p> 在客户端的身份认证中，有3种预先定义好的方法可以用。</p>
+<pre><code>public key
+password
+hostbased
+</code></pre><p>最常用的：password就是一般的密码验证，而public key就是一般的无密码验证。<br>当服务器成功的验证了客户端的身份之后，就会开始客户端请求的服务(service)了。<br>需要注意的是，<strong>服务器的验证方式并不是说3种方式任选其一，而是可以组合的。</strong><br>也就是说，服务器可以要求客户端<strong>同时通过Password和public key两种方式的认证。</strong></p>
+<h2 id="SSH-CONN子协议详解"><a href="#SSH-CONN子协议详解" class="headerlink" title="SSH-CONN子协议详解"></a>SSH-CONN子协议详解</h2><p>在SSH-CONN里面最重要的就是Channel的机制了。<br>在SSH-CONN里面，和服务器的通信基本上都是通过建立channel来通信的。</p>
+<p>SSH协议自身定义如何负责多个channel之间消息的分发。<br>对于使用者来说只需要开多个channel就可以了。<br>比如说普通在ssh的客户端开启port forwarding的时候，就会开启一个shell channel和一个forwarding channel。 这一part对于程序员来说都是比较熟悉的。</p>
+
           
         
       
@@ -1352,7 +1352,7 @@ Initialized empty Git repository in D:/git_cangku/get_cangku/
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/05_ssh实践二/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/07_ssh实践三/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -1371,7 +1371,7 @@ Initialized empty Git repository in D:/git_cangku/get_cangku/
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/12/remote_connection/05_ssh实践二/" itemprop="url">05_ssh实践二（连接腾讯云主机）</a></h1>
+                <a class="post-title-link" href="/2018/03/12/remote_connection/07_ssh实践三/" itemprop="url">05_ssh实践三</a></h1>
         
 
         <div class="post-meta">
@@ -1413,12 +1413,165 @@ Initialized empty Git repository in D:/git_cangku/get_cangku/
 
                 
                 
-                   > 
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>腾讯云主机<br>本地gitbash连接ok</p>
+<h2 id="创建博客"><a href="#创建博客" class="headerlink" title="创建博客"></a>创建博客</h2><p>git安装</p>
+<pre><code>git --version
+如果没有安装，则安装git
+sudo apt-get install git
+</code></pre><p>初始化git仓库</p>
+<pre><code>选择目录（用户目录下作为演示）
+git init --bare hexoBlog.git
+完成git仓库的初始化
+</code></pre><p>创建git钩子</p>
+<pre><code>进入仓库的hooks目录
+创建post-receive文件
+vim post-receive
+进入vi编辑模式，在该文件中添加两行代码（将下边的代码粘贴进去)；
+指定 Git 的工作树（源代码）和 Git 目录（配置文件等）
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">git --work-tree=/home/hexoBlog --git-dir=/home/git/hexoBlog.git checkout -f</span><br></pre></td></tr></table></figure>
+<pre><code>保存退出vi编辑器
+</code></pre><h2 id="云主机配置Nginx"><a href="#云主机配置Nginx" class="headerlink" title="云主机配置Nginx"></a>云主机配置Nginx</h2><p>安装Nginx</p>
+<pre><code>sudo apt-get install nginx
+</code></pre><p>启动Nginx</p>
+<pre><code>service nginx start
+</code></pre><p>测试nginx服务</p>
+<pre><code>wget
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/07_ssh实践四（root登录腾讯云）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
                 
+                <a class="post-title-link" href="/2018/03/12/remote_connection/07_ssh实践四（root登录腾讯云）/" itemprop="url">07_ssh实践四（root登录腾讯云）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T10:31:14+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/ssh/" itemprop="url" rel="index">
-                    <span itemprop="name">ssh</span>
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
                   </a>
                 </span>
 
@@ -1456,33 +1609,16 @@ Initialized empty Git repository in D:/git_cangku/get_cangku/
       
         
           
-            <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>注册登录腾讯云服务器<br>腾讯云控制台：给云主机添加密钥（公钥部分）<br>获取云主机的<strong>默认用户名</strong>和<strong>公网ip</strong><br>云主机安装SSH服务</p>
-<pre><code>以ubuntu系统演示
-登录云控制台
-
-查看ssh版本
-ssh - V
-OpenSSH_7.2p2 Ubuntu-4ubuntu2.4, OpenSSL 1.0.2g  1 Mar 2016
-
-查看ssh状态
-sudo service sshd status
-
-如果出现如下提示，表明本机器未安装ssh服务。
-Loaded: error (Reason: No such file or directory)
-安装ssh服务命令
-sudo apt-get install sshd
-启动ssh服务命令
-sudo service sshd start
-</code></pre><h2 id="SSH公钥使用（项目）远程服务器项目级别repo使用"><a href="#SSH公钥使用（项目）远程服务器项目级别repo使用" class="headerlink" title="SSH公钥使用（项目）远程服务器项目级别repo使用"></a>SSH公钥使用（项目）远程服务器项目级别repo使用</h2><p>远程服务器（远程空间）添加密钥（github作为演示）</p>
-<ul>
-<li>选择github上某一个仓库repository</li>
-<li>选择settings</li>
-<li>选择deploy keys ##就是添加部署公钥。</li>
-<li>添加公钥（打开git密钥的其中一个.pub结尾文件，复制粘贴到github上。）</li>
-</ul>
-<p>本地连接远程服务器（远程指的并不是距离上的远程，是一个软件层面的概念，非本机就是远程计算机）</p>
-<p>github部署githubpages不需要单独的部署公钥，直接使用账户公钥就可以。</p>
-<p>coding部署codingpages需要单独的部署公钥，不能使用账户公钥。</p>
+            <p>第1步：生成ssh-key密钥<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">生成两个密钥：第一个用于ubuntu用户，第二个用于root用户</span><br><span class="line"></span><br><span class="line">打开gitbash终端</span><br><span class="line">执行命令</span><br><span class="line">ssh-keygen</span><br><span class="line">输入key文件名</span><br><span class="line">输入密码（口令）</span><br><span class="line">确认密码（口令）</span><br><span class="line"></span><br><span class="line">重复以上步骤再生成一个ssh-key</span><br></pre></td></tr></table></figure></p>
+<p>第2步：配置ssh-key（非root用户公钥部分）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">这里配置的是ubuntu用户的公钥（本方法不支持root用户公钥配置）</span><br><span class="line"></span><br><span class="line">可登录腾讯云的控制台</span><br><span class="line">在控制台添加ssh密钥（公钥部分）（公钥添加的用户是ubuntu）</span><br></pre></td></tr></table></figure></p>
+<p>第3步：配置ssh密钥（私钥部分）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">配置ssh密钥（私钥），两种方式</span><br><span class="line">第一种：config文件</span><br><span class="line">第二种：ssh-agent bash代理命令 配合  ssh-add 添加私钥</span><br><span class="line"></span><br><span class="line">这里需要配置两个私钥，使用config文件方式配置</span><br><span class="line">第一个私钥用于ubuntu用户</span><br><span class="line">编辑.ssh文件夹下面的config文件</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> tencent</span></span><br><span class="line">Host xxx.xxx.xxx.xx</span><br><span class="line">	User xxx</span><br><span class="line">	PreferredAuthentications publickey</span><br><span class="line">	IdentityFile ~/.ssh/tencent/xxx-key</span><br><span class="line"></span><br><span class="line">第二个私钥用于root用户</span><br><span class="line">同上</span><br><span class="line"><span class="meta">#</span><span class="bash"> tencent</span></span><br><span class="line">Host xxx.xxx.xxx.xx</span><br><span class="line">	User xxx</span><br><span class="line">	PreferredAuthentications publickey</span><br><span class="line">	IdentityFile ~/.ssh/tencent/xxx-key</span><br></pre></td></tr></table></figure></p>
+<p>第3步：设置root用户密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">gitbash终端连接云主机；</span><br><span class="line">命令：ubuntu@腾讯云公网ip </span><br><span class="line"></span><br><span class="line">切换至root用户</span><br><span class="line">命令：su root</span><br><span class="line">这里会提示设置root用户的密码，按照提示设置就可以了。具体如下</span><br><span class="line"></span><br><span class="line">sudo passwd</span><br><span class="line">Enter new UNIX password: //输入新的密码</span><br><span class="line">Retype new UNIX password: //确认密码</span><br><span class="line">passwd：password update successfully //成功创建密码</span><br><span class="line">su root //切换到root超级用户</span><br><span class="line">Password：  //输入密码</span><br><span class="line">root@VM-0-13-ubuntu:/home/ubuntu# //表示成功切换到root超级用户</span><br></pre></td></tr></table></figure></p>
+<p>第4步：配置ssh-key（进入root用户ssh配置目录）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">gitbash终端连接云主机（非root用户）</span><br><span class="line">切换到root用户</span><br><span class="line"></span><br><span class="line">进入root用户的家目录（/root）</span><br><span class="line">进入root工作目录</span><br><span class="line">root@VM-0-13-ubuntu:/# ls</span><br><span class="line">bin   data  etc   initrd.img  lib64       media  opt   root  sbin  srv  tmp  var</span><br><span class="line">boot  dev   home  lib         lost+found  mnt    proc  run   snap  sys  usr  vmlinuz</span><br><span class="line">root@VM-0-13-ubuntu:/# cd ./root/</span><br><span class="line">root@VM-0-13-ubuntu:~# ll</span><br><span class="line">total 40</span><br><span class="line">drwx------  5 root root 4096 May 26 14:47 ./</span><br><span class="line">drwxr-xr-x 24 root root 4096 May 26 15:22 ../</span><br><span class="line">-rw-r--r--  1 root root 2491 May 26 15:22 .bash_history</span><br><span class="line">-rw-r--r--  1 root root 3108 Mar 16 10:28 .bashrc</span><br><span class="line">drwx------  2 root root 4096 Oct 28  2016 .cache/</span><br><span class="line">drwxr-xr-x  2 root root 4096 May 26 13:38 .nano/</span><br><span class="line">-rw-r--r--  1 root root  148 Aug 17  2015 .profile</span><br><span class="line">drwx------  2 root root 4096 Mar 16 10:47 .ssh/</span><br><span class="line">-rw-------  1 root root 4863 May 26 14:47 .viminfo</span><br><span class="line">root@VM-0-13-ubuntu:~#</span><br></pre></td></tr></table></figure></p>
+<p>第5步：配置ssh-key（查看当前ssh配置）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">进入.ssh目录，查看root用户密钥配置</span><br><span class="line">root@VM-0-13-ubuntu:~# cd ./.ssh/</span><br><span class="line">root@VM-0-13-ubuntu:~/.ssh# ll</span><br><span class="line">total 8</span><br><span class="line">drwx------ 2 root root 4096 Mar 16 10:47 ./</span><br><span class="line">drwx------ 5 root root 4096 May 26 14:47 ../</span><br><span class="line">-rw------- 1 root root    0 May 24 11:43 authorized_keys</span><br><span class="line"></span><br><span class="line">**查看authorized_keys文件，此时为空，表示root用户没有配置ssh密钥**</span><br><span class="line">root@VM-0-13-ubuntu:~/.ssh# cat authorized_keys </span><br><span class="line">root@VM-0-13-ubuntu:~/.ssh#</span><br></pre></td></tr></table></figure></p>
+<p>第6步：配置ssh-key（增加root用户ssh公钥）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">**使用vim编辑器编辑authorized_keys，将ssh公钥文件的字符串复制进去；**</span><br><span class="line">**保存退出；**</span><br><span class="line">root@VM-0-13-ubuntu:~/.ssh# vim authorized_keys</span><br><span class="line"></span><br><span class="line">**使用cat查看authorized_keys文件，验证编辑是否正确**</span><br><span class="line">root@VM-0-13-ubuntu:~/.ssh# cat authorized_keys</span><br></pre></td></tr></table></figure></p>
+<p>第7步：root用户远程连接云主机（gitbash终端，ssh方式）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">root用户登录云主机命令</span><br><span class="line">ssh root@云主机公网ip</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> ssh root@xxx.xx.xx.xx</span></span><br><span class="line">Welcome to Ubuntu 16.04.1 LTS (GNU/Linux 4.4.0-91-generic x86_64)</span><br><span class="line"></span><br><span class="line"> * Documentation:  https://help.ubuntu.com</span><br><span class="line"> * Management:     https://landscape.canonical.com</span><br><span class="line"> * Support:        https://ubuntu.com/advantage</span><br><span class="line"></span><br><span class="line">Last login: Thu Jan  1 08:00:10 1970</span><br><span class="line">root@VM-0-xx-ubuntu:~#</span><br></pre></td></tr></table></figure></p>
+<p>至此：windows模拟终端软件gitbash成功使用root用户，连接云主机linux系统。</p>
+<p><em>结束。</em></p>
 
           
         
@@ -1757,7 +1893,7 @@ sudo service sshd start
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/07_ssh实践三/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/05_ssh实践二/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -1776,7 +1912,169 @@ sudo service sshd start
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/12/remote_connection/07_ssh实践三/" itemprop="url">05_ssh实践三</a></h1>
+                <a class="post-title-link" href="/2018/03/12/remote_connection/05_ssh实践二/" itemprop="url">05_ssh实践二（连接腾讯云主机）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T10:31:14+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/ssh/" itemprop="url" rel="index">
+                    <span itemprop="name">ssh</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="SSH公钥使用（项目）远程服务器项目级别repo使用"><a href="#SSH公钥使用（项目）远程服务器项目级别repo使用" class="headerlink" title="SSH公钥使用（项目）远程服务器项目级别repo使用"></a>SSH公钥使用（项目）远程服务器项目级别repo使用</h2><p>远程服务器（远程空间）添加密钥（github作为演示）</p>
+<ul>
+<li>选择github上某一个仓库repository</li>
+<li>选择settings</li>
+<li>选择deploy keys ##就是添加部署公钥。</li>
+<li>添加公钥（打开git密钥的其中一个.pub结尾文件，复制粘贴到github上。）</li>
+</ul>
+<p>本地连接远程服务器（远程指的并不是距离上的远程，是一个软件层面的概念，非本机就是远程计算机）</p>
+<p>github部署githubpages不需要单独的部署公钥，直接使用账户公钥就可以。</p>
+<p>coding部署codingpages需要单独的部署公钥，不能使用账户公钥。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/07_git实践99（腾讯云git服务器）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/12/remote_connection/07_git实践99（腾讯云git服务器）/" itemprop="url">07_综合实践</a></h1>
         
 
         <div class="post-meta">
@@ -1850,30 +2148,25 @@ sudo service sshd start
       
         
           
-            <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>腾讯云主机<br>本地gitbash连接ok</p>
-<h2 id="创建博客"><a href="#创建博客" class="headerlink" title="创建博客"></a>创建博客</h2><p>git安装</p>
-<pre><code>git --version
-如果没有安装，则安装git
-sudo apt-get install git
-</code></pre><p>初始化git仓库</p>
-<pre><code>选择目录（用户目录下作为演示）
-git init --bare hexoBlog.git
-完成git仓库的初始化
-</code></pre><p>创建git钩子</p>
-<pre><code>进入仓库的hooks目录
-创建post-receive文件
-vim post-receive
-进入vi编辑模式，在该文件中添加两行代码（将下边的代码粘贴进去)；
-指定 Git 的工作树（源代码）和 Git 目录（配置文件等）
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!/bin/bash</span><br><span class="line">git --work-tree=/home/hexoBlog --git-dir=/home/git/hexoBlog.git checkout -f</span><br></pre></td></tr></table></figure>
-<pre><code>保存退出vi编辑器
-</code></pre><h2 id="云主机配置Nginx"><a href="#云主机配置Nginx" class="headerlink" title="云主机配置Nginx"></a>云主机配置Nginx</h2><p>安装Nginx</p>
-<pre><code>sudo apt-get install nginx
-</code></pre><p>启动Nginx</p>
-<pre><code>service nginx start
-</code></pre><p>测试nginx服务</p>
-<pre><code>wget
-</code></pre>
+            <p>第1步：win终端连接云主机（root）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@xxx.xxx.xx.xx</span><br></pre></td></tr></table></figure></p>
+<p>第2步：创建新用户git-github<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd git-github</span><br></pre></td></tr></table></figure></p>
+<p>第3步：更改git-github用户的shell<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">改为git-shell（git远程提交代码）</span><br><span class="line">命令</span><br><span class="line">root@VM-0-13-ubuntu:/usr/bin# usermod -s /usr/bin/git-shell git-github</span><br></pre></td></tr></table></figure></p>
+<p>第5步：为git-github用户添加口令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@VM-0-13-ubuntu:/usr/bin# passwd git-github</span><br><span class="line">Enter new UNIX password:</span><br><span class="line">Retype new UNIX password:</span><br><span class="line">passwd: password updated successfully</span><br></pre></td></tr></table></figure></p>
+<p>第6步：创建git用户组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@VM-0-13-ubuntu:~# groupadd git</span><br></pre></td></tr></table></figure></p>
+<p>第6步：git-github添加到git用户组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">添加到默认组</span><br><span class="line">root@VM-0-13-ubuntu:/usr/bin# usermod -g git git-github</span><br><span class="line">查看默认组</span><br><span class="line">root@VM-0-13-ubuntu:/usr/bin# id -n -g git-github</span><br><span class="line">git</span><br></pre></td></tr></table></figure></p>
+<p>第7步：查看git-github用户的配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/passwd</span><br><span class="line">找到git-github用户（新添加的在最后一行）</span><br><span class="line">git-github:x:1000:1004::/home/git-github:/usr/bin/git-shell</span><br></pre></td></tr></table></figure></p>
+<p>第8步：创建家目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">由于我们之前创建用户的时候，并没有给用户创建家目录；</span><br><span class="line">root@VM-0-13-ubuntu:/home# mkdir git-github</span><br></pre></td></tr></table></figure></p>
+<p>第9步：修改git-github家目录所有者和所属组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">在root用户下，创建的目录git-github，所有者是root。</span><br><span class="line">查看结果如下,root所有</span><br><span class="line">drwxr-xr-x  2 root       root   4096 Mar 28 19:01 git-github/</span><br><span class="line">修改所有者</span><br><span class="line">root@VM-0-13-ubuntu:/home# chown -R git-github git-github</span><br><span class="line">查看如下，git-github所有</span><br><span class="line">drwxr-xr-x  2 git-github root   4096 Mar 28 19:01 git-github/</span><br><span class="line">修改所属组</span><br><span class="line">root@VM-0-13-ubuntu:/home# chgrp -R git git-github</span><br><span class="line">查看如下，git所属组</span><br><span class="line">drwxr-xr-x  2 git-github git    4096 Mar 28 19:01 git-github/</span><br><span class="line"></span><br><span class="line">此时git-github具有读写权限了。</span><br></pre></td></tr></table></figure></p>
+<p>第10步：在git-github创建目录.ssh<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">root@VM-0-13-ubuntu:/home/git-github# mkdir .ssh</span><br><span class="line">root@VM-0-13-ubuntu:/home/git-github# ll</span><br><span class="line">drwxr-xr-x 3 git-github git  4096 Mar 28 19:50 ./</span><br><span class="line">drwxr-xr-x 7 root       root 4096 Mar 28 19:01 ../</span><br><span class="line">drwxr-xr-x 2 root       root 4096 Mar 28 19:50 .ssh/</span><br><span class="line">root@VM-0-13-ubuntu:/home/git-github# chown -R git-github .ssh/</span><br><span class="line">root@VM-0-13-ubuntu:/home/git-github# chgrp -R git .ssh/</span><br><span class="line">root@VM-0-13-ubuntu:/home/git-github# ll</span><br><span class="line">drwxr-xr-x 3 git-github git  4096 Mar 28 19:50 ./</span><br><span class="line">drwxr-xr-x 7 root       root 4096 Mar 28 19:01 ../</span><br><span class="line">drwxr-xr-x 2 git-github git  4096 Mar 28 19:50 .ssh/</span><br></pre></td></tr></table></figure></p>
+<p>第11步：生成ssh-key<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">打开gitbash终端</span><br><span class="line">执行命令</span><br><span class="line">ssh-keygen</span><br><span class="line">输入key文件名</span><br><span class="line">输入密码（口令）</span><br><span class="line">确认密码（口令）</span><br></pre></td></tr></table></figure></p>
+<p>第9步：添加ssh-key的公钥到服务器<br>这样做主要是为了无需密码就可以提交代码，使用ssh密钥提交。方便快捷。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ssh root@xxx.xxx.xxx.xx</span><br><span class="line">root@VM-0-13-ubuntu:/home/git-github# cd /home/git-github/.ssh/</span><br><span class="line">root@VM-0-13-ubuntu:/home/git-github/.ssh# vim authorized_keys</span><br><span class="line">root@VM-0-13-ubuntu:/home/git-github/.ssh# cat authorized_keys</span><br><span class="line">可以验证authorized_keys文件中已经存放了ssh公钥字符串了</span><br><span class="line">注意authorized_keys文件的权限，所有者的读写权限。</span><br></pre></td></tr></table></figure></p>
+<p>第10步：配置本地ssh-key的私钥config文件<br>注意：如果使用ssh-agent 代理key管理的话，确保服务端也启用了ssh-agent。<br>这里使用的是config文件。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># tencent-git</span><br><span class="line">Host xxx.xxx.xxx.xx</span><br><span class="line">	User git-github</span><br><span class="line">	PreferredAuthentications publickey</span><br><span class="line">	IdentityFile ~/.ssh/xxx/xxx-xxx</span><br></pre></td></tr></table></figure></p>
+<p>完成以上步骤，用户git-github就可以通过git-ssh连接云主机，实现git提交管理代码了。</p>
+<p>第10步：linux服务端创建git仓库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">root@VM-0-13-ubuntu:/# cd /var/</span><br><span class="line">root@VM-0-13-ubuntu:/var# mkdir github</span><br><span class="line">root@VM-0-13-ubuntu:/var/github# cd ./github/</span><br><span class="line">root@VM-0-13-ubuntu:/var/github# git init --bare xxxxxx.git</span><br><span class="line">这是我们就初始化好了一个xxxxxx.git的空的仓库</span><br><span class="line">添加777的权限，使得远程用户可以git-shell操作，递归操作</span><br><span class="line">root@VM-0-13-ubuntu:/var/github# cd ..</span><br><span class="line">root@VM-0-13-ubuntu:/var# chmod -R 777 ./github/</span><br></pre></td></tr></table></figure></p>
+<p>第11步：gitbash终端远程克隆仓库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">打开gitbash终端；</span><br><span class="line">$ git clone git-github@xxx.xxx.xxx.xx:/var/github/xxxxx.git</span><br></pre></td></tr></table></figure></p>
+<p>至此，clone完成。</p>
+<p><em>结束。</em></p>
+
           
         
       
@@ -1921,7 +2214,7 @@ vim post-receive
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/04_ssh实践一/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/04_ssh实践042（ssh密钥格式）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -1940,7 +2233,7 @@ vim post-receive
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/12/remote_connection/04_ssh实践一/" itemprop="url">04_ssh实践一</a></h1>
+                <a class="post-title-link" href="/2018/03/12/remote_connection/04_ssh实践042（ssh密钥格式）/" itemprop="url">04_ssh实践一（ssh密钥格式）</a></h1>
         
 
         <div class="post-meta">
@@ -2025,7 +2318,319 @@ vim post-receive
       
         
           
-            <h2 id="gitbash生成ssh密钥"><a href="#gitbash生成ssh密钥" class="headerlink" title="gitbash生成ssh密钥"></a>gitbash生成ssh密钥</h2><p><strong>gitbash命令窗口</strong><br>gitbash执行命令：ssh-keygen<br>执行命令需要输入存放密钥的文件名，默认是id_rsa<br>还需要输入密钥的口令（当你使用密钥连接操作时需要使用到口令），可以为空。<br>生成密钥。<br>生成密钥的程序包含在当前githash的当前目录下，或者windows默认目录users/admin/.ssh/中。（windows上）。<br>git密钥包含两个部分：ssh公钥，ssh私钥。</p>
+            <h2 id="SSH密钥格式1（一般格式）"><a href="#SSH密钥格式1（一般格式）" class="headerlink" title="SSH密钥格式1（一般格式）"></a>SSH密钥格式1（一般格式）</h2><p>公钥：id_rsa.pub（用于远程服务器上）<br>以ssh-rsa开头<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-rsa AAAAB3NzaC1yc2xxxxxxxQABAAABAQC6Jgn+8RpCM9lAGHHHDtA64th3GGvObWakUmyu/K3QGIfh06sscSpeOfuH7g7R+wisdaB+xxxxxxxxxxxxxxxxxxxlQKT0hECz5T86u0FtCtoHic8qWdwWRsXnY2tHLFQKCdMmJ4FZuPM3JAxVf0RVQy1bR5or2fFNabHeGYVwUz89ZPAYTN3nb9xxxxxxxxxxxxxxxxxtZXuS/ShPPXLN6CIUauvaIpEQs0Hb1l548GL9Jtgxz12lxxsHEsEpi6vYUPO6qLOHrqZ1TZD7bZkm5njMGu39OFTdBgqFsWz/wrGJttGWnHGgIT1Z3nUUZUlFGVXJrA47YIK8P xxxxxxxxx@qq.com</span><br></pre></td></tr></table></figure></p>
+<p>私钥：id_rsa（用于本地计算机）<br>BEGIN xxxx PRIVATE KEY 开始<br>END xxxxx PRIVATE KEY 结束<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">-----BEGIN RSA PRIVATE KEY-----</span><br><span class="line">Proc-Type: 4,ENCRYPTED</span><br><span class="line">DEK-Info: AES-128-CBC,476816ED08958476D0579D57A01FAF3D</span><br><span class="line"></span><br><span class="line">BvDVqKl9LN59z+WByXxxjVW1kjbZRpk8zBJbfC+8z/KbICOFidf3lpkawkOCJ43p</span><br><span class="line">+ahAdcVVMwD8S3pcBOLve7cRz6cg3gOMXcWThuzt1581xNYsvh/B2Vny9/beXwAX</span><br><span class="line">4ReB4L4jpEFt1YNEryBO/b7xpM312qOU7OaNnzkWHB2kdOJgBT5Y8mRyYpYgndAY</span><br><span class="line">jab25YRrbnjvB/OK04O+IEZo94ZBWDu7sk6zzAESarn8PF6MqZpD5rzhFIISNict</span><br><span class="line">PUTKiLWqkj2jBFssHizSEIaYhgR9dm+Agg8MnFfEJ0vOEOFx4gIARi8wkcMKlGCB</span><br><span class="line">WAF962muMfxAMAmHSsCcHhTX8rDrO6XFFcB06sR5psQAeOtqXAnFKYM4r0j884zH</span><br><span class="line">Tb6iiqTbVa0AV1da7+idxAqV7Y4+sk4EJhyjbv9HWppUIikyPESWBkjQwdIdLCMY</span><br><span class="line">f/2fHdd+jm7QRz4/Oo/bjAOtAuB66XNArmAdT4V4OCwfa4feHkgCobUe1bgBpBks</span><br><span class="line">IDBd+KGxASYs0abzI2XYuyJmXqDvKoP85aQLjPzXFpaQIP49E5wAIgATKvAdUzh5</span><br><span class="line">Rqad+YdrtES7cO+feB3metXIifScobBP/zupPUikqog02WygFlXASYQnpWTg/1Nt</span><br><span class="line">fNkjTp2/H/QSVAwR3e6jTBTKcHyu35BpZM97v3zt9/NlgG1dRU2BGJ38nRshwoVV</span><br><span class="line">EJMu3X9m5px0XtxpVZVuXuBrgQIvNp6cB9QjgRLpGg/n1sE4RyBbKuvfUjnEf6hC</span><br><span class="line">YIfZICv+Iqe+JHlNiv9EA66OaTO+sx0nOuw0GAP7TAM016BtW9/Zlv54m2Zk5hO8</span><br><span class="line">-----END RSA PRIVATE KEY-----</span><br></pre></td></tr></table></figure></p>
+<h2 id="SSH密钥格式2（ppk格式）"><a href="#SSH密钥格式2（ppk格式）" class="headerlink" title="SSH密钥格式2（ppk格式）"></a>SSH密钥格式2（ppk格式）</h2><p>使用puttygen生成<br>公钥格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">与第一种格式一样</span><br></pre></td></tr></table></figure></p>
+<p>ppk文件，私钥格式如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">PuTTY-User-Key-File-2: ssh-rsa</span><br><span class="line">Encryption: none</span><br><span class="line">Comment: rsa-key-20180524</span><br><span class="line">Public-Lines: 6</span><br><span class="line">AAAAB3NzaC1yc2EAAAABJQAAAQEAkz/l3idv9LpAFZimskw3AQVXPCh8UYdHMHMa</span><br><span class="line">apjDu+NgmghAY/jaR9mpM2kd251j8sdD606GolYmEGdZKLd1KbiLl6T5AoKekYti</span><br><span class="line">eFVLmR4GQJ1xRI6GnnZh3b0qbles+oec6rofHWEFNXMTAF+yHNYaDQHXgdvXIDbH</span><br><span class="line">rjdBXUhxcwkAdqL2sopSKHZZPrH0YqsKX9Qom1qtjEsEkpcQNELdDmHF6LWb5eJ0</span><br><span class="line">FJeS+O0SnkMFHI4L7y5m/bE/ywtjCzt4OGRbS2U//MabxPL3RLn6BCjpXLQ/gnrX</span><br><span class="line">FRJXxhsxXnnMRAhuMHqVO4ENIypXv7ShuM17Esn6zwsyepKTyw==</span><br><span class="line">Private-Lines: 14</span><br><span class="line">AAABABvbqAdvPrHCXyauLWAAlMjXfzTlEJnNfCvCv876TotUh+XKOipD1kTx0+ch</span><br><span class="line">uYpp4nnc8uaSRLbttCyd7kX521rrkAfux1OAft1D4jJxAHbqAS7RraUvuJqFGW8j</span><br><span class="line">ycHZPGa/tec3+Ax6I5R9jfkm3IH+/gJ1+FbWkHu3VjW3bTspGBXBNuxzcbrHovMZ</span><br><span class="line">zJ2beu9S6EoTC1umTgKUZ0Q8reMonR1q7m9xxpXyFHv+FRnAshddsmeH0Eoj0Di+</span><br><span class="line">F5x8aUnal3qMFhd5rF30qFtZO4tCoDekZ09tO/nfgoO1O8G7xmcTSnG2H3/KajRf</span><br><span class="line">AXUP342R5pfoRETrKNlRFiEgDJ0AAACBAMcLRc/BQyBT/Fk/c8nYXSsVMPnSXMGG</span><br><span class="line">avEzGfeW5Y4yit7AjOtuvEobtw/AnlVZbNk421kLo12i5+X9A74bQTQ2NbQkFJuo</span><br><span class="line">PinOCnJLxncGskSDFHgHpZX2PE35nJhtzuXJG0KnU4lNoldP27qAFmUPdFeLpfM</span><br><span class="line">XWLG5miKFCRTAAAAgQC9YnzFiUbGXrfZ36oxSdXRyjGN4Vvh51wgAmnGkwMPdZgt</span><br><span class="line">jcQ3UXtcsbmKVt2S7jyMDnhqyRzPDYk0ZwngUBQCTqbsjI/dJxGrq9OLBAuzOV5p</span><br><span class="line">2gFimMH+b5bGSZKE9qgBpoGxKYPnL4q17gJNYLGFGpgyExxV2iPksAp5iovjqQAA</span><br><span class="line">AIBqMqgAfwXGcZkyPbAn1TMMyugof9gKDTptEmPEH5XoQvHVHfGsKwy4mSv8YmvJ</span><br><span class="line">Ue4kLZic5LEyW/quCAtt61/RODnv44tNab0KTkRzN+oizbkJKLMWL2rwDOECBfSb</span><br><span class="line">YxbmIC3HrkD0ts5UP050tELyZ83JOUnhDLxK/TINjB263Q==</span><br><span class="line">Private-MAC: 4c5a7a46f542ff5de8df320efe0f7e011c7e78e1</span><br></pre></td></tr></table></figure></p>
+<h2 id="两种格式转化（私钥需要转化，公钥不需要）"><a href="#两种格式转化（私钥需要转化，公钥不需要）" class="headerlink" title="两种格式转化（私钥需要转化，公钥不需要）"></a>两种格式转化（私钥需要转化，公钥不需要）</h2><p>使用puttygen工具<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">运行puttygen</span><br><span class="line">点击Conversions菜单项中的Import key</span><br><span class="line">选择在gitbash终端下生成的id_rsa私钥文件（不是公钥）</span><br><span class="line">输入私钥的密码（口令）</span><br><span class="line">在puttygen的界面上点击Save private key按钮就可以把私钥转换为ppk的格式了</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/05_git实践051（git服务器）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/12/remote_connection/05_git实践051（git服务器）/" itemprop="url">05_git实践051（git服务器）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T10:09:08+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/git/" itemprop="url" rel="index">
+                    <span itemprop="name">git</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="git服务器"><a href="#git服务器" class="headerlink" title="git服务器"></a>git服务器</h2><p>创建git服务器（仓库）（github代码）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">登录github</span><br><span class="line">创建仓库：new repository</span><br><span class="line">初始化仓库：</span><br><span class="line">获取该仓库ssh地址（形式如：git@github.com:username/qiqibabade.git）</span><br><span class="line"></span><br><span class="line">本地clone该项目仓库</span><br><span class="line"></span><br><span class="line">设置部署密钥deploy</span><br></pre></td></tr></table></figure></p>
+<p>创建git服务器（仓库）（coding代码）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>创建git服务器（仓库）（腾讯云主机）<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">root登录到云主机</span><br><span class="line"></span><br><span class="line">创建新云主机用户user</span><br><span class="line">命令：useradd newusername</span><br><span class="line"></span><br><span class="line">添加到用户组</span><br><span class="line">groupadd www</span><br><span class="line"></span><br><span class="line">为新的用户user设置远程连接的ssh-key</span><br><span class="line"></span><br><span class="line">使用新的user登录到云主机</span><br><span class="line"></span><br><span class="line">创建文件夹，初始化git仓库</span><br><span class="line">命令：git init --bare</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/04_ssh实践041（生成ssh密钥）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/12/remote_connection/04_ssh实践041（生成ssh密钥）/" itemprop="url">04_ssh实践一（生成ssh密钥）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T10:09:08+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/ssh/" itemprop="url" rel="index">
+                    <span itemprop="name">ssh</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="git终端生成ssh密钥"><a href="#git终端生成ssh密钥" class="headerlink" title="git终端生成ssh密钥"></a>git终端生成ssh密钥</h2><p><strong>gitbash命令窗口</strong><br>gitbash执行命令：ssh-keygen<br>执行命令需要输入存放密钥的文件名，默认是id_rsa<br>还需要输入密钥的口令（当你使用密钥连接操作时需要使用到口令），可以为空。<br>生成密钥。<br>生成密钥的程序包含在当前githash的当前目录下，或者windows默认目录users/admin/.ssh/中。（windows上）。<br>git密钥包含两个部分：ssh公钥，ssh私钥。</p>
 <h2 id="puttygen工具生成ssh密钥"><a href="#puttygen工具生成ssh密钥" class="headerlink" title="puttygen工具生成ssh密钥"></a>puttygen工具生成ssh密钥</h2><p>下载puttygen工具</p>
 <blockquote>
 <p><a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html" target="_blank" rel="noopener">https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html</a></p>
@@ -2044,6 +2649,316 @@ puttygen是在一个文件中存储的；
 <pre><code>代码托管的服务器（在项目推进的过程中，多人合作，需要一个服务器托管代码）
 生产环境的服务器（项目运行环境的后台服务器，部署以及更新迭代修复bug的服务器。）
 </code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/04_ssh实践043（ssh服务端）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/12/remote_connection/04_ssh实践043（ssh服务端）/" itemprop="url">04_ssh实践043（ssh服务端）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T10:09:08+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/ssh/" itemprop="url" rel="index">
+                    <span itemprop="name">ssh</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="ssh服务端"><a href="#ssh服务端" class="headerlink" title="ssh服务端"></a>ssh服务端</h2><p>ubuntu服务器默认是安装了openssh。<br>查看linux服务端shh版本<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> 以ubuntu系统演示（非root用户演示）</span><br><span class="line"> 登录云控制台</span><br><span class="line">    </span><br><span class="line">查看ssh版本</span><br><span class="line">ssh - V</span><br><span class="line">OpenSSH_7.2p2 Ubuntu-4ubuntu2.4, OpenSSL 1.0.2g  1 Mar 2016</span><br><span class="line"></span><br><span class="line">查看ssh状态</span><br><span class="line">sudo service sshd status</span><br><span class="line">    </span><br><span class="line">如果出现如下提示，表明本机器未安装ssh服务。</span><br><span class="line">Loaded: error (Reason: No such file or directory)</span><br><span class="line">安装ssh服务命令</span><br><span class="line">sudo apt-get install sshd</span><br><span class="line">启动ssh服务命令</span><br><span class="line">sudo service sshd start</span><br></pre></td></tr></table></figure></p>
+<p>注意：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OpenSSH是SSH（Secure SHell）协议的免费开源实现。SSH协议族可以用来进行远程控制， 或在计算机之间传送文件。</span><br><span class="line"></span><br><span class="line">OpenSSL 是一个安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/12/remote_connection/04_ssh实践044（ssh客户端） /">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/12/remote_connection/04_ssh实践044（ssh客户端） /" itemprop="url">04_ssh实践044（ssh客户端）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-12T10:09:08+08:00">
+                2018-03-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/ssh/" itemprop="url" rel="index">
+                    <span itemprop="name">ssh</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="ssh客户端"><a href="#ssh客户端" class="headerlink" title="ssh客户端"></a>ssh客户端</h2><p>window系统模拟linux终端gitbash，需要安装ssh客户端，才可以实现与linux的加密通讯。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gitbash演示</span><br><span class="line">查看ssh版本</span><br><span class="line"><span class="meta">$</span><span class="bash"> ssh -V</span></span><br><span class="line">OpenSSH_7.7p1, OpenSSL 1.0.2o  10 Mar 2018</span><br></pre></td></tr></table></figure></p>
+<p>注意：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">OpenSSH是SSH（Secure SHell）协议的免费开源实现。SSH协议族可以用来进行远程控制， 或在计算机之间传送文件。</span><br><span class="line"></span><br><span class="line">OpenSSL 是一个安全套接字层密码库，囊括主要的密码算法、常用的密钥和证书封装管理功能及SSL协议，并提供丰富的应用程序供测试或其它目的使用。</span><br></pre></td></tr></table></figure></p>
+<p>关于客户端ssh；</p>
+<p>未完待续…….</p>
+
           
         
       
@@ -3295,7 +4210,7 @@ menu:
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/github/github个人博客绑定域名/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/github个人博客绑定域名/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -3314,7 +4229,7 @@ menu:
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/09/git/github/github个人博客绑定域名/" itemprop="url">github个人博客绑定域名</a></h1>
+                <a class="post-title-link" href="/2018/03/09/git/github个人博客绑定域名/" itemprop="url">github个人博客绑定域名</a></h1>
         
 
         <div class="post-meta">
@@ -4445,6 +5360,159 @@ execute方法应该仅在语句能返回多个ResultSet对象、多个更新计�
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/other-lang/JSon语法格式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/03/other-lang/JSon语法格式/" itemprop="url">JSon语法格式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T12:45:25+08:00">
+                2018-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/other-lang/" itemprop="url" rel="index">
+                    <span itemprop="name">other_lang</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/other-lang/JSon/" itemprop="url" rel="index">
+                    <span itemprop="name">JSon</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>JSon格式<br>简直对</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/other-lang/yml语法格式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -4587,159 +5655,6 @@ hash: { name: Steve, foo: bar }
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">create_key: yes</span><br><span class="line">needs_agent: no</span><br><span class="line">knows_oop: True</span><br><span class="line">likes_emacs: TRUE</span><br><span class="line">uses_cvs: false</span><br></pre></td></tr></table></figure>
 <p>简单的yml文件如下：2</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">name: Example Developer</span><br><span class="line">job: Developer</span><br><span class="line">skill: Elite</span><br><span class="line">employed: True</span><br><span class="line">foods:</span><br><span class="line">    - Apple</span><br><span class="line">    - Orange</span><br><span class="line">    - Strawberry</span><br><span class="line">    - Mango</span><br><span class="line">languages:</span><br><span class="line">    ruby: Elite</span><br><span class="line">    python: Elite</span><br><span class="line">    dotnet: Lame</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/03/other-lang/JSon语法格式/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/03/other-lang/JSon语法格式/" itemprop="url">JSon语法格式</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T12:45:25+08:00">
-                2018-03-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/other-lang/" itemprop="url" rel="index">
-                    <span itemprop="name">other_lang</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/other-lang/JSon/" itemprop="url" rel="index">
-                    <span itemprop="name">JSon</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>JSon格式<br>简直对</p>
-
           
         
       
@@ -6214,184 +7129,6 @@ CREATE DATABASE tmall DEFAULT CHARACTER SET utf8;
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/13/JavaEE_tomcat/02_Java服务器容器tomcat（配置）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/13/JavaEE_tomcat/02_Java服务器容器tomcat（配置）/" itemprop="url">02_Java服务器容器tomcat（配置）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T09:23:24+08:00">
-                2017-12-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaEE/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaEE</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaEE/tomcat/" itemprop="url" rel="index">
-                    <span itemprop="name">tomcat</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="windows独立环境下"><a href="#windows独立环境下" class="headerlink" title="windows独立环境下"></a>windows独立环境下</h2><p>下载：从tomcat官网下载tomcat最新版本的tomcat。<br>一旦下载了tomcat（tomcat包是免安装版本的），解压到方便的位置。例如，在您的windows系统中，则可以解压在C:\Apache Tomcat v7.0。<br><em>可选步骤：在windows环境变量里设置环境变量。</em></p>
-<p>windows系统，独立环境下，Tomcat服务器启动方式：</p>
-<ul>
-<li>进入tomcat目录，双击startup.bat。mac平台双击startup.sh。</li>
-<li>进入控制台窗口，进入tomcat的bin目录下，运行startup.bat文件。</li>
-<li>验证：浏览器输入：<a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a></li>
-</ul>
-<p>windows系统，独立环境下，Tomcat服务器停止方式</p>
-<ul>
-<li>关闭tomcat运行窗口。</li>
-<li>tomcat下bin目录，运行shutdown.bat文件。</li>
-</ul>
-<p>设置ClASSPATH：</p>
-<ul>
-<li><strong>由于Servlet不是Java平台的标准组成部分，所以您需要为编译器指定Servlet类的路径。</strong></li>
-<li><strong>点击：计算机—&gt;属性—&gt;高级—&gt;环境变量—&gt;CLASSPATH，设置CLASSPATH的值。</strong></li>
-<li><strong>设置成：tomcat安装目录（D:\Apache Tomcat v7.0\lib\servlet-api.jar）</strong></li>
-</ul>
-<h2 id="eclipse开发工具中，tomcat环境搭建"><a href="#eclipse开发工具中，tomcat环境搭建" class="headerlink" title="eclipse开发工具中，tomcat环境搭建"></a>eclipse开发工具中，tomcat环境搭建</h2><p>已经配置好jdk。<br>已经安装好eclipse，能够正确运行。<br>进入：eclipse—&gt;preferences—&gt;server—&gt;runtime environment—&gt;add—&gt;选择tomcat版本。这里需要注意的是tomcat版本和javaEE版本是否支持。<br>选择next：<br>输入tomcat需要设置的名字（name）；<br>选择tomcat服务器的安装目录，这里选择的是已经在windows系统在独立安装好的tomcat路径。（当然，我们也可以在eclipse中临时下载和安装，参照下面一个步骤）<br><em>可选步骤：eclipse中下载安装tomcat，点击download and install</em><br>选择JRE：选择工作平台默认的JRE就可以了。<br>点击finish，配置完成。</p>
-<h2 id="eclipse项目中，引用设置好的tomcat服务器。"><a href="#eclipse项目中，引用设置好的tomcat服务器。" class="headerlink" title="eclipse项目中，引用设置好的tomcat服务器。"></a>eclipse项目中，引用设置好的tomcat服务器。</h2><p>Dynamic web project</p>
-<ul>
-<li>新建项目，点击target runtime，选择需要设置的tomcat服务器。<br>普通project</li>
-<li>未总结</li>
-</ul>
-<h2 id="win独立tomcat启动方式和eclipse中启动方式（区别联系）"><a href="#win独立tomcat启动方式和eclipse中启动方式（区别联系）" class="headerlink" title="win独立tomcat启动方式和eclipse中启动方式（区别联系）"></a>win独立tomcat启动方式和eclipse中启动方式（区别联系）</h2><p><strong>win独立的：</strong><br>进入目录：startup.bat文件<br>localhost:8080，验证成功<br>项目存放在webapp目录下面</p>
-<p><strong>eclipse中：</strong><br>eclipse中启动<br>localhost:8080，验证出现404<br>localhost:8080+项目，验证成功<br>项目存放在eclipse的工作空间<br>项目运行：eclipse工作空间.metadata目录下</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/13/JavaEE_servlet/01_Java网络服务器连接库servlet（概述）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -6743,6 +7480,184 @@ CREATE DATABASE tmall DEFAULT CHARACTER SET utf8;
 <h2 id="Host组件（比Engine组件级别小一级的容器组件。）"><a href="#Host组件（比Engine组件级别小一级的容器组件。）" class="headerlink" title="Host组件（比Engine组件级别小一级的容器组件。）"></a>Host组件（比Engine组件级别小一级的容器组件。）</h2><p>就是我们所理解的虚拟主机。<br>Host组成<br>Context组件（Host可以包含多个Context组件，是比Host容器级别小一级的容器组件。）<br>Listener组件<br>AccessLog组件<br>Cluster组件<br>Pipeline组件<br>Realm组件</p>
 <h2 id="Context组件（比Host容器级别小一级的容器组件。）"><a href="#Context组件（比Host容器级别小一级的容器组件。）" class="headerlink" title="Context组件（比Host容器级别小一级的容器组件。）"></a>Context组件（比Host容器级别小一级的容器组件。）</h2><p>Context组件就是web应用的抽象，我们开发的web应用部署到tomcat后，运行时就会转化成Context对象。<br>Context组件组成<br>各种静态资源<br>若干个Servlet（wrapper容器）<br>其他动态资源。<br>Listener组件<br>AccessLog组件<br>Pipeline组件<br>Realm组件<br>Loader组件<br>Manager组件<br>NamingResource组件<br>Mapper组件</p>
 <h2 id="Wrapper组件（比context级别小一级的容器组件）"><a href="#Wrapper组件（比context级别小一级的容器组件）" class="headerlink" title="Wrapper组件（比context级别小一级的容器组件）"></a>Wrapper组件（比context级别小一级的容器组件）</h2><p>Wrapper组件（比context级别小一级的容器组件）<br>wrapper容器是tomcat中4个级别最小的容器。与之对应的是Servlet，一个wrapper对应一个Servlet。<br>wrapper组件组成<br>servlet组件<br>ServletPool组件<br>Servllet对象池，当web应用的servlet实现了SingleThreadModel接口时，则会在wrapper中产生一个Servlet对象池。<br>线程执行时，需先从对象池中获取到一个Servlet对象，ServletPool组件能够保证Servlet对象的线程安全。<br>Pipeline组件</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/13/JavaEE_tomcat/02_Java服务器容器tomcat（配置）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/13/JavaEE_tomcat/02_Java服务器容器tomcat（配置）/" itemprop="url">02_Java服务器容器tomcat（配置）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T09:23:24+08:00">
+                2017-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaEE/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaEE</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaEE/tomcat/" itemprop="url" rel="index">
+                    <span itemprop="name">tomcat</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="windows独立环境下"><a href="#windows独立环境下" class="headerlink" title="windows独立环境下"></a>windows独立环境下</h2><p>下载：从tomcat官网下载tomcat最新版本的tomcat。<br>一旦下载了tomcat（tomcat包是免安装版本的），解压到方便的位置。例如，在您的windows系统中，则可以解压在C:\Apache Tomcat v7.0。<br><em>可选步骤：在windows环境变量里设置环境变量。</em></p>
+<p>windows系统，独立环境下，Tomcat服务器启动方式：</p>
+<ul>
+<li>进入tomcat目录，双击startup.bat。mac平台双击startup.sh。</li>
+<li>进入控制台窗口，进入tomcat的bin目录下，运行startup.bat文件。</li>
+<li>验证：浏览器输入：<a href="http://localhost:8080/" target="_blank" rel="noopener">http://localhost:8080/</a></li>
+</ul>
+<p>windows系统，独立环境下，Tomcat服务器停止方式</p>
+<ul>
+<li>关闭tomcat运行窗口。</li>
+<li>tomcat下bin目录，运行shutdown.bat文件。</li>
+</ul>
+<p>设置ClASSPATH：</p>
+<ul>
+<li><strong>由于Servlet不是Java平台的标准组成部分，所以您需要为编译器指定Servlet类的路径。</strong></li>
+<li><strong>点击：计算机—&gt;属性—&gt;高级—&gt;环境变量—&gt;CLASSPATH，设置CLASSPATH的值。</strong></li>
+<li><strong>设置成：tomcat安装目录（D:\Apache Tomcat v7.0\lib\servlet-api.jar）</strong></li>
+</ul>
+<h2 id="eclipse开发工具中，tomcat环境搭建"><a href="#eclipse开发工具中，tomcat环境搭建" class="headerlink" title="eclipse开发工具中，tomcat环境搭建"></a>eclipse开发工具中，tomcat环境搭建</h2><p>已经配置好jdk。<br>已经安装好eclipse，能够正确运行。<br>进入：eclipse—&gt;preferences—&gt;server—&gt;runtime environment—&gt;add—&gt;选择tomcat版本。这里需要注意的是tomcat版本和javaEE版本是否支持。<br>选择next：<br>输入tomcat需要设置的名字（name）；<br>选择tomcat服务器的安装目录，这里选择的是已经在windows系统在独立安装好的tomcat路径。（当然，我们也可以在eclipse中临时下载和安装，参照下面一个步骤）<br><em>可选步骤：eclipse中下载安装tomcat，点击download and install</em><br>选择JRE：选择工作平台默认的JRE就可以了。<br>点击finish，配置完成。</p>
+<h2 id="eclipse项目中，引用设置好的tomcat服务器。"><a href="#eclipse项目中，引用设置好的tomcat服务器。" class="headerlink" title="eclipse项目中，引用设置好的tomcat服务器。"></a>eclipse项目中，引用设置好的tomcat服务器。</h2><p>Dynamic web project</p>
+<ul>
+<li>新建项目，点击target runtime，选择需要设置的tomcat服务器。<br>普通project</li>
+<li>未总结</li>
+</ul>
+<h2 id="win独立tomcat启动方式和eclipse中启动方式（区别联系）"><a href="#win独立tomcat启动方式和eclipse中启动方式（区别联系）" class="headerlink" title="win独立tomcat启动方式和eclipse中启动方式（区别联系）"></a>win独立tomcat启动方式和eclipse中启动方式（区别联系）</h2><p><strong>win独立的：</strong><br>进入目录：startup.bat文件<br>localhost:8080，验证成功<br>项目存放在webapp目录下面</p>
+<p><strong>eclipse中：</strong><br>eclipse中启动<br>localhost:8080，验证出现404<br>localhost:8080+项目，验证成功<br>项目存放在eclipse的工作空间<br>项目运行：eclipse工作空间.metadata目录下</p>
 
           
         
@@ -8951,6 +9866,1729 @@ lo    Link encap:Local Loopback
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/09_win远程连接linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/09_win远程连接linux/" itemprop="url">01_win远程桌面连接win</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux-ssh/" itemprop="url" rel="index">
+                    <span itemprop="name">linux_ssh</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="telnet协议"><a href="#telnet协议" class="headerlink" title="telnet协议"></a>telnet协议</h2><p>Telnet协议是TCP/IP协议族中的一员，是Internet远程登陆服务的<strong>标准协议</strong>和主要方式。<br>Telnet服务虽然也属于客户机/服务器模型的服务，但它更大的意义在于实现了基于Telnet协议的远程登录。<br>telnet的默认端口号为25。<br>telnet协议不安全。传输未加密。</p>
+<h2 id="telnet服务端"><a href="#telnet服务端" class="headerlink" title="telnet服务端"></a>telnet服务端</h2><p>windows开启telnet服务端。<br>控制面板-&gt;程序功能 -&gt;启用或关闭windows功能-&gt;勾选telnet服务端<br>勾选之后，需要重新启动电脑，服务生效。</p>
+<pre><code>也可以使用dos命令启动：
+</code></pre><p>然后，内网计算机可以使用远程连接到此计算机。</p>
+<h2 id="telnet客户端"><a href="#telnet客户端" class="headerlink" title="telnet客户端"></a>telnet客户端</h2><p>windows开启telnet客户端。<br>控制面板-&gt;程序功能 -&gt;启用或关闭windows功能-&gt;勾选telnet客户端。<br>勾选之后，telnet客户端程序可以即刻运行，连接远程桌面。</p>
+<pre><code>也可以使用dos命令启动
+</code></pre><h2 id="win远程桌面连接"><a href="#win远程桌面连接" class="headerlink" title="win远程桌面连接"></a>win远程桌面连接</h2><p>找到win的远程桌面连接工具；系统默认自带。<br>输入远程的ip<br>登录user和password<br>即可实现控制远程win计算机。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践02（user用户状态id和name）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践02（user用户状态id和name）/" itemprop="url">01_linux权限实践02（user用户状态id和name）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>用户user管理内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户状态查看（用户名，所属组，家目录，shell等）</span><br><span class="line">用户账号的添加、删除与修改。</span><br><span class="line">用户口令的管理。</span><br><span class="line">用户组的管理。</span><br></pre></td></tr></table></figure></p>
+<p>查看用户状态<br>用户的状态包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">用户id和name</span><br><span class="line">默认组id和name</span><br><span class="line">附加组id和name</span><br><span class="line"></span><br><span class="line">用户登录（锁定状态）</span><br></pre></td></tr></table></figure></p>
+<p>id username：查看用户的用户id，默认组id，附加组id<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">不加参数表示：查看当前用户</span><br><span class="line">ubuntu@VM-0-13-ubuntu:/root$ id</span><br><span class="line">uid=500(ubuntu) gid=500(ubuntu) groups=500(ubuntu),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),115(lpadmin),116(sambashare)</span><br><span class="line">**分别显示**</span><br><span class="line">**用户id**用户组id**附加组id 附加组id 附加组id 附加组id xxx xxx xxx**</span><br></pre></td></tr></table></figure></p>
+<p>id -g USERNAME：查看用户的默认组id<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@VM-0-13-ubuntu:/root$ id -g</span><br><span class="line">500</span><br><span class="line">**不加username参数，表示当前用户**</span><br><span class="line"></span><br><span class="line">ubuntu@VM-0-13-ubuntu:/root$ id -g root</span><br><span class="line">0</span><br><span class="line">**查看root用户的默认组id</span><br></pre></td></tr></table></figure></p>
+<p>id -G USERNAME：显示附加组ID<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@VM-0-13-ubuntu:/root$ id -G</span><br><span class="line">500 4 24 27 30 46 115 116</span><br><span class="line">**查看当前用户的附加组id**</span><br><span class="line"></span><br><span class="line">ubuntu@VM-0-13-ubuntu:/root$ id -G root</span><br><span class="line">0</span><br><span class="line">**查看root用户的附加组id**</span><br></pre></td></tr></table></figure></p>
+<p>id -u USERNAME：显示UID<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@VM-0-13-ubuntu:/root$ id -u</span><br><span class="line">500</span><br><span class="line">**查看当前用户id**</span><br><span class="line"></span><br><span class="line">ubuntu@VM-0-13-ubuntu:/root$ id -u root</span><br><span class="line">0</span><br><span class="line">**查看root用户id**</span><br></pre></td></tr></table></figure></p>
+<p>id -n -g/-G/-U：显示默认组/附加组/用户的<strong>名称</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">ubuntu@VM-0-13-ubuntu:/root$ id -n -g</span><br><span class="line">ubuntu</span><br><span class="line">**显示用户默认组的名称**</span><br><span class="line"></span><br><span class="line">ubuntu@VM-0-13-ubuntu:/root$ id -n -g root</span><br><span class="line">root</span><br><span class="line">**显示用户默认组的名称**</span><br><span class="line"></span><br><span class="line">ubuntu@VM-0-13-ubuntu:/root$ id -n -G</span><br><span class="line">ubuntu adm cdrom sudo dip plugdev lpadmin sambashare</span><br><span class="line">**显示用户附加组的名称**</span><br><span class="line"></span><br><span class="line">ubuntu@VM-0-13-ubuntu:/root$ id -n -G root</span><br><span class="line">root</span><br><span class="line">**显示用户附加组的名称**</span><br><span class="line"></span><br><span class="line">ubuntu@VM-0-13-ubuntu:/root$ id -n -u</span><br><span class="line">ubuntu</span><br><span class="line">**显示用户的名称**</span><br><span class="line"></span><br><span class="line">ubuntu@VM-0-13-ubuntu:/root$ id -n -u root</span><br><span class="line">root</span><br><span class="line">**显示用户的名称**</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践08（group用户组管理）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践08（group用户组管理）/" itemprop="url">01_linux_用户组</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>linux用户管理的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户状态查看（用户名，所属组，家目录，shell等）</span><br><span class="line">用户账号的添加、删除与修改。</span><br><span class="line">用户口令的管理。</span><br><span class="line">用户组的管理。</span><br></pre></td></tr></table></figure></p>
+<p>用户组管理</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践07（etc-group文件）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践07（etc-group文件）/" itemprop="url">01_linux_用户组</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>用户组配置文件group<br>用户组名称：密码占位符：用户组id：用户组包含的用户1，用户2，用户3…<br>我们自己创建的用户组，id都是大于1000<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">root@VM-0-13-ubuntu:~# cat /etc/group</span><br><span class="line">root:x:0:</span><br><span class="line">daemon:x:1:</span><br><span class="line">bin:x:2:</span><br><span class="line">sys:x:3:</span><br><span class="line">adm:x:4:syslog,ubuntu</span><br><span class="line">tty:x:5:</span><br><span class="line">disk:x:6:</span><br><span class="line">lp:x:7:</span><br><span class="line">mail:x:8:</span><br><span class="line">news:x:9:</span><br><span class="line">uucp:x:10:</span><br><span class="line">man:x:12:</span><br><span class="line">proxy:x:13:</span><br><span class="line">kmem:x:15:</span><br><span class="line">dialout:x:20:</span><br><span class="line">fax:x:21:</span><br><span class="line">voice:x:22:</span><br><span class="line">cdrom:x:24:ubuntu</span><br><span class="line">floppy:x:25:</span><br><span class="line">tape:x:26:</span><br><span class="line">sudo:x:27:ubuntu</span><br><span class="line">audio:x:29:</span><br><span class="line">dip:x:30:ubuntu</span><br><span class="line">backup:x:34:</span><br><span class="line">operator:x:37:</span><br><span class="line">list:x:38:</span><br><span class="line">irc:x:39:</span><br><span class="line">src:x:40:</span><br><span class="line">gnats:x:41:</span><br><span class="line">shadow:x:42:</span><br><span class="line">utmp:x:43:</span><br><span class="line">video:x:44:</span><br><span class="line">sasl:x:45:</span><br><span class="line">plugdev:x:46:ubuntu</span><br><span class="line">staff:x:50:</span><br><span class="line">games:x:60:</span><br><span class="line">users:x:100:</span><br><span class="line">nogroup:x:65534:</span><br><span class="line">systemd-journal:x:101:</span><br><span class="line">systemd-timesync:x:102:</span><br><span class="line">systemd-network:x:103:</span><br><span class="line">systemd-resolve:x:104:</span><br><span class="line">systemd-bus-proxy:x:105:</span><br><span class="line">input:x:106:</span><br><span class="line">crontab:x:107:</span><br><span class="line">syslog:x:108:</span><br><span class="line">netdev:x:109:</span><br><span class="line">lxd:x:110:</span><br><span class="line">messagebus:x:111:</span><br><span class="line">uuidd:x:112:</span><br><span class="line">mlocate:x:113:</span><br><span class="line">ssh:x:114:</span><br><span class="line">ubuntu:x:500:</span><br><span class="line">lpadmin:x:115:ubuntu</span><br><span class="line">sambashare:x:116:ubuntu</span><br><span class="line">ntp:x:117:</span><br><span class="line">www:x:1000:</span><br><span class="line">www-git:x:1002:</span><br><span class="line">www-web:x:1003:</span><br></pre></td></tr></table></figure></p>
+<p>几个重要的组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo组：可以执行sudo命令</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/02_linux文件实践03（为用户修改rwx权限）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/02_linux文件实践03（为用户修改rwx权限）/" itemprop="url">02_linux文件实践01（查看文件详细信息）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>linux文件的详细信息包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">文件类型（目录&amp;文件）</span><br><span class="line"></span><br><span class="line">文件所有者的权限（r读，w写，x执行）</span><br><span class="line">文件所属组的权限（r读，w写，x执行）</span><br><span class="line">其他用户的权限（r读，w写，x执行）</span><br><span class="line"></span><br><span class="line">链接个数（数字表示）</span><br><span class="line"></span><br><span class="line">文件所有者username</span><br><span class="line">文件所属组groupname</span><br><span class="line">长度（kb）</span><br><span class="line">月+日+时间</span><br><span class="line"></span><br><span class="line">文件的名称（目录&amp;文件）</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践03（user用户帐号管理）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践03（user用户帐号管理）/" itemprop="url">01_linux权限实践03（user用户帐号管理）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>用户user管理内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户状态查看（用户名，所属组，家目录，shell等）</span><br><span class="line">用户账号的添加、删除与修改。</span><br><span class="line">用户口令的管理。</span><br><span class="line">用户组的管理。</span><br></pre></td></tr></table></figure></p>
+<p>用户帐号管理包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">添加新用户</span><br><span class="line">删除用户</span><br><span class="line">用户组更改</span><br><span class="line">等等</span><br></pre></td></tr></table></figure></p>
+<p>添加新用户</p>
+<p>命令：useradd<br>格式：useradd 选项 用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">参数说明：</span><br><span class="line">选项:</span><br><span class="line">-c comment 指定一段注释性描述。</span><br><span class="line">-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。</span><br><span class="line">-g 用户组 指定用户所属的用户组。</span><br><span class="line">-G 附加组指定用户所属的附加组。</span><br><span class="line">-s Shell文件 指定用户的登录Shell。</span><br><span class="line">-u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。</span><br><span class="line"></span><br><span class="line">用户名:</span><br><span class="line">指定新账号的登录名。</span><br></pre></td></tr></table></figure></p>
+<p>示例：添加用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd -d /home/git -m </span><br><span class="line">注意：-d表示指定用户主目录，-m表示主目录不存在就创建该目录。</span><br></pre></td></tr></table></figure></p>
+<p>删除用户<br>命令：userdel<br>格式：user 选项 用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">常用的选项是 -r，它的作用是把用户的主目录一起删除。</span><br></pre></td></tr></table></figure></p>
+<p>示例：删除用户git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">userdel -r git</span><br><span class="line">此命令删除用户sam在系统文件中（主要是/etc/passwd, /etc/shadow, /etc/group等）的记录，同时删除用户的主目录。</span><br></pre></td></tr></table></figure></p>
+<p>修改用户<br>修改用户账号就是根据实际情况更改用户的有关属性，如用户号、主目录、用户组、登录Shell等。<br>命令：usermod 选项 用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">选项：</span><br><span class="line">-c comment 指定一段注释性描述。</span><br><span class="line">-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。  </span><br><span class="line">-g 用户组 指定用户所属的用户组。</span><br><span class="line">-G 用户组，用户组 指定用户所属的附加组</span><br><span class="line">-s Shell文件 指定用户的登录Shell。</span><br><span class="line">-u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。</span><br><span class="line"></span><br><span class="line">用户名</span><br></pre></td></tr></table></figure></p>
+<p>示例：为用户添加一段注释描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -c &apos;github code&apos;</span><br></pre></td></tr></table></figure></p>
+<p>示例：修改用户工作目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -s /bin/ksh -d /home/z –g developer sam</span><br></pre></td></tr></table></figure></p>
+<p>实例：修改用户所属用户组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">usermod -g git git-github</span><br><span class="line">将git-github添加到git组</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/02_linux文件实践02（修改文件所以者）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/02_linux文件实践02（修改文件所以者）/" itemprop="url">02_linux文件实践01（ll文件详细信息）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>linux文件的详细信息包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">文件类型（目录&amp;文件）</span><br><span class="line"></span><br><span class="line">文件所有者的权限（r读，w写，x执行）</span><br><span class="line">文件所属组的权限（r读，w写，x执行）</span><br><span class="line">其他用户的权限（r读，w写，x执行）</span><br><span class="line"></span><br><span class="line">链接个数（数字表示）</span><br><span class="line"></span><br><span class="line">文件所有者username</span><br><span class="line">文件所属组groupname</span><br><span class="line">长度（kb）</span><br><span class="line">月+日+时间</span><br><span class="line"></span><br><span class="line">文件的名称（目录&amp;文件）</span><br></pre></td></tr></table></figure></p>
+<p>修改文件的所有者<br>命令：chowm （change owner 的缩写）<br>格式：chowm [-R] 用户user 文件目录<br>选项：-R 表示递归，目录修改时，需要使用-R选项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R git-github git-github</span><br><span class="line">chowm git-github test.txt</span><br></pre></td></tr></table></figure></p>
+<p>修改文件的所在的组<br>命令：chgrp（change group 的缩写）<br>格式：chgrp [-R] 所在组 文件目录<br>选项：-R 表示递归，目录修改时，需要使用-R选项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chgrp -R git git-github</span><br><span class="line">chgrp git test.txt</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践05（user用户shell管理）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践05（user用户shell管理）/" itemprop="url">01_linux权限实践05（user用户shell管理）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>用户shell管理内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">用户的shell表示：该用户操作linux使用的shell的版本。</span><br><span class="line">例子：</span><br><span class="line">root用户的shell为：/bin/bash</span><br><span class="line">表示root用户操作linux的shell版本是bash</span><br><span class="line"></span><br><span class="line">例子：</span><br><span class="line">sshd（ssh服务端程序）用户的shell为：/usr/sbin/nologin</span><br><span class="line">表示sshd程序不可以登录到linux系统</span><br></pre></td></tr></table></figure></p>
+<p>实践1（为某用户设置git-shell，使该用户只有git提交代码的权限）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root登录</span><br><span class="line">查看linux是否安装git（命令：git --version）</span><br><span class="line">创建git-username用户</span><br><span class="line">修该该用户的shell为git-shell</span><br><span class="line"></span><br><span class="line">root@xxx.xxx.xx.xx</span><br><span class="line">命令</span><br><span class="line">root@VM-0-13-ubuntu:/usr/bin# useradd git-github</span><br><span class="line">root@VM-0-13-ubuntu:/usr/bin# usermod -s /usr/bin/git-shell git-github</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践01（eth-passwd文件） /">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践01（eth-passwd文件） /" itemprop="url">01_linux权限实践01（eth-passwd文件）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>已经开始接触Linux用户管理，用户组管理，以及权限管理这几个逼格满满的关键字。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">用户管理</span><br><span class="line">用户组管理</span><br><span class="line">权限管理</span><br></pre></td></tr></table></figure></p>
+<p>/etc/passwd 说起<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">从广义上来说，任何能保存数据的东东都可以叫做数据库。比如文本。</span><br><span class="line"></span><br><span class="line">passwd文件就是一个用户管理，用户组管理，权限管理，的数据库。</span><br></pre></td></tr></table></figure></p>
+<p>etc/passwd文件，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">root:x:0:0:root:/root:/bin/bash</span><br><span class="line">daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin</span><br><span class="line">bin:x:2:2:bin:/bin:/usr/sbin/nologin</span><br><span class="line">sys:x:3:3:sys:/dev:/usr/sbin/nologin</span><br><span class="line">sync:x:4:65534:sync:/bin:/bin/sync</span><br><span class="line">games:x:5:60:games:/usr/games:/usr/sbin/nologin</span><br><span class="line">man:x:6:12:man:/var/cache/man:/usr/sbin/nologin</span><br><span class="line">lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin</span><br><span class="line">mail:x:8:8:mail:/var/mail:/usr/sbin/nologin</span><br><span class="line">news:x:9:9:news:/var/spool/news:/usr/sbin/nologin</span><br><span class="line">uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin</span><br><span class="line">proxy:x:13:13:proxy:/bin:/usr/sbin/nologin</span><br><span class="line">www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin</span><br><span class="line">backup:x:34:34:backup:/var/backups:/usr/sbin/nologin</span><br><span class="line">list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin</span><br><span class="line">irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin</span><br><span class="line">gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin</span><br><span class="line">nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin</span><br><span class="line">systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false</span><br><span class="line">systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false</span><br><span class="line">systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false</span><br><span class="line">systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false</span><br><span class="line">syslog:x:104:108::/home/syslog:/bin/false</span><br><span class="line">_apt:x:105:65534::/nonexistent:/bin/false</span><br><span class="line">lxd:x:106:65534::/var/lib/lxd/:/bin/false</span><br><span class="line">messagebus:x:107:111::/var/run/dbus:/bin/false</span><br><span class="line">uuidd:x:108:112::/run/uuidd:/bin/false</span><br><span class="line">dnsmasq:x:109:65534:dnsmasq,,,:/var/lib/misc:/bin/false</span><br><span class="line">sshd:x:110:65534::/var/run/sshd:/usr/sbin/nologin</span><br><span class="line">ubuntu:x:500:500:ubuntu,,,:/home/ubuntu:/bin/bash</span><br><span class="line">ntp:x:111:117::/home/ntp:/bin/false</span><br><span class="line">usrgithub:x:1000:1001::/home/github/:</span><br></pre></td></tr></table></figure></p>
+<p>分析passwd文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">每一行文本都有数个英文格式的冒号（:) ，它们对每一行文本进行了分割　　　　</span><br><span class="line">仔细数一数，每行文本的冒号数量都是相同的</span><br><span class="line">再仔细数一数，如果我们把冒号前后的东东叫字段的话，每行文本中的字段数目都是相同的（包括空字段）</span><br><span class="line"></span><br><span class="line">首行的 root 和尾行的 usrgithub，就是我们的两个账户。</span><br><span class="line"></span><br><span class="line">/etc/passwd 保存了用户相关的信息，包括用户名，密码，所属组等等。</span><br></pre></td></tr></table></figure></p>
+<p>/etc/passwd 中的字段分析<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">行记录：root:x:0:0:root:/root:/bin/bash</span><br><span class="line">每一个字段依次表示：</span><br><span class="line">root：用户名</span><br><span class="line">x：密码占位符</span><br><span class="line">0：用户ID</span><br><span class="line">0：用户组ID</span><br><span class="line">root：注释信息</span><br><span class="line">/root：用户家目录</span><br><span class="line">/bin/bash：该用户的默认shell</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践04（user用户登录口令管理）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践04（user用户登录口令管理）/" itemprop="url">linux权限实践04（user用户登录口令管理）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>用户user管理内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户状态查看（用户名，所属组，家目录，shell等）</span><br><span class="line">用户账号的添加、删除与修改。</span><br><span class="line">用户口令的管理。</span><br><span class="line">用户组的管理。</span><br></pre></td></tr></table></figure></p>
+<p>用户登录口令管理包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">设置口令</span><br><span class="line">删除口令</span><br><span class="line">锁定口令</span><br><span class="line">解锁口令</span><br></pre></td></tr></table></figure></p>
+<p>用户口令管理</p>
+<p>用户管理的一项重要内容是用户口令的管理。<br>用户账号刚创建时没有口令，但是被系统锁定，无法使用，必须为其指定口令后才可以使用，即使是指定空口令。</p>
+<p>指定和修改用户口令的Shell命令是passwd。<br>超级用户可以为自己和其他用户指定口令，普通用户只能用它修改自己的口令。<br>命令的格式为： passwd 选项 用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">选项：</span><br><span class="line">-l 锁定口令，即禁用账号。</span><br><span class="line">-u 口令解锁。</span><br><span class="line">-d 使账号无口令。</span><br><span class="line">-f 强迫用户下次登录时修改口令。</span><br><span class="line"></span><br><span class="line">用户名：表示需要操作的用户（不加用户名，表示当前用户）</span><br></pre></td></tr></table></figure></p>
+<p>示例：普通用户修改当前用户口令（普通用户只有修改自己密码权限）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">当前用户密码为空</span><br><span class="line">passwd</span><br><span class="line">newpassword（输入新的密码）</span><br><span class="line">    </span><br><span class="line">当前用户已有密码</span><br><span class="line">passwd</span><br><span class="line">oldpassword（输入旧的密码）</span><br><span class="line">newpassword（输入新的密码）</span><br><span class="line">re-enter newpassword（确认新的密码）</span><br></pre></td></tr></table></figure></p>
+<p>示例：超级用户修改密码（超级用户权限最大）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">超级用户root修改普通用户username密码口令</span><br><span class="line">passwd username</span><br><span class="line">old password</span><br><span class="line">new password</span><br><span class="line">注意：超级用户修改普通用户的口令，可以不需要原来的密码口令，直接指定新的密码口令。</span><br></pre></td></tr></table></figure></p>
+<p>示例：为用户指定空口令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">passwd -d username</span><br><span class="line">**也就是删除口令**</span><br></pre></td></tr></table></figure></p>
+<p>示例：锁定某用户，使其<strong>暂时不能登录</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">passwd -l username</span><br><span class="line">**锁定某个用户的口令，使得该口令暂时无法登录</span><br></pre></td></tr></table></figure></p>
+<p>实践1（忘记用户a口令）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root登录</span><br><span class="line">删除用户a口令</span><br><span class="line">切换至用户a</span><br><span class="line">重新设置用户a口令</span><br><span class="line"></span><br><span class="line">root@xxx.xxx.xx.xx</span><br><span class="line">passwd -d aaa</span><br><span class="line">passwd: password expiry information changed.</span><br><span class="line">su aaa</span><br><span class="line">passwd</span><br><span class="line">Enter new UNIX password:</span><br><span class="line">Retype new UNIX password:</span><br><span class="line">passwd: password updated successfully</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/02_linux文件实践01（查看文件详细信息）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/02_linux文件实践01（查看文件详细信息）/" itemprop="url">02_linux文件实践01（查看文件详细信息）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>linux文件的详细信息包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">文件类型（目录&amp;文件）</span><br><span class="line"></span><br><span class="line">文件所有者的权限（r读，w写，x执行）</span><br><span class="line">文件所属组的权限（r读，w写，x执行）</span><br><span class="line">其他用户的权限（r读，w写，x执行）</span><br><span class="line"></span><br><span class="line">链接个数（数字表示）</span><br><span class="line"></span><br><span class="line">文件所有者username</span><br><span class="line">文件所属组groupname</span><br><span class="line">长度（kb）</span><br><span class="line">月+日+时间</span><br><span class="line"></span><br><span class="line">文件的名称（目录&amp;文件）</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/08_win远程桌面连接win/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -9110,7 +11748,7 @@ lo    Link encap:Local Loopback
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/09_win远程连接linux/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux_cd/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -9129,7 +11767,7 @@ lo    Link encap:Local Loopback
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/03/remote_connection/09_win远程连接linux/" itemprop="url">01_win远程桌面连接win</a></h1>
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux_cd/" itemprop="url">01_linux_cd</a></h1>
         
 
         <div class="post-meta">
@@ -9175,8 +11813,8 @@ lo    Link encap:Local Loopback
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/linux-ssh/" itemprop="url" rel="index">
-                    <span itemprop="name">linux_ssh</span>
+                  <a href="/categories/remote-connection/linux路径命令/" itemprop="url" rel="index">
+                    <span itemprop="name">linux路径命令</span>
                   </a>
                 </span>
 
@@ -9214,14 +11852,742 @@ lo    Link encap:Local Loopback
       
         
           
-            <h2 id="telnet协议"><a href="#telnet协议" class="headerlink" title="telnet协议"></a>telnet协议</h2><p>Telnet协议是TCP/IP协议族中的一员，是Internet远程登陆服务的<strong>标准协议</strong>和主要方式。<br>Telnet服务虽然也属于客户机/服务器模型的服务，但它更大的意义在于实现了基于Telnet协议的远程登录。<br>telnet的默认端口号为25。<br>telnet协议不安全。传输未加密。</p>
-<h2 id="telnet服务端"><a href="#telnet服务端" class="headerlink" title="telnet服务端"></a>telnet服务端</h2><p>windows开启telnet服务端。<br>控制面板-&gt;程序功能 -&gt;启用或关闭windows功能-&gt;勾选telnet服务端<br>勾选之后，需要重新启动电脑，服务生效。</p>
-<pre><code>也可以使用dos命令启动：
-</code></pre><p>然后，内网计算机可以使用远程连接到此计算机。</p>
-<h2 id="telnet客户端"><a href="#telnet客户端" class="headerlink" title="telnet客户端"></a>telnet客户端</h2><p>windows开启telnet客户端。<br>控制面板-&gt;程序功能 -&gt;启用或关闭windows功能-&gt;勾选telnet客户端。<br>勾选之后，telnet客户端程序可以即刻运行，连接远程桌面。</p>
-<pre><code>也可以使用dos命令启动
-</code></pre><h2 id="win远程桌面连接"><a href="#win远程桌面连接" class="headerlink" title="win远程桌面连接"></a>win远程桌面连接</h2><p>找到win的远程桌面连接工具；系统默认自带。<br>输入远程的ip<br>登录user和password<br>即可实现控制远程win计算机。</p>
+            <p>命令名称：cd<br>命令格式：cd +参数<br>命令作用：切换工作目录</p>
+<p>示例：切换工作绝对路径</p>
+<pre><code>cd /user/bin/
+</code></pre><p>示例：切换到当前目录的上一级目录</p>
+<pre><code>cd ..
+</code></pre><p>示例：切换到当前目录的下一级目录（相对路径）</p>
+<pre><code>cd ./子目录
+例子：
+cd ./git
+</code></pre><p>示例：切换到当前用户user的家目录</p>
+<pre><code>cd ~
+</code></pre><p>示例：切换到上一次使用的工作目录（可以在两个目录间来回切换）</p>
+<pre><code>cd -
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux_chmod/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux_chmod/" itemprop="url">01_linux_用户</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux路径命令/" itemprop="url" rel="index">
+                    <span itemprop="name">linux路径命令</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>linux是一个多用户多任务的操作系统<br>实现用户账号的管理，要完成的工作主要有如下几个方面：</p>
+<pre><code>用户账号的添加、删除与修改。
+用户口令的管理。
+用户组的管理。 
+</code></pre><h2 id="添加新用户"><a href="#添加新用户" class="headerlink" title="添加新用户"></a>添加新用户</h2><p>命令：useradd<br>格式：useradd 选项 用户名<br>参数说明：</p>
+<pre><code>选项:
+    -c comment 指定一段注释性描述。
+    -d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。
+    -g 用户组 指定用户所属的用户组。
+    -G 用户组，用户组 指定用户所属的附加组。
+    -s Shell文件 指定用户的登录Shell。
+    -u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。
+
+用户名:
+指定新账号的登录名。
+</code></pre><p>示例：添加用户</p>
+<pre><code>useradd -d /home/git -m 
+注意：-d表示指定用户主目录，-m表示主目录不存在就创建该目录。
+</code></pre><h2 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h2><p>命令：userdel<br>格式：user 选项 用户名<br>常用的选项是 -r，它的作用是把用户的主目录一起删除。</p>
+<p>示例：删除用户git</p>
+<pre><code>userdel -r git
+此命令删除用户sam在系统文件中（主要是/etc/passwd, /etc/shadow, /etc/group等）的记录，同时删除用户的主目录。 
+</code></pre><h2 id="修改用户"><a href="#修改用户" class="headerlink" title="修改用户"></a>修改用户</h2><p>修改用户账号就是根据实际情况更改用户的有关属性，如用户号、主目录、用户组、登录Shell等。<br>命令：usermod 选项 用户名<br>选项：</p>
+<pre><code>-c comment 指定一段注释性描述。
+-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。  
+-g 用户组 指定用户所属的用户组。
+-G 用户组，用户组 指定用户所属的附加组
+-s Shell文件 指定用户的登录Shell。
+-u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。
+</code></pre><p>示例：修改用户工作目录</p>
+<pre><code>sermod -s /bin/ksh -d /home/z –g developer sam
+</code></pre><h2 id="用户口令管理"><a href="#用户口令管理" class="headerlink" title="用户口令管理"></a>用户口令管理</h2><p>用户管理的一项重要内容是用户口令的管理。<br>用户账号刚创建时没有口令，但是被系统锁定，无法使用，必须为其指定口令后才可以使用，即使是指定空口令。</p>
+<p>指定和修改用户口令的Shell命令是passwd。<br>超级用户可以为自己和其他用户指定口令，普通用户只能用它修改自己的口令。<br>命令的格式为： passwd 选项 用户名<br>选项：</p>
+<pre><code>-l 锁定口令，即禁用账号。
+-u 口令解锁。
+-d 使账号无口令。
+-f 强迫用户下次登录时修改口令。
+</code></pre><p>示例：普通用户修改当前用户口令（普通用户只有修改自己密码权限）</p>
+<pre><code>当前用户密码为空
+passwd
+newpassword（输入新的密码）
+
+当前用户已有密码
+passwd
+oldpassword（输入旧的密码）
+newpassword（输入新的密码）
+re-enter newpassword（确认新的密码）
+</code></pre><p>示例：超级用户修改密码（超级用户权限最大）</p>
+<pre><code>超级用户root修改普通用户username密码口令
+passwd username
+old password
+new password
+注意：超级用户修改普通用户的口令，可以不需要原来的密码口令，直接指定新的密码口令。
+</code></pre><p>示例：为用户指定空口令</p>
+<pre><code>passwd -d username
+</code></pre><p>示例：锁定某用户，使其不能登录</p>
+<pre><code>passwd -了username
+</code></pre><p>​    </p>
+<p>​    </p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux_kill/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux_kill/" itemprop="url">01_linux_kill</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux进程命令/" itemprop="url" rel="index">
+                    <span itemprop="name">linux进程命令</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>kill命令用于删除执行中的程序或工作。<br>命令名称：kill<br>命令格式：kill 选项 程序pPID&amp;工作变号<br>命令作用：杀死进程</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><pre><code>kill [-s &lt;信息名称或编号&gt;][程序]　或　kill [-l &lt;信息编号&gt;]
+</code></pre><p>参数说明：</p>
+<pre><code>-l &lt;信息编号&gt; 　若不加&lt;信息编号&gt;选项，则-l参数会列出全部的信息名称。
+-s &lt;信息名称或编号&gt; 　指定要送出的信息。
+[程序] 　[程序]可以是程序的PID或是PGID，也可以是工作编号。
+</code></pre><p>示例：杀死进程</p>
+<pre><code>kill 5423
+</code></pre><p>示例：强制杀死进程</p>
+<pre><code>kill -KILL 5423
+</code></pre><p>示例：彻底杀死进程</p>
+<pre><code>kill -9 5423
+</code></pre><p>示例：显示信号</p>
+<pre><code>root@VM-0-13-ubuntu:/home/ubuntu# kill -l
+1) SIGHUP       2) SIGINT       3) SIGQUIT      4) SIGILL       5) SIGTRAP
+6) SIGABRT      7) SIGBUS       8) SIGFPE       9) SIGKILL     10) SIGUSR1
+11) SIGSEGV     12) SIGUSR2     13) SIGPIPE     14) SIGALRM     15) SIGTERM
+16) SIGSTKFLT   17) SIGCHLD     18) SIGCONT     19) SIGSTOP     20) SIGTSTP
+21) SIGTTIN     22) SIGTTOU     23) SIGURG      24) SIGXCPU     25) SIGXFSZ
+26) SIGVTALRM   27) SIGPROF     28) SIGWINCH    29) SIGIO       30) SIGPWR
+31) SIGSYS      34) SIGRTMIN    35) SIGRTMIN+1  36) SIGRTMIN+2  37) SIGRTMIN+3
+38) SIGRTMIN+4  39) SIGRTMIN+5  40) SIGRTMIN+6  41) SIGRTMIN+7  42) SIGRTMIN+8
+43) SIGRTMIN+9  44) SIGRTMIN+10 45) SIGRTMIN+11 46) SIGRTMIN+12 47) SIGRTMIN+13
+48) SIGRTMIN+14 49) SIGRTMIN+15 50) SIGRTMAX-14 51) SIGRTMAX-13 52) SIGRTMAX-12
+53) SIGRTMAX-11 54) SIGRTMAX-10 55) SIGRTMAX-9  56) SIGRTMAX-8  57) SIGRTMAX-7
+58) SIGRTMAX-6  59) SIGRTMAX-5  60) SIGRTMAX-4  61) SIGRTMAX-3  62) SIGRTMAX-2
+63) SIGRTMAX-1  64) SIGRTMAX
+</code></pre><p>示例：杀死指定用户所有进程</p>
+<pre><code>kill -u usergit //杀死usergit用户的进程
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux_pwd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux_pwd/" itemprop="url">01_linux_cd</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux路径命令/" itemprop="url" rel="index">
+                    <span itemprop="name">linux路径命令</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>命令名称：cd<br>命令格式：cd +参数<br>命令作用：切换工作目录</p>
+<p>示例：切换工作绝对路径</p>
+<pre><code>cd /user/bin/
+</code></pre><p>示例：切换到当前目录的上一级目录</p>
+<pre><code>cd ..
+</code></pre><p>示例：切换到当前目录的下一级目录（相对路径）</p>
+<pre><code>cd ./子目录
+例子：
+cd ./git
+</code></pre><p>示例：切换到当前用户user的家目录</p>
+<pre><code>cd ~
+</code></pre><p>示例：切换到上一次使用的工作目录（可以在两个目录间来回切换）</p>
+<pre><code>cd -
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux_su/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux_su/" itemprop="url">01_linux_su</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux路径命令/" itemprop="url" rel="index">
+                    <span itemprop="name">linux路径命令</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>命令名称：su<br>命令格式：su 选项 参数<br>命令作用：切换当前使用用户</p>
+<p>示例：切换工作绝对路径</p>
+<pre><code>cd /user/bin/
+</code></pre><p>示例：切换到当前目录的上一级目录</p>
+<pre><code>cd ..
+</code></pre><p>示例：切换到当前目录的下一级目录（相对路径）</p>
+<pre><code>cd ./子目录
+例子：
+cd ./git
+</code></pre><p>示例：切换到当前用户user的家目录</p>
+<pre><code>cd ~
+</code></pre><p>示例：切换到上一次使用的工作目录（可以在两个目录间来回切换）</p>
+<pre><code>cd -
+</code></pre>
           
         
       
@@ -9555,6 +12921,161 @@ lo    Link encap:Local Loopback
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/java_lang/Java语法01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/01/java_lang/Java语法01/" itemprop="url">Java语法01</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
+                2016-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-lang/" itemprop="url" rel="index">
+                    <span itemprop="name">Java_lang</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-lang/a/" itemprop="url" rel="index">
+                    <span itemprop="name">a</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
           
         
       
@@ -10061,7 +13582,7 @@ lo    Link encap:Local Loopback
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/Java基本数据类型/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之继承/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -10080,7 +13601,7 @@ lo    Link encap:Local Loopback
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/01/01/Java/Java基本数据类型/" itemprop="url">Java基本数据类型</a></h1>
+                <a class="post-title-link" href="/2016/01/01/Java/面向对象之继承/" itemprop="url">面向对象之继承</a></h1>
         
 
         <div class="post-meta">
@@ -10126,8 +13647,8 @@ lo    Link encap:Local Loopback
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/数据类型/" itemprop="url" rel="index">
-                    <span itemprop="name">数据类型</span>
+                  <a href="/categories/Java/面向对象/" itemprop="url" rel="index">
+                    <span itemprop="name">面向对象</span>
                   </a>
                 </span>
 
@@ -10532,7 +14053,7 @@ lo    Link encap:Local Loopback
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之继承/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/Java基本数据类型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -10551,7 +14072,7 @@ lo    Link encap:Local Loopback
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/01/01/Java/面向对象之继承/" itemprop="url">面向对象之继承</a></h1>
+                <a class="post-title-link" href="/2016/01/01/Java/Java基本数据类型/" itemprop="url">Java基本数据类型</a></h1>
         
 
         <div class="post-meta">
@@ -10597,8 +14118,8 @@ lo    Link encap:Local Loopback
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/面向对象/" itemprop="url" rel="index">
-                    <span itemprop="name">面向对象</span>
+                  <a href="/categories/Java/数据类型/" itemprop="url" rel="index">
+                    <span itemprop="name">数据类型</span>
                   </a>
                 </span>
 
@@ -10642,161 +14163,6 @@ lo    Link encap:Local Loopback
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/java_lang/Java语法01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/01/java_lang/Java语法01/" itemprop="url">Java语法01</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
-                2016-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java-lang/" itemprop="url" rel="index">
-                    <span itemprop="name">Java_lang</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java-lang/a/" itemprop="url" rel="index">
-                    <span itemprop="name">a</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
           
         
       
@@ -10881,7 +14247,7 @@ lo    Link encap:Local Loopback
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">60</span>
+                  <span class="site-state-item-count">81</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -10892,7 +14258,7 @@ lo    Link encap:Local Loopback
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -10903,7 +14269,7 @@ lo    Link encap:Local Loopback
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">41</span>
+                  <span class="site-state-item-count">50</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
