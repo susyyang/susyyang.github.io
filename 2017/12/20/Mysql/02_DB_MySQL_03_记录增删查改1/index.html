@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="susyyang, hi!!!" />
+  <meta name="keywords" content="mysql," />
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="二级分类1$ hexo new &quot;My New Post&quot; 1$ hexo server 1$ hexo generate 1$ hexo deploy Deploy to remote sites1$ hexo deploy">
+<meta name="description" content="准备一个数据库database；准备一张数据表table； 插入记录insert插入记录（自定义字段都插入 值）12345格式：insert into 表名(字段1，字段2，字段3，等等)values（值1，值2，值3，等等） 注意事项1234567插入数据中文乱码问题，方式1（不建议）直接修改my.ini文件的字符编码；方式2：set name gbk；自增约束的字段，插入值为null；插入多条">
+<meta name="keywords" content="mysql">
 <meta property="og:type" content="article">
-<meta property="og:title" content="面向对象之封装">
-<meta property="og:url" content="http://yoursite.com/2016/01/01/Java/面向对象之封装/index.html">
+<meta property="og:title" content="02_DB_MySQL_03_记录增删查改1">
+<meta property="og:url" content="http://yoursite.com/2017/12/20/Mysql/02_DB_MySQL_03_记录增删查改1/index.html">
 <meta property="og:site_name" content="Mr.Yang">
-<meta property="og:description" content="二级分类1$ hexo new &quot;My New Post&quot; 1$ hexo server 1$ hexo generate 1$ hexo deploy Deploy to remote sites1$ hexo deploy">
+<meta property="og:description" content="准备一个数据库database；准备一张数据表table； 插入记录insert插入记录（自定义字段都插入 值）12345格式：insert into 表名(字段1，字段2，字段3，等等)values（值1，值2，值3，等等） 注意事项1234567插入数据中文乱码问题，方式1（不建议）直接修改my.ini文件的字符编码；方式2：set name gbk；自增约束的字段，插入值为null；插入多条">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-12T12:54:14.473Z">
+<meta property="og:updated_time" content="2018-06-02T11:46:25.825Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="面向对象之封装">
-<meta name="twitter:description" content="二级分类1$ hexo new &quot;My New Post&quot; 1$ hexo server 1$ hexo generate 1$ hexo deploy Deploy to remote sites1$ hexo deploy">
+<meta name="twitter:title" content="02_DB_MySQL_03_记录增删查改1">
+<meta name="twitter:description" content="准备一个数据库database；准备一张数据表table； 插入记录insert插入记录（自定义字段都插入 值）12345格式：insert into 表名(字段1，字段2，字段3，等等)values（值1，值2，值3，等等） 注意事项1234567插入数据中文乱码问题，方式1（不建议）直接修改my.ini文件的字符编码；方式2：set name gbk；自增约束的字段，插入值为null；插入多条">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2016/01/01/Java/面向对象之封装/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/12/20/Mysql/02_DB_MySQL_03_记录增删查改1/"/>
 
 
 
 
 
-  <title>面向对象之封装 | Mr.Yang</title>
+  <title>02_DB_MySQL_03_记录增删查改1 | Mr.Yang</title>
   
 
 
@@ -332,7 +333,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之封装/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/20/Mysql/02_DB_MySQL_03_记录增删查改1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -349,7 +350,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">面向对象之封装</h1>
+          <h1 class="post-title" itemprop="name headline">02_DB_MySQL_03_记录增删查改1</h1>
         
 
         <div class="post-meta">
@@ -361,8 +362,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
-                2016-01-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T09:28:17+08:00">
+                2017-12-20
               </time>
             
 
@@ -384,8 +385,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/DB/" itemprop="url" rel="index">
+                    <span itemprop="name">DB</span>
                   </a>
                 </span>
 
@@ -395,8 +396,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/面向对象/" itemprop="url" rel="index">
-                    <span itemprop="name">面向对象</span>
+                  <a href="/categories/DB/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
                   </a>
                 </span>
 
@@ -432,11 +433,16 @@
       
 
       
-        <p>二级分类<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+        <p>准备一个数据库database；<br>准备一张数据表table；</p>
+<h2 id="插入记录insert"><a href="#插入记录insert" class="headerlink" title="插入记录insert"></a>插入记录insert</h2><p>插入记录（<strong>自定义字段都插入 值</strong>）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">格式：</span><br><span class="line">insert into 表名</span><br><span class="line">(字段1，字段2，字段3，等等)</span><br><span class="line">values</span><br><span class="line">（值1，值2，值3，等等）</span><br></pre></td></tr></table></figure></p>
+<p>注意事项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">插入数据中文乱码问题，</span><br><span class="line">方式1（不建议）直接修改my.ini文件的字符编码；</span><br><span class="line">方式2：set name gbk；</span><br><span class="line"></span><br><span class="line">自增约束的字段，插入值为null；</span><br><span class="line">插入多条记录，每一条记录值都用括号括起来，记录之间使用逗号；</span><br><span class="line">记录的值使用单引号；</span><br></pre></td></tr></table></figure></p>
+<p>demo，插入一条数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert into tbl_user(uid,uname,upassword)</span><br><span class="line">    -&gt; values</span><br><span class="line">    -&gt; (null,&apos;zhangsan&apos;,&apos;123456&apos;);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from tbl_user;</span><br><span class="line">+-----+----------+-----------+</span><br><span class="line">| uid | uname    | upassword |</span><br><span class="line">+-----+----------+-----------+</span><br><span class="line">|   1 | zhangsan | 123456    |</span><br><span class="line">+-----+----------+-----------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>插入数据（<strong>所有字段都插入 值</strong>）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">格式：</span><br><span class="line">insert into 表名 values（值1，值2，值3，等等）;</span><br></pre></td></tr></table></figure></p>
+<p>demo，插入一条数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert into tbl_user values</span><br><span class="line">    -&gt; (null,&apos;lisi&apos;,&apos;654321&apos;);</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from tbl_user;</span><br><span class="line">+-----+----------+-----------+</span><br><span class="line">| uid | uname    | upassword |</span><br><span class="line">+-----+----------+-----------+</span><br><span class="line">|   1 | zhangsan | 123456    |</span><br><span class="line">|   2 | lisi     | 654321    |</span><br><span class="line">+-----+----------+-----------+</span><br><span class="line">2 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>demo，插入多条数据<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; insert into tbl_user values</span><br><span class="line">    -&gt; (null,&apos;wangwu&apos;,&apos;wangwu123&apos;),</span><br><span class="line">    -&gt; (null,&apos;zhaoliu&apos;,&apos;zhaoliu123&apos;),</span><br><span class="line">    -&gt; (null,&apos;qianba&apos;,&apos;qianba123&apos;);</span><br><span class="line">Query OK, 3 rows affected (0.00 sec)</span><br><span class="line">Records: 3  Duplicates: 0  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from tbl_user;</span><br><span class="line">+-----+----------+------------+</span><br><span class="line">| uid | uname    | upassword  |</span><br><span class="line">+-----+----------+------------+</span><br><span class="line">|   1 | zhangsan | 123456     |</span><br><span class="line">|   2 | lisi     | 654321     |</span><br><span class="line">|   3 | wangwu   | wangwu123  |</span><br><span class="line">|   4 | zhaoliu  | zhaoliu123 |</span><br><span class="line">|   5 | qianba   | qianba123  |</span><br><span class="line">+-----+----------+------------+</span><br><span class="line">5 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h2 id="更新记录update"><a href="#更新记录update" class="headerlink" title="更新记录update"></a>更新记录update</h2><p>格式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">修改表记录（不带条件）</span><br><span class="line">格式：update 表名 set 字段名=&apos;value&apos;;</span><br><span class="line"></span><br><span class="line">修改表记录（附带条件）</span><br><span class="line">格式：update 表名 set 字段名=&apos;value&apos;,字段名=&apos;value&apos; where 条件</span><br></pre></td></tr></table></figure></p>
+<p>demo,不带条件的update，会把该字段所有记录的值都改变<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; update tbl_user set upassword=&apos;888888&apos;;</span><br><span class="line">Query OK, 5 rows affected (0.01 sec)</span><br><span class="line">Rows matched: 5  Changed: 5  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from tbl_user;</span><br><span class="line">+-----+----------+-----------+</span><br><span class="line">| uid | uname    | upassword |</span><br><span class="line">+-----+----------+-----------+</span><br><span class="line">|   1 | zhangsan | 888888    |</span><br><span class="line">|   2 | lisi     | 888888    |</span><br><span class="line">|   3 | wangwu   | 888888    |</span><br><span class="line">|   4 | zhaoliu  | 888888    |</span><br><span class="line">|   5 | qianba   | 888888    |</span><br><span class="line">+-----+----------+-----------+</span><br><span class="line">5 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<p>demo，带条件的update<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; update tbl_user set upassword=&apos;passwd123&apos;,uname=&apos;qianxuesheng&apos;</span><br><span class="line">    -&gt; where</span><br><span class="line">    -&gt; uid=&apos;5&apos;;</span><br><span class="line">Query OK, 1 row affected (0.01 sec)</span><br><span class="line">Rows matched: 1  Changed: 1  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; select * from tbl_user;</span><br><span class="line">+-----+--------------+-----------+</span><br><span class="line">| uid | uname        | upassword |</span><br><span class="line">+-----+--------------+-----------+</span><br><span class="line">|   1 | zhangsan     | 888888    |</span><br><span class="line">|   2 | lisi         | 888888    |</span><br><span class="line">|   3 | wangwu       | 888888    |</span><br><span class="line">|   4 | zhaoliu      | 888888    |</span><br><span class="line">|   5 | qianxuesheng | passwd123 |</span><br><span class="line">+-----+--------------+-----------+</span><br><span class="line">5 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -452,6 +458,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
 
       
       
@@ -461,8 +473,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/01/01/Java/Java基本数据类型/" rel="next" title="Java基本数据类型">
-                <i class="fa fa-chevron-left"></i> Java基本数据类型
+              <a href="/2017/12/20/Mysql/02_DB_MySQL_02_数据表操作/" rel="next" title="02_DB_MySQL_02_数据表操作">
+                <i class="fa fa-chevron-left"></i> 02_DB_MySQL_02_数据表操作
               </a>
             
           </div>
@@ -471,8 +483,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/01/01/Java/面向对象之多态/" rel="prev" title="面向对象之多态">
-                面向对象之多态 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/12/20/Mysql/02_DB_MySQL_00_概述/" rel="prev" title="MySQL表设计demo">
+                MySQL表设计demo <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -619,7 +631,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#插入记录insert"><span class="nav-number">1.</span> <span class="nav-text">插入记录insert</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新记录update"><span class="nav-number">2.</span> <span class="nav-text">更新记录update</span></a></li></ol></div>
             
 
           </div>

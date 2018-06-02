@@ -1927,180 +1927,6 @@ http://127.0.0.1:8080/
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/Java_net/Java网络通讯之Socket（客户端和服务端相互发送数据）TCP/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/10/Java_net/Java网络通讯之Socket（客户端和服务端相互发送数据）TCP/" itemprop="url">Java网络通讯之 Socket（客户端和服务端相互发送数据）TCP</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T08:55:55+08:00">
-                2017-12-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/net/" itemprop="url" rel="index">
-                    <span itemprop="name">net</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>socket类理解</p>
-<ul>
-<li>套接字，ip+port</li>
-<li>可以存储数据（水泵，往里面灌水）</li>
-<li>可以取出数据（水龙头，打开接水）</li>
-<li>socket可以理解为一辆车。</li>
-<li>存储数据outputstream（车的上货区域）</li>
-<li>读取数据inputstream（车的卸货区域）</li>
-<li>面向对象的思维。</li>
-</ul>
-<p>serverSocket类理解</p>
-<ul>
-<li>创建于服务端。</li>
-<li>可以通过accept方法，获取客户端发过来的socket对象。从而实现连接。</li>
-<li>通过打开socket对象的<strong>上货区域和卸货区域</strong>也就是inputstream和outputstream对象，读取或存入数据到socket中。</li>
-<li>所以java编程，就是对于socket编程，对于socket数据存入和读取的操作。这个操作都是通过IO流的方式来处理的。</li>
-<li><strong>socket编程</strong>，就可以这样理解。</li>
-<li>重点掌握的类就是socket类</li>
-</ul>
-<p>注意：下面的例子代码，可以一个在eclipse执行，另一个在windows控制台执行。<br>在windows控制台执行的java类，通过javac编译，java命令执行。（去掉该类的包声明代码package com.net;）</p>
-<h2 id="TCP客户端（发送一次数据，接收一次数据）demo"><a href="#TCP客户端（发送一次数据，接收一次数据）demo" class="headerlink" title="TCP客户端（发送一次数据，接收一次数据）demo"></a>TCP客户端（发送一次数据，接收一次数据）demo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.net;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"><span class="keyword">import</span> java.net.UnknownHostException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPclient2</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> UnknownHostException, IOException </span>&#123;</span><br><span class="line">		Socket s = <span class="keyword">new</span> Socket(<span class="string">"192.168.133.1"</span>, <span class="number">9998</span>);</span><br><span class="line">		<span class="comment">//获取输出流对象，可以理解为打开水泵，准备往里面灌水了。</span></span><br><span class="line">		OutputStream out = s.getOutputStream();</span><br><span class="line">		out.write(<span class="string">"服务端，你好，我是客户端，接收我的请求信息"</span>.getBytes());</span><br><span class="line">		</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 处理服务器端发过来的数据</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		<span class="comment">//获取输入流对象，可以理解为打开进水的水龙头</span></span><br><span class="line">		InputStream in = s.getInputStream();</span><br><span class="line">		<span class="comment">//缓冲区</span></span><br><span class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">		<span class="comment">//读取输入流到缓冲区中（这里已知，缓冲区足够大，可以放得下输入流）</span></span><br><span class="line">		<span class="keyword">int</span> len = in.read(buf);</span><br><span class="line">		String st = <span class="keyword">new</span> String(buf, <span class="number">0</span>,len);</span><br><span class="line">		System.out.println(st);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//关闭客户端socket资源</span></span><br><span class="line">		s.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="TCP服务端serverSocket（）demo"><a href="#TCP服务端serverSocket（）demo" class="headerlink" title="TCP服务端serverSocket（）demo"></a>TCP服务端serverSocket（）demo</h2><p>接收客户端socket连接，并且在服务端处理客户端socket发送的数据<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.net;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 演示tcp的传输的客户端和服务端的交互。互相发送处理数据。</span></span><br><span class="line"><span class="comment"> * 需求：客户端给服务器发送数据，服务端收到后，给客户端反馈信息。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPserver2</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">//创建serverSocket对象</span></span><br><span class="line">		ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">9998</span>);</span><br><span class="line">		<span class="comment">//服务端socket先接收客户端信息，处理数据。</span></span><br><span class="line">		Socket s = ss.accept();</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 打印输出：表示客户端socket已经连接上了</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		System.out.println(<span class="string">"connected........"</span>);</span><br><span class="line">		<span class="comment">//打开客户端socket对象的输入流</span></span><br><span class="line">		InputStream in = s.getInputStream();</span><br><span class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">		<span class="comment">//读取输入流到缓冲区中（这里已知，缓冲区足够大，可以放得下输入流）</span></span><br><span class="line">		<span class="keyword">int</span> len = in.read(buf);</span><br><span class="line">		<span class="comment">//数组，创建string对象。</span></span><br><span class="line">		String st = <span class="keyword">new</span> String(buf,<span class="number">0</span>,len);</span><br><span class="line">		<span class="comment">//控制台打印输出</span></span><br><span class="line">		System.out.println(st);</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 发送反馈信息给客户端</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//获取输出流对象（通过socket获取）。socket对象可以理解为一个在客户端和服务端跑来跑去的车或快递员。</span></span><br><span class="line">		<span class="comment">//获取的输出流outputstream对象，可以理解为，车上的上货区域。同样inputstream对象，就是卸货区域。</span></span><br><span class="line">		OutputStream out = s.getOutputStream();</span><br><span class="line">		<span class="comment">//写数据进去</span></span><br><span class="line">		out.write(<span class="string">"你好，信息收到。我是服务端，你已经可以跟我连接上了。"</span>.getBytes());</span><br><span class="line">		<span class="comment">//关闭资源</span></span><br><span class="line">		s.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/Java_net/Java网络通讯之Socket（javaAPI和简单示例）TCP/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2240,6 +2066,180 @@ http://127.0.0.1:8080/
 </ul>
 <h2 id="TCP客户端（单向发送一次数据）demo"><a href="#TCP客户端（单向发送一次数据）demo" class="headerlink" title="TCP客户端（单向发送一次数据）demo"></a>TCP客户端（单向发送一次数据）demo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.net;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 演示tcp传输</span></span><br><span class="line"><span class="comment"> * tcp分客户端和服务端</span></span><br><span class="line"><span class="comment"> * 客户端对应的对象socket</span></span><br><span class="line"><span class="comment"> * 服务端对应的对象是serversocket</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 客户端</span></span><br><span class="line"><span class="comment"> * 通过查阅socket对象，发现在该对象建立时，就可以去连接指定主机。</span></span><br><span class="line"><span class="comment"> * 因为tcp连接是面向对象的，所以在建立socket服务时</span></span><br><span class="line"><span class="comment"> * 就需要有服务器存在，并连接成功，形成通路后，在该通路进行数据传输。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 步骤</span></span><br><span class="line"><span class="comment"> * 1、创建socket服务</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPclient</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 下面这一步是：</span></span><br><span class="line"><span class="comment">		 * 客户端socket，连接到服务端serverSocket的必要步骤。指定远程ip和远程主机的端口号。</span></span><br><span class="line"><span class="comment">		 * 完成这一步，仅仅是建立连接，并没用发送任何我们自定义的数据</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		<span class="comment">//创建客户端client的socket服务，指定目的主机和端口</span></span><br><span class="line">		Socket s = <span class="keyword">new</span> Socket(<span class="string">"192.168.133.1"</span>,<span class="number">9999</span>);</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 测试一下连接是否成功</span></span><br><span class="line"><span class="comment">		 * System.out.println("连接本机9999端口成功");</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 完成上面的步骤，建立连接完成。</span></span><br><span class="line"><span class="comment">		 * 下面的步骤，是使用连接，发送数据。</span></span><br><span class="line"><span class="comment">		 * 首先定义或获取流对象。</span></span><br><span class="line"><span class="comment">		 * 然后需要的是封装数据，封装数据使用的是io流相关的对象和方法。</span></span><br><span class="line"><span class="comment">		 * 然后在发送数据，发送</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		<span class="comment">//获取socket的输出流对象，io流对象用于封装数据使用。</span></span><br><span class="line">		OutputStream out = s.getOutputStream();</span><br><span class="line">		<span class="comment">//封装数据</span></span><br><span class="line">		out.write(<span class="string">"tcp client ke hu duan"</span>.getBytes());</span><br><span class="line">		<span class="comment">//关闭socket资源</span></span><br><span class="line">		s.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="TCP服务端serverSocket（）demo"><a href="#TCP服务端serverSocket（）demo" class="headerlink" title="TCP服务端serverSocket（）demo"></a>TCP服务端serverSocket（）demo</h2><p>接收客户端socket连接，并且在服务端处理客户端socket发送的数据<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.net;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 服务端</span></span><br><span class="line"><span class="comment"> * 需求：定义端点接收数据，控制台打印输出。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPserver</span> </span>&#123;</span><br><span class="line">	<span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 步骤</span></span><br><span class="line"><span class="comment">	 * 1、建立服务端socket服务（serverSocket类对象），并监听一个端口。</span></span><br><span class="line"><span class="comment">	 * 2、获取连接过来的客户端对象。通过serverSocket对象的accept方法，没有连接就会等，这个方法是阻塞的。</span></span><br><span class="line"><span class="comment">	 * 3、客户端如果发数据过来，那么服务端要使用对应客户端对象，并获取到该客户端对象发过来的流，使用服务器端的inputstream对象接收。</span></span><br><span class="line"><span class="comment">	 * 4、关闭服务器端（可选）</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> args</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 下面两个步骤，是建立客户端连接到服务端，必须的步骤。</span></span><br><span class="line"><span class="comment">		 * 第一步：服务器serversocket对象</span></span><br><span class="line"><span class="comment">		 * 第二步：抓去连接过来的客户端socket对象。</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		<span class="comment">//第一步：创建服务端server的serversocket对象</span></span><br><span class="line">		ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">9999</span>);</span><br><span class="line">		<span class="comment">//第二步：通过accept方法，获取连接过来的客户端对象</span></span><br><span class="line">		<span class="comment">//ss.accept();</span></span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 获取客户端socket对象，并且取出数据，处理数据。</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		<span class="comment">//将获取的客户端socket对象，定义。并且取出数据。</span></span><br><span class="line">		Socket s = ss.accept();</span><br><span class="line">		<span class="comment">//取出客户端socket对象中封装的数据包,对于服务器端来说就是inputstream</span></span><br><span class="line">		InputStream in = s.getInputStream();</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 下面的方法就是处理io流</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		<span class="comment">//定义缓冲区</span></span><br><span class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">		<span class="comment">//inputstream的read()方法，将io流中的数据读取存储到缓存区数组中。返回的是读取的长度，也是数组的有效长度。</span></span><br><span class="line">		<span class="keyword">int</span> len = in.read(buf);</span><br><span class="line">		<span class="comment">//读取完成之后，缓冲区数组已经存有数据，使用string字符串接收数组中的字符。</span></span><br><span class="line">		String st = <span class="keyword">new</span> String(buf,<span class="number">0</span>,buf.length);</span><br><span class="line">		<span class="comment">//控制台输出</span></span><br><span class="line">		System.out.println(st);</span><br><span class="line">		<span class="comment">//最后一步：关闭客户端socket对象（必须的，不然占用资源）</span></span><br><span class="line">		s.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/10/Java_net/Java网络通讯之Socket（客户端和服务端相互发送数据）TCP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/10/Java_net/Java网络通讯之Socket（客户端和服务端相互发送数据）TCP/" itemprop="url">Java网络通讯之 Socket（客户端和服务端相互发送数据）TCP</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T08:55:55+08:00">
+                2017-12-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/net/" itemprop="url" rel="index">
+                    <span itemprop="name">net</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>socket类理解</p>
+<ul>
+<li>套接字，ip+port</li>
+<li>可以存储数据（水泵，往里面灌水）</li>
+<li>可以取出数据（水龙头，打开接水）</li>
+<li>socket可以理解为一辆车。</li>
+<li>存储数据outputstream（车的上货区域）</li>
+<li>读取数据inputstream（车的卸货区域）</li>
+<li>面向对象的思维。</li>
+</ul>
+<p>serverSocket类理解</p>
+<ul>
+<li>创建于服务端。</li>
+<li>可以通过accept方法，获取客户端发过来的socket对象。从而实现连接。</li>
+<li>通过打开socket对象的<strong>上货区域和卸货区域</strong>也就是inputstream和outputstream对象，读取或存入数据到socket中。</li>
+<li>所以java编程，就是对于socket编程，对于socket数据存入和读取的操作。这个操作都是通过IO流的方式来处理的。</li>
+<li><strong>socket编程</strong>，就可以这样理解。</li>
+<li>重点掌握的类就是socket类</li>
+</ul>
+<p>注意：下面的例子代码，可以一个在eclipse执行，另一个在windows控制台执行。<br>在windows控制台执行的java类，通过javac编译，java命令执行。（去掉该类的包声明代码package com.net;）</p>
+<h2 id="TCP客户端（发送一次数据，接收一次数据）demo"><a href="#TCP客户端（发送一次数据，接收一次数据）demo" class="headerlink" title="TCP客户端（发送一次数据，接收一次数据）demo"></a>TCP客户端（发送一次数据，接收一次数据）demo</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.net;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"><span class="keyword">import</span> java.net.UnknownHostException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPclient2</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> UnknownHostException, IOException </span>&#123;</span><br><span class="line">		Socket s = <span class="keyword">new</span> Socket(<span class="string">"192.168.133.1"</span>, <span class="number">9998</span>);</span><br><span class="line">		<span class="comment">//获取输出流对象，可以理解为打开水泵，准备往里面灌水了。</span></span><br><span class="line">		OutputStream out = s.getOutputStream();</span><br><span class="line">		out.write(<span class="string">"服务端，你好，我是客户端，接收我的请求信息"</span>.getBytes());</span><br><span class="line">		</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 处理服务器端发过来的数据</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		<span class="comment">//获取输入流对象，可以理解为打开进水的水龙头</span></span><br><span class="line">		InputStream in = s.getInputStream();</span><br><span class="line">		<span class="comment">//缓冲区</span></span><br><span class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">		<span class="comment">//读取输入流到缓冲区中（这里已知，缓冲区足够大，可以放得下输入流）</span></span><br><span class="line">		<span class="keyword">int</span> len = in.read(buf);</span><br><span class="line">		String st = <span class="keyword">new</span> String(buf, <span class="number">0</span>,len);</span><br><span class="line">		System.out.println(st);</span><br><span class="line">		</span><br><span class="line">		<span class="comment">//关闭客户端socket资源</span></span><br><span class="line">		s.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="TCP服务端serverSocket（）demo"><a href="#TCP服务端serverSocket（）demo" class="headerlink" title="TCP服务端serverSocket（）demo"></a>TCP服务端serverSocket（）demo</h2><p>接收客户端socket连接，并且在服务端处理客户端socket发送的数据<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.net;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.IOException;</span><br><span class="line"><span class="keyword">import</span> java.io.InputStream;</span><br><span class="line"><span class="keyword">import</span> java.io.OutputStream;</span><br><span class="line"><span class="keyword">import</span> java.net.ServerSocket;</span><br><span class="line"><span class="keyword">import</span> java.net.Socket;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 演示tcp的传输的客户端和服务端的交互。互相发送处理数据。</span></span><br><span class="line"><span class="comment"> * 需求：客户端给服务器发送数据，服务端收到后，给客户端反馈信息。</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span> Administrator</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TCPserver2</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">//创建serverSocket对象</span></span><br><span class="line">		ServerSocket ss = <span class="keyword">new</span> ServerSocket(<span class="number">9998</span>);</span><br><span class="line">		<span class="comment">//服务端socket先接收客户端信息，处理数据。</span></span><br><span class="line">		Socket s = ss.accept();</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 打印输出：表示客户端socket已经连接上了</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		System.out.println(<span class="string">"connected........"</span>);</span><br><span class="line">		<span class="comment">//打开客户端socket对象的输入流</span></span><br><span class="line">		InputStream in = s.getInputStream();</span><br><span class="line">		<span class="keyword">byte</span>[] buf = <span class="keyword">new</span> <span class="keyword">byte</span>[<span class="number">1024</span>];</span><br><span class="line">		<span class="comment">//读取输入流到缓冲区中（这里已知，缓冲区足够大，可以放得下输入流）</span></span><br><span class="line">		<span class="keyword">int</span> len = in.read(buf);</span><br><span class="line">		<span class="comment">//数组，创建string对象。</span></span><br><span class="line">		String st = <span class="keyword">new</span> String(buf,<span class="number">0</span>,len);</span><br><span class="line">		<span class="comment">//控制台打印输出</span></span><br><span class="line">		System.out.println(st);</span><br><span class="line">		<span class="comment">/**</span></span><br><span class="line"><span class="comment">		 * 发送反馈信息给客户端</span></span><br><span class="line"><span class="comment">		 */</span></span><br><span class="line">		</span><br><span class="line">		<span class="comment">//获取输出流对象（通过socket获取）。socket对象可以理解为一个在客户端和服务端跑来跑去的车或快递员。</span></span><br><span class="line">		<span class="comment">//获取的输出流outputstream对象，可以理解为，车上的上货区域。同样inputstream对象，就是卸货区域。</span></span><br><span class="line">		OutputStream out = s.getOutputStream();</span><br><span class="line">		<span class="comment">//写数据进去</span></span><br><span class="line">		out.write(<span class="string">"你好，信息收到。我是服务端，你已经可以跟我连接上了。"</span>.getBytes());</span><br><span class="line">		<span class="comment">//关闭资源</span></span><br><span class="line">		s.close();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -3033,7 +3033,7 @@ http://127.0.0.1:8080/
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践03（user用户帐号管理）/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/02_linux文件实践03（为用户修改rwx权限）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -3052,7 +3052,7 @@ http://127.0.0.1:8080/
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践03（user用户帐号管理）/" itemprop="url">01_linux权限实践03（user用户帐号管理）</a></h1>
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/02_linux文件实践03（为用户修改rwx权限）/" itemprop="url">02_linux文件实践01（查看文件详细信息）</a></h1>
         
 
         <div class="post-meta">
@@ -3137,17 +3137,7 @@ http://127.0.0.1:8080/
       
         
           
-            <p>用户user管理内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户状态查看（用户名，所属组，家目录，shell等）</span><br><span class="line">用户账号的添加、删除与修改。</span><br><span class="line">用户口令的管理。</span><br><span class="line">用户组的管理。</span><br></pre></td></tr></table></figure></p>
-<p>用户帐号管理包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">添加新用户</span><br><span class="line">删除用户</span><br><span class="line">用户组更改</span><br><span class="line">等等</span><br></pre></td></tr></table></figure></p>
-<p>添加新用户</p>
-<p>命令：useradd<br>格式：useradd 选项 用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">参数说明：</span><br><span class="line">选项:</span><br><span class="line">-c comment 指定一段注释性描述。</span><br><span class="line">-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。</span><br><span class="line">-g 用户组 指定用户所属的用户组。</span><br><span class="line">-G 附加组指定用户所属的附加组。</span><br><span class="line">-s Shell文件 指定用户的登录Shell。</span><br><span class="line">-u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。</span><br><span class="line"></span><br><span class="line">用户名:</span><br><span class="line">指定新账号的登录名。</span><br></pre></td></tr></table></figure></p>
-<p>示例：添加用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd -d /home/git -m </span><br><span class="line">注意：-d表示指定用户主目录，-m表示主目录不存在就创建该目录。</span><br></pre></td></tr></table></figure></p>
-<p>删除用户<br>命令：userdel<br>格式：user 选项 用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">常用的选项是 -r，它的作用是把用户的主目录一起删除。</span><br></pre></td></tr></table></figure></p>
-<p>示例：删除用户git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">userdel -r git</span><br><span class="line">此命令删除用户sam在系统文件中（主要是/etc/passwd, /etc/shadow, /etc/group等）的记录，同时删除用户的主目录。</span><br></pre></td></tr></table></figure></p>
-<p>修改用户<br>修改用户账号就是根据实际情况更改用户的有关属性，如用户号、主目录、用户组、登录Shell等。<br>命令：usermod 选项 用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">选项：</span><br><span class="line">-c comment 指定一段注释性描述。</span><br><span class="line">-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。  </span><br><span class="line">-g 用户组 指定用户所属的用户组。</span><br><span class="line">-G 用户组，用户组 指定用户所属的附加组</span><br><span class="line">-s Shell文件 指定用户的登录Shell。</span><br><span class="line">-u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。</span><br><span class="line"></span><br><span class="line">用户名</span><br></pre></td></tr></table></figure></p>
-<p>示例：为用户添加一段注释描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -c &apos;github code&apos;</span><br></pre></td></tr></table></figure></p>
-<p>示例：修改用户工作目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -s /bin/ksh -d /home/z –g developer sam</span><br></pre></td></tr></table></figure></p>
-<p>实例：修改用户所属用户组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">usermod -g git git-github</span><br><span class="line">将git-github添加到git组</span><br></pre></td></tr></table></figure></p>
+            <p>linux文件的详细信息包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">文件类型（目录&amp;文件）</span><br><span class="line"></span><br><span class="line">文件所有者的权限（r读，w写，x执行）</span><br><span class="line">文件所属组的权限（r读，w写，x执行）</span><br><span class="line">其他用户的权限（r读，w写，x执行）</span><br><span class="line"></span><br><span class="line">链接个数（数字表示）</span><br><span class="line"></span><br><span class="line">文件所有者username</span><br><span class="line">文件所属组groupname</span><br><span class="line">长度（kb）</span><br><span class="line">月+日+时间</span><br><span class="line"></span><br><span class="line">文件的名称（目录&amp;文件）</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -3307,1250 +3297,6 @@ http://127.0.0.1:8080/
 <h2 id="telnet客户端"><a href="#telnet客户端" class="headerlink" title="telnet客户端"></a>telnet客户端</h2><p>windows开启telnet客户端。<br>控制面板-&gt;程序功能 -&gt;启用或关闭windows功能-&gt;勾选telnet客户端。<br>勾选之后，telnet客户端程序可以即刻运行，连接远程桌面。</p>
 <pre><code>也可以使用dos命令启动
 </code></pre><h2 id="win远程桌面连接"><a href="#win远程桌面连接" class="headerlink" title="win远程桌面连接"></a>win远程桌面连接</h2><p>找到win的远程桌面连接工具；系统默认自带。<br>输入远程的ip<br>登录user和password<br>即可实现控制远程win计算机。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/09_win远程连接linux/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/03/remote_connection/09_win远程连接linux/" itemprop="url">01_win远程桌面连接win</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
-                2017-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
-                    <span itemprop="name">remote_connection</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/linux-ssh/" itemprop="url" rel="index">
-                    <span itemprop="name">linux_ssh</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="telnet协议"><a href="#telnet协议" class="headerlink" title="telnet协议"></a>telnet协议</h2><p>Telnet协议是TCP/IP协议族中的一员，是Internet远程登陆服务的<strong>标准协议</strong>和主要方式。<br>Telnet服务虽然也属于客户机/服务器模型的服务，但它更大的意义在于实现了基于Telnet协议的远程登录。<br>telnet的默认端口号为25。<br>telnet协议不安全。传输未加密。</p>
-<h2 id="telnet服务端"><a href="#telnet服务端" class="headerlink" title="telnet服务端"></a>telnet服务端</h2><p>windows开启telnet服务端。<br>控制面板-&gt;程序功能 -&gt;启用或关闭windows功能-&gt;勾选telnet服务端<br>勾选之后，需要重新启动电脑，服务生效。</p>
-<pre><code>也可以使用dos命令启动：
-</code></pre><p>然后，内网计算机可以使用远程连接到此计算机。</p>
-<h2 id="telnet客户端"><a href="#telnet客户端" class="headerlink" title="telnet客户端"></a>telnet客户端</h2><p>windows开启telnet客户端。<br>控制面板-&gt;程序功能 -&gt;启用或关闭windows功能-&gt;勾选telnet客户端。<br>勾选之后，telnet客户端程序可以即刻运行，连接远程桌面。</p>
-<pre><code>也可以使用dos命令启动
-</code></pre><h2 id="win远程桌面连接"><a href="#win远程桌面连接" class="headerlink" title="win远程桌面连接"></a>win远程桌面连接</h2><p>找到win的远程桌面连接工具；系统默认自带。<br>输入远程的ip<br>登录user和password<br>即可实现控制远程win计算机。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/02_linux文件实践03（为用户修改rwx权限）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/02_linux文件实践03（为用户修改rwx权限）/" itemprop="url">02_linux文件实践01（查看文件详细信息）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
-                2017-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
-                    <span itemprop="name">remote_connection</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>linux文件的详细信息包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">文件类型（目录&amp;文件）</span><br><span class="line"></span><br><span class="line">文件所有者的权限（r读，w写，x执行）</span><br><span class="line">文件所属组的权限（r读，w写，x执行）</span><br><span class="line">其他用户的权限（r读，w写，x执行）</span><br><span class="line"></span><br><span class="line">链接个数（数字表示）</span><br><span class="line"></span><br><span class="line">文件所有者username</span><br><span class="line">文件所属组groupname</span><br><span class="line">长度（kb）</span><br><span class="line">月+日+时间</span><br><span class="line"></span><br><span class="line">文件的名称（目录&amp;文件）</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践05（user用户shell管理）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践05（user用户shell管理）/" itemprop="url">01_linux权限实践05（user用户shell管理）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
-                2017-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
-                    <span itemprop="name">remote_connection</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>用户shell管理内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">用户的shell表示：该用户操作linux使用的shell的版本。</span><br><span class="line">例子：</span><br><span class="line">root用户的shell为：/bin/bash</span><br><span class="line">表示root用户操作linux的shell版本是bash</span><br><span class="line"></span><br><span class="line">例子：</span><br><span class="line">sshd（ssh服务端程序）用户的shell为：/usr/sbin/nologin</span><br><span class="line">表示sshd程序不可以登录到linux系统</span><br></pre></td></tr></table></figure></p>
-<p>实践1（为某用户设置git-shell，使该用户只有git提交代码的权限）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root登录</span><br><span class="line">查看linux是否安装git（命令：git --version）</span><br><span class="line">创建git-username用户</span><br><span class="line">修该该用户的shell为git-shell</span><br><span class="line"></span><br><span class="line">root@xxx.xxx.xx.xx</span><br><span class="line">命令</span><br><span class="line">root@VM-0-13-ubuntu:/usr/bin# useradd git-github</span><br><span class="line">root@VM-0-13-ubuntu:/usr/bin# usermod -s /usr/bin/git-shell git-github</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践04（user用户登录口令管理）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践04（user用户登录口令管理）/" itemprop="url">linux权限实践04（user用户登录口令管理）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
-                2017-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
-                    <span itemprop="name">remote_connection</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>用户user管理内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户状态查看（用户名，所属组，家目录，shell等）</span><br><span class="line">用户账号的添加、删除与修改。</span><br><span class="line">用户口令的管理。</span><br><span class="line">用户组的管理。</span><br></pre></td></tr></table></figure></p>
-<p>用户登录口令管理包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">设置口令</span><br><span class="line">删除口令</span><br><span class="line">锁定口令</span><br><span class="line">解锁口令</span><br></pre></td></tr></table></figure></p>
-<p>用户口令管理</p>
-<p>用户管理的一项重要内容是用户口令的管理。<br>用户账号刚创建时没有口令，但是被系统锁定，无法使用，必须为其指定口令后才可以使用，即使是指定空口令。</p>
-<p>指定和修改用户口令的Shell命令是passwd。<br>超级用户可以为自己和其他用户指定口令，普通用户只能用它修改自己的口令。<br>命令的格式为： passwd 选项 用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">选项：</span><br><span class="line">-l 锁定口令，即禁用账号。</span><br><span class="line">-u 口令解锁。</span><br><span class="line">-d 使账号无口令。</span><br><span class="line">-f 强迫用户下次登录时修改口令。</span><br><span class="line"></span><br><span class="line">用户名：表示需要操作的用户（不加用户名，表示当前用户）</span><br></pre></td></tr></table></figure></p>
-<p>示例：普通用户修改当前用户口令（普通用户只有修改自己密码权限）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">当前用户密码为空</span><br><span class="line">passwd</span><br><span class="line">newpassword（输入新的密码）</span><br><span class="line">    </span><br><span class="line">当前用户已有密码</span><br><span class="line">passwd</span><br><span class="line">oldpassword（输入旧的密码）</span><br><span class="line">newpassword（输入新的密码）</span><br><span class="line">re-enter newpassword（确认新的密码）</span><br></pre></td></tr></table></figure></p>
-<p>示例：超级用户修改密码（超级用户权限最大）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">超级用户root修改普通用户username密码口令</span><br><span class="line">passwd username</span><br><span class="line">old password</span><br><span class="line">new password</span><br><span class="line">注意：超级用户修改普通用户的口令，可以不需要原来的密码口令，直接指定新的密码口令。</span><br></pre></td></tr></table></figure></p>
-<p>示例：为用户指定空口令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">passwd -d username</span><br><span class="line">**也就是删除口令**</span><br></pre></td></tr></table></figure></p>
-<p>示例：锁定某用户，使其<strong>暂时不能登录</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">passwd -l username</span><br><span class="line">**锁定某个用户的口令，使得该口令暂时无法登录</span><br></pre></td></tr></table></figure></p>
-<p>实践1（忘记用户a口令）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root登录</span><br><span class="line">删除用户a口令</span><br><span class="line">切换至用户a</span><br><span class="line">重新设置用户a口令</span><br><span class="line"></span><br><span class="line">root@xxx.xxx.xx.xx</span><br><span class="line">passwd -d aaa</span><br><span class="line">passwd: password expiry information changed.</span><br><span class="line">su aaa</span><br><span class="line">passwd</span><br><span class="line">Enter new UNIX password:</span><br><span class="line">Retype new UNIX password:</span><br><span class="line">passwd: password updated successfully</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践08（group用户组管理）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践08（group用户组管理）/" itemprop="url">01_linux_用户组</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
-                2017-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
-                    <span itemprop="name">remote_connection</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>linux用户管理的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户状态查看（用户名，所属组，家目录，shell等）</span><br><span class="line">用户账号的添加、删除与修改。</span><br><span class="line">用户口令的管理。</span><br><span class="line">用户组的管理。</span><br></pre></td></tr></table></figure></p>
-<p>用户组管理</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/02_linux文件实践01（查看文件详细信息）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/02_linux文件实践01（查看文件详细信息）/" itemprop="url">02_linux文件实践01（查看文件详细信息）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
-                2017-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
-                    <span itemprop="name">remote_connection</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>linux文件的详细信息包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">文件类型（目录&amp;文件）</span><br><span class="line"></span><br><span class="line">文件所有者的权限（r读，w写，x执行）</span><br><span class="line">文件所属组的权限（r读，w写，x执行）</span><br><span class="line">其他用户的权限（r读，w写，x执行）</span><br><span class="line"></span><br><span class="line">链接个数（数字表示）</span><br><span class="line"></span><br><span class="line">文件所有者username</span><br><span class="line">文件所属组groupname</span><br><span class="line">长度（kb）</span><br><span class="line">月+日+时间</span><br><span class="line"></span><br><span class="line">文件的名称（目录&amp;文件）</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/02_linux文件实践02（修改文件所以者）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/02_linux文件实践02（修改文件所以者）/" itemprop="url">02_linux文件实践01（ll文件详细信息）</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
-                2017-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
-                    <span itemprop="name">remote_connection</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>linux文件的详细信息包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">文件类型（目录&amp;文件）</span><br><span class="line"></span><br><span class="line">文件所有者的权限（r读，w写，x执行）</span><br><span class="line">文件所属组的权限（r读，w写，x执行）</span><br><span class="line">其他用户的权限（r读，w写，x执行）</span><br><span class="line"></span><br><span class="line">链接个数（数字表示）</span><br><span class="line"></span><br><span class="line">文件所有者username</span><br><span class="line">文件所属组groupname</span><br><span class="line">长度（kb）</span><br><span class="line">月+日+时间</span><br><span class="line"></span><br><span class="line">文件的名称（目录&amp;文件）</span><br></pre></td></tr></table></figure></p>
-<p>修改文件的所有者<br>命令：chowm （change owner 的缩写）<br>格式：chowm [-R] 用户user 文件目录<br>选项：-R 表示递归，目录修改时，需要使用-R选项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R git-github git-github</span><br><span class="line">chowm git-github test.txt</span><br></pre></td></tr></table></figure></p>
-<p>修改文件的所在的组<br>命令：chgrp（change group 的缩写）<br>格式：chgrp [-R] 所在组 文件目录<br>选项：-R 表示递归，目录修改时，需要使用-R选项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chgrp -R git git-github</span><br><span class="line">chgrp git test.txt</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践07（etc-group文件）/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践07（etc-group文件）/" itemprop="url">01_linux_用户组</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
-                2017-10-03
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
-                    <span itemprop="name">remote_connection</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
-                    <span itemprop="name">linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>用户组配置文件group<br>用户组名称：密码占位符：用户组id：用户组包含的用户1，用户2，用户3…<br>我们自己创建的用户组，id都是大于1000<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">root@VM-0-13-ubuntu:~# cat /etc/group</span><br><span class="line">root:x:0:</span><br><span class="line">daemon:x:1:</span><br><span class="line">bin:x:2:</span><br><span class="line">sys:x:3:</span><br><span class="line">adm:x:4:syslog,ubuntu</span><br><span class="line">tty:x:5:</span><br><span class="line">disk:x:6:</span><br><span class="line">lp:x:7:</span><br><span class="line">mail:x:8:</span><br><span class="line">news:x:9:</span><br><span class="line">uucp:x:10:</span><br><span class="line">man:x:12:</span><br><span class="line">proxy:x:13:</span><br><span class="line">kmem:x:15:</span><br><span class="line">dialout:x:20:</span><br><span class="line">fax:x:21:</span><br><span class="line">voice:x:22:</span><br><span class="line">cdrom:x:24:ubuntu</span><br><span class="line">floppy:x:25:</span><br><span class="line">tape:x:26:</span><br><span class="line">sudo:x:27:ubuntu</span><br><span class="line">audio:x:29:</span><br><span class="line">dip:x:30:ubuntu</span><br><span class="line">backup:x:34:</span><br><span class="line">operator:x:37:</span><br><span class="line">list:x:38:</span><br><span class="line">irc:x:39:</span><br><span class="line">src:x:40:</span><br><span class="line">gnats:x:41:</span><br><span class="line">shadow:x:42:</span><br><span class="line">utmp:x:43:</span><br><span class="line">video:x:44:</span><br><span class="line">sasl:x:45:</span><br><span class="line">plugdev:x:46:ubuntu</span><br><span class="line">staff:x:50:</span><br><span class="line">games:x:60:</span><br><span class="line">users:x:100:</span><br><span class="line">nogroup:x:65534:</span><br><span class="line">systemd-journal:x:101:</span><br><span class="line">systemd-timesync:x:102:</span><br><span class="line">systemd-network:x:103:</span><br><span class="line">systemd-resolve:x:104:</span><br><span class="line">systemd-bus-proxy:x:105:</span><br><span class="line">input:x:106:</span><br><span class="line">crontab:x:107:</span><br><span class="line">syslog:x:108:</span><br><span class="line">netdev:x:109:</span><br><span class="line">lxd:x:110:</span><br><span class="line">messagebus:x:111:</span><br><span class="line">uuidd:x:112:</span><br><span class="line">mlocate:x:113:</span><br><span class="line">ssh:x:114:</span><br><span class="line">ubuntu:x:500:</span><br><span class="line">lpadmin:x:115:ubuntu</span><br><span class="line">sambashare:x:116:ubuntu</span><br><span class="line">ntp:x:117:</span><br><span class="line">www:x:1000:</span><br><span class="line">www-git:x:1002:</span><br><span class="line">www-web:x:1003:</span><br></pre></td></tr></table></figure></p>
-<p>几个重要的组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo组：可以执行sudo命令</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -4798,7 +3544,7 @@ lo    Link encap:Local Loopback
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux_cd/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/02_linux文件实践02（修改文件所以者）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -4817,7 +3563,7 @@ lo    Link encap:Local Loopback
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux_cd/" itemprop="url">01_linux_cd</a></h1>
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/02_linux文件实践02（修改文件所以者）/" itemprop="url">02_linux文件实践01（ll文件详细信息）</a></h1>
         
 
         <div class="post-meta">
@@ -4863,8 +3609,8 @@ lo    Link encap:Local Loopback
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/remote-connection/linux路径命令/" itemprop="url" rel="index">
-                    <span itemprop="name">linux路径命令</span>
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
                   </a>
                 </span>
 
@@ -4902,20 +3648,169 @@ lo    Link encap:Local Loopback
       
         
           
-            <p>命令名称：cd<br>命令格式：cd +参数<br>命令作用：切换工作目录</p>
-<p>示例：切换工作绝对路径</p>
-<pre><code>cd /user/bin/
-</code></pre><p>示例：切换到当前目录的上一级目录</p>
-<pre><code>cd ..
-</code></pre><p>示例：切换到当前目录的下一级目录（相对路径）</p>
-<pre><code>cd ./子目录
-例子：
-cd ./git
-</code></pre><p>示例：切换到当前用户user的家目录</p>
-<pre><code>cd ~
-</code></pre><p>示例：切换到上一次使用的工作目录（可以在两个目录间来回切换）</p>
-<pre><code>cd -
-</code></pre>
+            <p>linux文件的详细信息包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">文件类型（目录&amp;文件）</span><br><span class="line"></span><br><span class="line">文件所有者的权限（r读，w写，x执行）</span><br><span class="line">文件所属组的权限（r读，w写，x执行）</span><br><span class="line">其他用户的权限（r读，w写，x执行）</span><br><span class="line"></span><br><span class="line">链接个数（数字表示）</span><br><span class="line"></span><br><span class="line">文件所有者username</span><br><span class="line">文件所属组groupname</span><br><span class="line">长度（kb）</span><br><span class="line">月+日+时间</span><br><span class="line"></span><br><span class="line">文件的名称（目录&amp;文件）</span><br></pre></td></tr></table></figure></p>
+<p>修改文件的所有者<br>命令：chowm （change owner 的缩写）<br>格式：chowm [-R] 用户user 文件目录<br>选项：-R 表示递归，目录修改时，需要使用-R选项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chown -R git-github git-github</span><br><span class="line">chowm git-github test.txt</span><br></pre></td></tr></table></figure></p>
+<p>修改文件的所在的组<br>命令：chgrp（change group 的缩写）<br>格式：chgrp [-R] 所在组 文件目录<br>选项：-R 表示递归，目录修改时，需要使用-R选项<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chgrp -R git git-github</span><br><span class="line">chgrp git test.txt</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/09_win远程连接linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/09_win远程连接linux/" itemprop="url">01_win远程桌面连接win</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux-ssh/" itemprop="url" rel="index">
+                    <span itemprop="name">linux_ssh</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="telnet协议"><a href="#telnet协议" class="headerlink" title="telnet协议"></a>telnet协议</h2><p>Telnet协议是TCP/IP协议族中的一员，是Internet远程登陆服务的<strong>标准协议</strong>和主要方式。<br>Telnet服务虽然也属于客户机/服务器模型的服务，但它更大的意义在于实现了基于Telnet协议的远程登录。<br>telnet的默认端口号为25。<br>telnet协议不安全。传输未加密。</p>
+<h2 id="telnet服务端"><a href="#telnet服务端" class="headerlink" title="telnet服务端"></a>telnet服务端</h2><p>windows开启telnet服务端。<br>控制面板-&gt;程序功能 -&gt;启用或关闭windows功能-&gt;勾选telnet服务端<br>勾选之后，需要重新启动电脑，服务生效。</p>
+<pre><code>也可以使用dos命令启动：
+</code></pre><p>然后，内网计算机可以使用远程连接到此计算机。</p>
+<h2 id="telnet客户端"><a href="#telnet客户端" class="headerlink" title="telnet客户端"></a>telnet客户端</h2><p>windows开启telnet客户端。<br>控制面板-&gt;程序功能 -&gt;启用或关闭windows功能-&gt;勾选telnet客户端。<br>勾选之后，telnet客户端程序可以即刻运行，连接远程桌面。</p>
+<pre><code>也可以使用dos命令启动
+</code></pre><h2 id="win远程桌面连接"><a href="#win远程桌面连接" class="headerlink" title="win远程桌面连接"></a>win远程桌面连接</h2><p>找到win的远程桌面连接工具；系统默认自带。<br>输入远程的ip<br>登录user和password<br>即可实现控制远程win计算机。</p>
+
           
         
       
@@ -6001,6 +4896,1111 @@ cd ./git
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践03（user用户帐号管理）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践03（user用户帐号管理）/" itemprop="url">01_linux权限实践03（user用户帐号管理）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>用户user管理内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户状态查看（用户名，所属组，家目录，shell等）</span><br><span class="line">用户账号的添加、删除与修改。</span><br><span class="line">用户口令的管理。</span><br><span class="line">用户组的管理。</span><br></pre></td></tr></table></figure></p>
+<p>用户帐号管理包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">添加新用户</span><br><span class="line">删除用户</span><br><span class="line">用户组更改</span><br><span class="line">等等</span><br></pre></td></tr></table></figure></p>
+<p>添加新用户</p>
+<p>命令：useradd<br>格式：useradd 选项 用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">参数说明：</span><br><span class="line">选项:</span><br><span class="line">-c comment 指定一段注释性描述。</span><br><span class="line">-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。</span><br><span class="line">-g 用户组 指定用户所属的用户组。</span><br><span class="line">-G 附加组指定用户所属的附加组。</span><br><span class="line">-s Shell文件 指定用户的登录Shell。</span><br><span class="line">-u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。</span><br><span class="line"></span><br><span class="line">用户名:</span><br><span class="line">指定新账号的登录名。</span><br></pre></td></tr></table></figure></p>
+<p>示例：添加用户<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">useradd -d /home/git -m </span><br><span class="line">注意：-d表示指定用户主目录，-m表示主目录不存在就创建该目录。</span><br></pre></td></tr></table></figure></p>
+<p>删除用户<br>命令：userdel<br>格式：user 选项 用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">常用的选项是 -r，它的作用是把用户的主目录一起删除。</span><br></pre></td></tr></table></figure></p>
+<p>示例：删除用户git<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">userdel -r git</span><br><span class="line">此命令删除用户sam在系统文件中（主要是/etc/passwd, /etc/shadow, /etc/group等）的记录，同时删除用户的主目录。</span><br></pre></td></tr></table></figure></p>
+<p>修改用户<br>修改用户账号就是根据实际情况更改用户的有关属性，如用户号、主目录、用户组、登录Shell等。<br>命令：usermod 选项 用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">选项：</span><br><span class="line">-c comment 指定一段注释性描述。</span><br><span class="line">-d 目录 指定用户主目录，如果此目录不存在，则同时使用-m选项，可以创建主目录。  </span><br><span class="line">-g 用户组 指定用户所属的用户组。</span><br><span class="line">-G 用户组，用户组 指定用户所属的附加组</span><br><span class="line">-s Shell文件 指定用户的登录Shell。</span><br><span class="line">-u 用户号 指定用户的用户号，如果同时有-o选项，则可以重复使用其他用户的标识号。</span><br><span class="line"></span><br><span class="line">用户名</span><br></pre></td></tr></table></figure></p>
+<p>示例：为用户添加一段注释描述<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -c &apos;github code&apos;</span><br></pre></td></tr></table></figure></p>
+<p>示例：修改用户工作目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod -s /bin/ksh -d /home/z –g developer sam</span><br></pre></td></tr></table></figure></p>
+<p>实例：修改用户所属用户组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">usermod -g git git-github</span><br><span class="line">将git-github添加到git组</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践04（user用户登录口令管理）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践04（user用户登录口令管理）/" itemprop="url">linux权限实践04（user用户登录口令管理）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>用户user管理内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户状态查看（用户名，所属组，家目录，shell等）</span><br><span class="line">用户账号的添加、删除与修改。</span><br><span class="line">用户口令的管理。</span><br><span class="line">用户组的管理。</span><br></pre></td></tr></table></figure></p>
+<p>用户登录口令管理包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">设置口令</span><br><span class="line">删除口令</span><br><span class="line">锁定口令</span><br><span class="line">解锁口令</span><br></pre></td></tr></table></figure></p>
+<p>用户口令管理</p>
+<p>用户管理的一项重要内容是用户口令的管理。<br>用户账号刚创建时没有口令，但是被系统锁定，无法使用，必须为其指定口令后才可以使用，即使是指定空口令。</p>
+<p>指定和修改用户口令的Shell命令是passwd。<br>超级用户可以为自己和其他用户指定口令，普通用户只能用它修改自己的口令。<br>命令的格式为： passwd 选项 用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">选项：</span><br><span class="line">-l 锁定口令，即禁用账号。</span><br><span class="line">-u 口令解锁。</span><br><span class="line">-d 使账号无口令。</span><br><span class="line">-f 强迫用户下次登录时修改口令。</span><br><span class="line"></span><br><span class="line">用户名：表示需要操作的用户（不加用户名，表示当前用户）</span><br></pre></td></tr></table></figure></p>
+<p>示例：普通用户修改当前用户口令（普通用户只有修改自己密码权限）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">当前用户密码为空</span><br><span class="line">passwd</span><br><span class="line">newpassword（输入新的密码）</span><br><span class="line">    </span><br><span class="line">当前用户已有密码</span><br><span class="line">passwd</span><br><span class="line">oldpassword（输入旧的密码）</span><br><span class="line">newpassword（输入新的密码）</span><br><span class="line">re-enter newpassword（确认新的密码）</span><br></pre></td></tr></table></figure></p>
+<p>示例：超级用户修改密码（超级用户权限最大）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">超级用户root修改普通用户username密码口令</span><br><span class="line">passwd username</span><br><span class="line">old password</span><br><span class="line">new password</span><br><span class="line">注意：超级用户修改普通用户的口令，可以不需要原来的密码口令，直接指定新的密码口令。</span><br></pre></td></tr></table></figure></p>
+<p>示例：为用户指定空口令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">passwd -d username</span><br><span class="line">**也就是删除口令**</span><br></pre></td></tr></table></figure></p>
+<p>示例：锁定某用户，使其<strong>暂时不能登录</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">passwd -l username</span><br><span class="line">**锁定某个用户的口令，使得该口令暂时无法登录</span><br></pre></td></tr></table></figure></p>
+<p>实践1（忘记用户a口令）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">root登录</span><br><span class="line">删除用户a口令</span><br><span class="line">切换至用户a</span><br><span class="line">重新设置用户a口令</span><br><span class="line"></span><br><span class="line">root@xxx.xxx.xx.xx</span><br><span class="line">passwd -d aaa</span><br><span class="line">passwd: password expiry information changed.</span><br><span class="line">su aaa</span><br><span class="line">passwd</span><br><span class="line">Enter new UNIX password:</span><br><span class="line">Retype new UNIX password:</span><br><span class="line">passwd: password updated successfully</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践05（user用户shell管理）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践05（user用户shell管理）/" itemprop="url">01_linux权限实践05（user用户shell管理）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>用户shell管理内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">用户的shell表示：该用户操作linux使用的shell的版本。</span><br><span class="line">例子：</span><br><span class="line">root用户的shell为：/bin/bash</span><br><span class="line">表示root用户操作linux的shell版本是bash</span><br><span class="line"></span><br><span class="line">例子：</span><br><span class="line">sshd（ssh服务端程序）用户的shell为：/usr/sbin/nologin</span><br><span class="line">表示sshd程序不可以登录到linux系统</span><br></pre></td></tr></table></figure></p>
+<p>实践1（为某用户设置git-shell，使该用户只有git提交代码的权限）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root登录</span><br><span class="line">查看linux是否安装git（命令：git --version）</span><br><span class="line">创建git-username用户</span><br><span class="line">修该该用户的shell为git-shell</span><br><span class="line"></span><br><span class="line">root@xxx.xxx.xx.xx</span><br><span class="line">命令</span><br><span class="line">root@VM-0-13-ubuntu:/usr/bin# useradd git-github</span><br><span class="line">root@VM-0-13-ubuntu:/usr/bin# usermod -s /usr/bin/git-shell git-github</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践07（etc-group文件）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践07（etc-group文件）/" itemprop="url">01_linux_用户组</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>用户组配置文件group<br>用户组名称：密码占位符：用户组id：用户组包含的用户1，用户2，用户3…<br>我们自己创建的用户组，id都是大于1000<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">root@VM-0-13-ubuntu:~# cat /etc/group</span><br><span class="line">root:x:0:</span><br><span class="line">daemon:x:1:</span><br><span class="line">bin:x:2:</span><br><span class="line">sys:x:3:</span><br><span class="line">adm:x:4:syslog,ubuntu</span><br><span class="line">tty:x:5:</span><br><span class="line">disk:x:6:</span><br><span class="line">lp:x:7:</span><br><span class="line">mail:x:8:</span><br><span class="line">news:x:9:</span><br><span class="line">uucp:x:10:</span><br><span class="line">man:x:12:</span><br><span class="line">proxy:x:13:</span><br><span class="line">kmem:x:15:</span><br><span class="line">dialout:x:20:</span><br><span class="line">fax:x:21:</span><br><span class="line">voice:x:22:</span><br><span class="line">cdrom:x:24:ubuntu</span><br><span class="line">floppy:x:25:</span><br><span class="line">tape:x:26:</span><br><span class="line">sudo:x:27:ubuntu</span><br><span class="line">audio:x:29:</span><br><span class="line">dip:x:30:ubuntu</span><br><span class="line">backup:x:34:</span><br><span class="line">operator:x:37:</span><br><span class="line">list:x:38:</span><br><span class="line">irc:x:39:</span><br><span class="line">src:x:40:</span><br><span class="line">gnats:x:41:</span><br><span class="line">shadow:x:42:</span><br><span class="line">utmp:x:43:</span><br><span class="line">video:x:44:</span><br><span class="line">sasl:x:45:</span><br><span class="line">plugdev:x:46:ubuntu</span><br><span class="line">staff:x:50:</span><br><span class="line">games:x:60:</span><br><span class="line">users:x:100:</span><br><span class="line">nogroup:x:65534:</span><br><span class="line">systemd-journal:x:101:</span><br><span class="line">systemd-timesync:x:102:</span><br><span class="line">systemd-network:x:103:</span><br><span class="line">systemd-resolve:x:104:</span><br><span class="line">systemd-bus-proxy:x:105:</span><br><span class="line">input:x:106:</span><br><span class="line">crontab:x:107:</span><br><span class="line">syslog:x:108:</span><br><span class="line">netdev:x:109:</span><br><span class="line">lxd:x:110:</span><br><span class="line">messagebus:x:111:</span><br><span class="line">uuidd:x:112:</span><br><span class="line">mlocate:x:113:</span><br><span class="line">ssh:x:114:</span><br><span class="line">ubuntu:x:500:</span><br><span class="line">lpadmin:x:115:ubuntu</span><br><span class="line">sambashare:x:116:ubuntu</span><br><span class="line">ntp:x:117:</span><br><span class="line">www:x:1000:</span><br><span class="line">www-git:x:1002:</span><br><span class="line">www-web:x:1003:</span><br></pre></td></tr></table></figure></p>
+<p>几个重要的组<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo组：可以执行sudo命令</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux权限实践08（group用户组管理）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux权限实践08（group用户组管理）/" itemprop="url">01_linux_用户组</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>linux用户管理的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">用户状态查看（用户名，所属组，家目录，shell等）</span><br><span class="line">用户账号的添加、删除与修改。</span><br><span class="line">用户口令的管理。</span><br><span class="line">用户组的管理。</span><br></pre></td></tr></table></figure></p>
+<p>用户组管理</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/02_linux文件实践01（查看文件详细信息）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/02_linux文件实践01（查看文件详细信息）/" itemprop="url">02_linux文件实践01（查看文件详细信息）</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux/" itemprop="url" rel="index">
+                    <span itemprop="name">linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>linux文件的详细信息包括<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">文件类型（目录&amp;文件）</span><br><span class="line"></span><br><span class="line">文件所有者的权限（r读，w写，x执行）</span><br><span class="line">文件所属组的权限（r读，w写，x执行）</span><br><span class="line">其他用户的权限（r读，w写，x执行）</span><br><span class="line"></span><br><span class="line">链接个数（数字表示）</span><br><span class="line"></span><br><span class="line">文件所有者username</span><br><span class="line">文件所属组groupname</span><br><span class="line">长度（kb）</span><br><span class="line">月+日+时间</span><br><span class="line"></span><br><span class="line">文件的名称（目录&amp;文件）</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/03/remote_connection/linux/01_linux_cd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/03/remote_connection/linux/01_linux_cd/" itemprop="url">01_linux_cd</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-03T09:20:19+08:00">
+                2017-10-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/" itemprop="url" rel="index">
+                    <span itemprop="name">remote_connection</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/remote-connection/linux路径命令/" itemprop="url" rel="index">
+                    <span itemprop="name">linux路径命令</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>命令名称：cd<br>命令格式：cd +参数<br>命令作用：切换工作目录</p>
+<p>示例：切换工作绝对路径</p>
+<pre><code>cd /user/bin/
+</code></pre><p>示例：切换到当前目录的上一级目录</p>
+<pre><code>cd ..
+</code></pre><p>示例：切换到当前目录的下一级目录（相对路径）</p>
+<pre><code>cd ./子目录
+例子：
+cd ./git
+</code></pre><p>示例：切换到当前用户user的家目录</p>
+<pre><code>cd ~
+</code></pre><p>示例：切换到上一次使用的工作目录（可以在两个目录间来回切换）</p>
+<pre><code>cd -
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/20/JavaEE/JavaEE概念dao-po-vo-bo-pojo/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -6129,308 +6129,6 @@ cd ./git
 <blockquote>
 <p>POJO（Plain Ordinary Java Object）简单的 Java 对象，实际就是普通的 JavaBeans，是为了避免和 EJB（Enterprise JavaBean）混淆所创造的简称。POJO 实质上可以理解为简单的实体类，其中有一些属性及其getter和setter方法的类，没有业务逻辑，也不允许有业务方法，也不能携带有connection之类的方法。POJO 是 JavaEE 世界里面最灵活的对象，在简单系统中，如果从数据库到页面展示都是 POJO 的话，它可以是 DTO；如果从数据库中到业务处理中都是 POJO 的话，它可以是 BO；如果从数据库到整个页面的展示的话，它也可以是 VO.</p>
 </blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Sublime_Text/Sublime_Text下载安装/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/01/Sublime_Text/Sublime_Text下载安装/" itemprop="url">Sublime_Text下载安装</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
-                2016-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Sublime-Text/" itemprop="url" rel="index">
-                    <span itemprop="name">Sublime_Text</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="sublime下载安装"><a href="#sublime下载安装" class="headerlink" title="sublime下载安装"></a>sublime下载安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/Java基本数据类型/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Susy Yang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/uploads/jiayou.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Mr.Yang">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/01/01/Java/Java基本数据类型/" itemprop="url">Java基本数据类型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
-                2016-01-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-                   > 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/数据类型/" itemprop="url" rel="index">
-                    <span itemprop="name">数据类型</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>二级分类<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
           
         
@@ -6634,7 +6332,7 @@ cd ./git
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之封装/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/Java数组/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -6653,7 +6351,7 @@ cd ./git
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/01/01/Java/面向对象之封装/" itemprop="url">面向对象之封装</a></h1>
+                <a class="post-title-link" href="/2016/01/01/Java/Java数组/" itemprop="url">Java数组</a></h1>
         
 
         <div class="post-meta">
@@ -6699,8 +6397,8 @@ cd ./git
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/面向对象/" itemprop="url" rel="index">
-                    <span itemprop="name">面向对象</span>
+                  <a href="/categories/Java/Java数组/" itemprop="url" rel="index">
+                    <span itemprop="name">Java数组</span>
                   </a>
                 </span>
 
@@ -6742,6 +6440,151 @@ cd ./git
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Sublime_Text/Sublime_Text下载安装/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/01/Sublime_Text/Sublime_Text下载安装/" itemprop="url">Sublime_Text下载安装</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
+                2016-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Sublime-Text/" itemprop="url" rel="index">
+                    <span itemprop="name">Sublime_Text</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="sublime下载安装"><a href="#sublime下载安装" class="headerlink" title="sublime下载安装"></a>sublime下载安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
 
           
@@ -7105,7 +6948,7 @@ cd ./git
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/Java数组/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/面向对象之封装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Susy Yang">
@@ -7124,7 +6967,7 @@ cd ./git
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2016/01/01/Java/Java数组/" itemprop="url">Java数组</a></h1>
+                <a class="post-title-link" href="/2016/01/01/Java/面向对象之封装/" itemprop="url">面向对象之封装</a></h1>
         
 
         <div class="post-meta">
@@ -7170,8 +7013,165 @@ cd ./git
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/Java数组/" itemprop="url" rel="index">
-                    <span itemprop="name">Java数组</span>
+                  <a href="/categories/Java/面向对象/" itemprop="url" rel="index">
+                    <span itemprop="name">面向对象</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>二级分类<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/01/Java/Java基本数据类型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/01/Java/Java基本数据类型/" itemprop="url">Java基本数据类型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-01T12:21:21+08:00">
+                2016-01-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/数据类型/" itemprop="url" rel="index">
+                    <span itemprop="name">数据类型</span>
                   </a>
                 </span>
 
