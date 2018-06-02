@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mysql,alter,drop,create,change,select,show,database," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="准备一个数据库 1234567891011mysql&amp;gt; create database yhfddb;Query OK, 1 row affected (0.00 sec)mysql&amp;gt; use yhfddb;Database changedmysql&amp;gt; select database();+------------+| database() |+------------+| yh">
+<meta name="keywords" content="mysql,alter,drop,create,change,select,show,database">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02_DB_MySQL_02_数据表操作">
+<meta property="og:url" content="http://yoursite.com/2017/12/20/Mysql/02_DB_MySQL_02_数据表操作/index.html">
+<meta property="og:site_name" content="Mr.Yang">
+<meta property="og:description" content="准备一个数据库 1234567891011mysql&amp;gt; create database yhfddb;Query OK, 1 row affected (0.00 sec)mysql&amp;gt; use yhfddb;Database changedmysql&amp;gt; select database();+------------+| database() |+------------+| yh">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-02T09:39:24.359Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="02_DB_MySQL_02_数据表操作">
+<meta name="twitter:description" content="准备一个数据库 1234567891011mysql&amp;gt; create database yhfddb;Query OK, 1 row affected (0.00 sec)mysql&amp;gt; use yhfddb;Database changedmysql&amp;gt; select database();+------------+| database() |+------------+| yh">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/20/Mysql/02_DB_MySQL_02_数据表操作/"/>
+
+
+
+
+
+  <title>02_DB_MySQL_02_数据表操作 | Mr.Yang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Yang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/Java" rel="section">
+            
+            Java基础
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_lang">
+          <a href="/categories/Java-lang" rel="section">
+            
+            Java语法
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_set">
+          <a href="/categories/Java-set" rel="section">
+            
+            Java集合
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_thread">
+          <a href="/categories/Java-thread" rel="section">
+            
+            Java多线程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_net">
+          <a href="/categories/Java-net" rel="section">
+            
+            Java网络
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-spring_boot">
+          <a href="/categories/Spring-boot" rel="section">
+            
+            Springboot
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-git">
+          <a href="/categories/git" rel="section">
+            
+            git
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-other_lang">
+          <a href="/categories/other-lang" rel="section">
+            
+            其他小语种
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sublime">
+          <a href="/categories/Sublime-Text" rel="section">
+            
+            Sublime_Text
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maven">
+          <a href="/categories/Maven" rel="section">
+            
+            Maven
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            时间线
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/20/Mysql/02_DB_MySQL_02_数据表操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">02_DB_MySQL_02_数据表操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T09:28:17+08:00">
+                2017-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB/" itemprop="url" rel="index">
+                    <span itemprop="name">DB</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>准备一个数据库</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create database yhfddb;</span><br><span class="line">Query OK, 1 row affected (0.00 sec)</span><br><span class="line">mysql&gt; use yhfddb;</span><br><span class="line">Database changed</span><br><span class="line">mysql&gt; select database();</span><br><span class="line">+------------+</span><br><span class="line">| database() |</span><br><span class="line">+------------+</span><br><span class="line">| yhfddb     |</span><br><span class="line">+------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure>
+<p>sql命令以分号；结束。</p>
+<h2 id="创建表table"><a href="#创建表table" class="headerlink" title="创建表table"></a>创建表table</h2><p>创建表create table<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">格式</span><br><span class="line">create table tableName(</span><br><span class="line">字段名 类型（长度） 约束</span><br><span class="line">字段名 类型（长度） 约束</span><br><span class="line">字段名 类型（长度） 约束</span><br><span class="line">等等</span><br><span class="line">)；</span><br><span class="line">字符类型：varchar（n）</span><br></pre></td></tr></table></figure></p>
+<p>注意事项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">表名后面跟括号(</span><br><span class="line">结束位置跟括号);</span><br><span class="line">非末尾字段定义结束位置逗号,</span><br><span class="line">末尾字段定义结束位置不加逗号</span><br></pre></td></tr></table></figure></p>
+<p><strong>单表</strong>约束<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">主键约束:primary key</span><br><span class="line">唯一约束:unique</span><br><span class="line">非空约束:not null</span><br><span class="line">自增约束：auto_increment</span><br></pre></td></tr></table></figure></p>
+<p>demo：创建一个user的表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create table user(</span><br><span class="line">    -&gt; uid int(32) primary key auto_increment,</span><br><span class="line">    -&gt; uname varchar(32),</span><br><span class="line">    -&gt; ipassword varchar(32)</span><br><span class="line">    -&gt; );</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="查看表"><a href="#查看表" class="headerlink" title="查看表"></a>查看表</h2><p>查看所有的表：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">格式：show tables;</span><br></pre></td></tr></table></figure></p>
+<p>demo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show tables;</span><br><span class="line">+------------------+</span><br><span class="line">| Tables_in_yhfddb |</span><br><span class="line">+------------------+</span><br><span class="line">| user             |</span><br><span class="line">+------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h2 id="查看表结构"><a href="#查看表结构" class="headerlink" title="查看表结构"></a>查看表结构</h2><p>查看表结构desc<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">格式：desc 表名</span><br></pre></td></tr></table></figure></p>
+<p>demo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; desc user;</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">| Field     | Type        | Null | Key | Default | Extra          |</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">| uid       | int(32)     | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| uname     | varchar(32) | YES  |     | NULL    |                |</span><br><span class="line">| ipassword | varchar(32) | YES  |     | NULL    |                |</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">3 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h2 id="删除表"><a href="#删除表" class="headerlink" title="删除表"></a>删除表</h2><p>删除表drop<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">格式：drop table 表名；</span><br></pre></td></tr></table></figure></p>
+<p>demo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show tables</span><br><span class="line">    -&gt; ;</span><br><span class="line">+------------------+</span><br><span class="line">| Tables_in_yhfddb |</span><br><span class="line">+------------------+</span><br><span class="line">| user             |</span><br><span class="line">+------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; drop table user;</span><br><span class="line">Query OK, 0 rows affected (0.02 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show tables;</span><br><span class="line">Empty set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h2 id="修改表"><a href="#修改表" class="headerlink" title="修改表"></a>修改表</h2><p>添加一列（添加字段）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table 表名 add 字段 类型（长度） 约束；</span><br></pre></td></tr></table></figure></p>
+<p>demo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; desc user;</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">| Field     | Type        | Null | Key | Default | Extra          |</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">| uid       | int(32)     | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| uname     | varchar(32) | YES  |     | NULL    |                |</span><br><span class="line">| upassword | varchar(32) | YES  |     | NULL    |                |</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">3 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; alter table user add uinfo varchar(64) not null;</span><br><span class="line">Query OK, 0 rows affected (0.05 sec)</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; desc user</span><br><span class="line">    -&gt; ;</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">| Field     | Type        | Null | Key | Default | Extra          |</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">| uid       | int(32)     | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| uname     | varchar(32) | YES  |     | NULL    |                |</span><br><span class="line">| upassword | varchar(32) | YES  |     | NULL    |                |</span><br><span class="line">| uinfo     | varchar(64) | NO   |     | NULL    |                |</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">4 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h2 id="修改字段的信息（长度、约束）"><a href="#修改字段的信息（长度、约束）" class="headerlink" title="修改字段的信息（长度、约束）"></a>修改字段的信息（长度、约束）</h2><p>修改字段信息modify<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">alter table 表名 modify 字段名 类型（长度） 约束 ；</span><br></pre></td></tr></table></figure></p>
+<p>demo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; alter table user modify uinfo varchar(100) null;</span><br><span class="line">mysql&gt; desc user;</span><br><span class="line">+-----------+--------------+------+-----+---------+----------------+</span><br><span class="line">| Field     | Type         | Null | Key | Default | Extra          |</span><br><span class="line">+-----------+--------------+------+-----+---------+----------------+</span><br><span class="line">| uid       | int(32)      | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| uname     | varchar(32)  | YES  |     | NULL    |                |</span><br><span class="line">| upassword | varchar(32)  | YES  |     | NULL    |                |</span><br><span class="line">| uinfo     | varchar(100) | YES  |     | NULL    |                |</span><br><span class="line">+-----------+--------------+------+-----+---------+----------------+</span><br><span class="line">4 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h2 id="修改字段的信息（字段名、长度、约束等信息一并修改）"><a href="#修改字段的信息（字段名、长度、约束等信息一并修改）" class="headerlink" title="修改字段的信息（字段名、长度、约束等信息一并修改）"></a>修改字段的信息（字段名、长度、约束等信息一并修改）</h2><p>修改字段名称change<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">格式：alter table 表名 change 旧字段名 新字段名 类型(长度) 约束；</span><br></pre></td></tr></table></figure></p>
+<p>demo：将uinfo字段修改为info<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; desc user;</span><br><span class="line">+-----------+--------------+------+-----+---------+----------------+</span><br><span class="line">| Field     | Type         | Null | Key | Default | Extra          |</span><br><span class="line">+-----------+--------------+------+-----+---------+----------------+</span><br><span class="line">| uid       | int(32)      | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| uname     | varchar(32)  | YES  |     | NULL    |                |</span><br><span class="line">| upassword | varchar(32)  | YES  |     | NULL    |                |</span><br><span class="line">| uinfo     | varchar(100) | YES  |     | NULL    |                |</span><br><span class="line">+-----------+--------------+------+-----+---------+----------------+</span><br><span class="line">4 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; alter table user change uinfo info varchar(32) not null;</span><br><span class="line">Query OK, 0 rows affected (0.06 sec)</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; desc user;</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">| Field     | Type        | Null | Key | Default | Extra          |</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">| uid       | int(32)     | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| uname     | varchar(32) | YES  |     | NULL    |                |</span><br><span class="line">| upassword | varchar(32) | YES  |     | NULL    |                |</span><br><span class="line">| info      | varchar(32) | NO   |     | NULL    |                |</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">4 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h2 id="删除表的字段（列）"><a href="#删除表的字段（列）" class="headerlink" title="删除表的字段（列）"></a>删除表的字段（列）</h2><p>删除表的字段drop<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">格式：alter table 表名 drop 字段名</span><br></pre></td></tr></table></figure></p>
+<p>demo：删除user表中的info字段列<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; desc user;</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">| Field     | Type        | Null | Key | Default | Extra          |</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">| uid       | int(32)     | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| uname     | varchar(32) | YES  |     | NULL    |                |</span><br><span class="line">| upassword | varchar(32) | YES  |     | NULL    |                |</span><br><span class="line">| info      | varchar(32) | NO   |     | NULL    |                |</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">4 rows in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; alter table user drop info;</span><br><span class="line">Query OK, 0 rows affected (0.05 sec)</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; desc user;</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">| Field     | Type        | Null | Key | Default | Extra          |</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">| uid       | int(32)     | NO   | PRI | NULL    | auto_increment |</span><br><span class="line">| uname     | varchar(32) | YES  |     | NULL    |                |</span><br><span class="line">| upassword | varchar(32) | YES  |     | NULL    |                |</span><br><span class="line">+-----------+-------------+------+-----+---------+----------------+</span><br><span class="line">3 rows in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h2 id="修改表的名称"><a href="#修改表的名称" class="headerlink" title="修改表的名称"></a>修改表的名称</h2><p>修改表的名称rename<br>注意：<strong>创建表的时候，表名称一般都会加上一些有意义的前缀</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">格式：rename table 表名 to 新表名</span><br></pre></td></tr></table></figure></p>
+<p>demo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; rename table user to tbl_user;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; show tables;</span><br><span class="line">+------------------+</span><br><span class="line">| Tables_in_yhfddb |</span><br><span class="line">+------------------+</span><br><span class="line">| tbl_user         |</span><br><span class="line">+------------------+</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+<h2 id="修改表的字符集"><a href="#修改表的字符集" class="headerlink" title="修改表的字符集"></a>修改表的字符集</h2><p>查看字符集<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">格式：show create table 表名</span><br></pre></td></tr></table></figure></p>
+<p>修改字符集<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">格式：alter table 表名 character set 编码</span><br></pre></td></tr></table></figure></p>
+<p>demo<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show create table tbl_user;</span><br><span class="line">xxxxxxxx</span><br><span class="line">ENGINE=InnoDB DEFAULT CHARSET=utf8 </span><br><span class="line">1 row in set (0.00 sec)</span><br><span class="line"></span><br><span class="line">mysql&gt; alter table tbl_user character set gbk;</span><br><span class="line">Query OK, 0 rows affected (0.01 sec)</span><br><span class="line">Records: 0  Duplicates: 0  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; show create table tbl_user;</span><br><span class="line">xxxxxxx</span><br><span class="line">ENGINE=InnoDB DEFAULT CHARSET=gbk</span><br><span class="line">1 row in set (0.00 sec)</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+            <a href="/tags/alter/" rel="tag"># alter</a>
+          
+            <a href="/tags/drop/" rel="tag"># drop</a>
+          
+            <a href="/tags/create/" rel="tag"># create</a>
+          
+            <a href="/tags/change/" rel="tag"># change</a>
+          
+            <a href="/tags/select/" rel="tag"># select</a>
+          
+            <a href="/tags/show/" rel="tag"># show</a>
+          
+            <a href="/tags/database/" rel="tag"># database</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/20/Mysql/02_DB_MySQL_00_1概述/" rel="next" title="MySQL表设计demo">
+                <i class="fa fa-chevron-left"></i> MySQL表设计demo
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/20/Mysql/02_DB_MySQL_00_2安装windows/" rel="prev" title="MySQL表设计demo">
+                MySQL表设计demo <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/jiayou.png"
+                alt="Susy Yang" />
+            
+              <p class="site-author-name" itemprop="name">Susy Yang</p>
+              <p class="site-description motion-element" itemprop="description">today</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/susy-yang-sy" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建表table"><span class="nav-number">1.</span> <span class="nav-text">创建表table</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看表"><span class="nav-number">2.</span> <span class="nav-text">查看表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看表结构"><span class="nav-number">3.</span> <span class="nav-text">查看表结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除表"><span class="nav-number">4.</span> <span class="nav-text">删除表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改表"><span class="nav-number">5.</span> <span class="nav-text">修改表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改字段的信息（长度、约束）"><span class="nav-number">6.</span> <span class="nav-text">修改字段的信息（长度、约束）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改字段的信息（字段名、长度、约束等信息一并修改）"><span class="nav-number">7.</span> <span class="nav-text">修改字段的信息（字段名、长度、约束等信息一并修改）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#删除表的字段（列）"><span class="nav-number">8.</span> <span class="nav-text">删除表的字段（列）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改表的名称"><span class="nav-number">9.</span> <span class="nav-text">修改表的名称</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修改表的字符集"><span class="nav-number">10.</span> <span class="nav-text">修改表的字符集</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Susy Yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

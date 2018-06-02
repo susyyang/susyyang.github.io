@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mysql," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="第1步：官网下载，社区版（community）123456789101112安装包如下：mysql-5.7.21-winx64.zip 压缩包mysql-5.7.17-winx64.zip 压缩包注意：下载的安装包，可以验证MD5。mysql-5.7.22的MD5: 0b4efe256a28cd391bf057d4c61ade09验证方式，cmd控制台：certutil -hashfile ./文">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL表设计demo">
+<meta property="og:url" content="http://yoursite.com/2017/12/20/Mysql/02_DB_MySQL_00_2安装windows/index.html">
+<meta property="og:site_name" content="Mr.Yang">
+<meta property="og:description" content="第1步：官网下载，社区版（community）123456789101112安装包如下：mysql-5.7.21-winx64.zip 压缩包mysql-5.7.17-winx64.zip 压缩包注意：下载的安装包，可以验证MD5。mysql-5.7.22的MD5: 0b4efe256a28cd391bf057d4c61ade09验证方式，cmd控制台：certutil -hashfile ./文">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-02T07:05:06.623Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL表设计demo">
+<meta name="twitter:description" content="第1步：官网下载，社区版（community）123456789101112安装包如下：mysql-5.7.21-winx64.zip 压缩包mysql-5.7.17-winx64.zip 压缩包注意：下载的安装包，可以验证MD5。mysql-5.7.22的MD5: 0b4efe256a28cd391bf057d4c61ade09验证方式，cmd控制台：certutil -hashfile ./文">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/20/Mysql/02_DB_MySQL_00_2安装windows/"/>
+
+
+
+
+
+  <title>MySQL表设计demo | Mr.Yang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Yang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/Java" rel="section">
+            
+            Java基础
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_lang">
+          <a href="/categories/Java-lang" rel="section">
+            
+            Java语法
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_set">
+          <a href="/categories/Java-set" rel="section">
+            
+            Java集合
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_thread">
+          <a href="/categories/Java-thread" rel="section">
+            
+            Java多线程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_net">
+          <a href="/categories/Java-net" rel="section">
+            
+            Java网络
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-spring_boot">
+          <a href="/categories/Spring-boot" rel="section">
+            
+            Springboot
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-git">
+          <a href="/categories/git" rel="section">
+            
+            git
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-other_lang">
+          <a href="/categories/other-lang" rel="section">
+            
+            其他小语种
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sublime">
+          <a href="/categories/Sublime-Text" rel="section">
+            
+            Sublime_Text
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maven">
+          <a href="/categories/Maven" rel="section">
+            
+            Maven
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            时间线
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/20/Mysql/02_DB_MySQL_00_2安装windows/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL表设计demo</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T09:28:17+08:00">
+                2017-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB/" itemprop="url" rel="index">
+                    <span itemprop="name">DB</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="第1步：官网下载，社区版（community）"><a href="#第1步：官网下载，社区版（community）" class="headerlink" title="第1步：官网下载，社区版（community）"></a>第1步：官网下载，社区版（community）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">安装包如下：</span><br><span class="line">mysql-5.7.21-winx64.zip 压缩包</span><br><span class="line">mysql-5.7.17-winx64.zip 压缩包</span><br><span class="line"></span><br><span class="line">注意：下载的安装包，可以验证MD5。</span><br><span class="line">mysql-5.7.22的MD5: 0b4efe256a28cd391bf057d4c61ade09</span><br><span class="line">验证方式，cmd控制台：certutil -hashfile ./文件名（下载的安装包）</span><br><span class="line"></span><br><span class="line">解压后如下：</span><br><span class="line">mysql-5.7.22-winx64 文件夹</span><br><span class="line">mysql-5.7.21-winx64 文件夹</span><br><span class="line">mysql-5.7.17-winx64 文件夹</span><br></pre></td></tr></table></figure>
+<h2 id="第1步：将解压文件夹拷贝到运行目录"><a href="#第1步：将解压文件夹拷贝到运行目录" class="headerlink" title="第1步：将解压文件夹拷贝到运行目录"></a>第1步：将解压文件夹拷贝到运行目录</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">运行目录：D：\\MySQL\\mysql-5.7.21-winx64</span><br></pre></td></tr></table></figure>
+<h2 id="第3步：配置my-ini文件"><a href="#第3步：配置my-ini文件" class="headerlink" title="第3步：配置my.ini文件"></a>第3步：配置my.ini文件</h2><p>配置项目很多，如下是其中一些必须要配置的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">[mysql]</span><br><span class="line"># 设置mysql客户端默认字符集</span><br><span class="line">default-character-set=utf8 </span><br><span class="line">[mysqld]</span><br><span class="line">#设置3306端口</span><br><span class="line">port = 3306 </span><br><span class="line"># 设置mysql的安装目录</span><br><span class="line">basedir=D:\MySQL\mysql-5.7.21-winx64</span><br><span class="line"># 设置mysql数据库的数据的存放目录</span><br><span class="line">datadir=D:\MySQL\mysql-5.7.21-winx64\data</span><br><span class="line">#skip-grant-tables</span><br><span class="line"># 允许最大连接数</span><br><span class="line">max_connections=2000</span><br><span class="line"># 服务端使用的字符集默认为8比特编码的latin1字符集  </span><br><span class="line">character-set-server=utf8  </span><br><span class="line"># 创建新表时将使用的默认存储引擎  </span><br><span class="line">default-storage-engine=INNODB</span><br></pre></td></tr></table></figure></p>
+<h2 id="第4步：安装mysql（免安装版本）"><a href="#第4步：安装mysql（免安装版本）" class="headerlink" title="第4步：安装mysql（免安装版本）"></a>第4步：安装mysql（免安装版本）</h2><p>以管理员身份运行cmd命令，进入window 控制台窗口。<br>执行命令：D:\MySQL\mysql-5.7.21-winx64\bin&gt;mysqld install<br>输出：Service successfully installed.<br>表示安装成功。<br>完成这一步安装过程之后的mysql路径文件如下：</p>
+<blockquote>
+<p>文件夹bin<br>文件夹docs<br>文件夹include<br>文件夹lib<br>文件夹share<br>文件COPYING<br>文件my.ini<br>文件README</p>
+</blockquote>
+<p>这一步结束，并没有data目录产生。接着下一步。</p>
+<h2 id="第5步：初始化mysql"><a href="#第5步：初始化mysql" class="headerlink" title="第5步：初始化mysql"></a>第5步：初始化mysql</h2><p>mysql初始化方式<br>方式1</p>
+<ul>
+<li>mysqld –initialize直接回车，执行初始化…稍等一会就OK了<br>初始化时，会生成一个root用户和一个随机的密码，并且密码设置为过期，需要你立即修改密码。<br>方式2</li>
+<li>mysqld –initialize-insecure -user=mysql ;回车执行初始化…稍等一会就OK了<br>另外，你也可以使用该配置初始化，但这种方式会生成一个root用户，并且密码是空（第一次登录密码空即可），同样需要你立即修改密码<br>由于免安装版本的mysql目录下没有data目录，需要初始化，产生该data目录<br>管理员身份控制台进入：cd \MySQL\mysql-5.7.21-winx64\bin<br>命令行输入：D:\MySQL\mysql-5.7.21-winx64\bin&gt;mysqld –initialize-insecure -root=mysql<br>输出：没有任何输出<blockquote>
+<p>完成初始化的过程后，mysql目录下已经有data目录。<br>文件夹bin<br>文件夹data<br>文件夹docs<br>文件夹include<br>文件夹lib<br>文件夹share<br>文件COPYING<br>文件my.ini<br>文件README</p>
+</blockquote>
+</li>
+</ul>
+<p>按照以上方式2完成mysql初始化，mysql的默认密码为空。</p>
+<h2 id="第6步：启动mysql服务"><a href="#第6步：启动mysql服务" class="headerlink" title="第6步：启动mysql服务"></a>第6步：启动mysql服务</h2><p>命令行（<strong><em>管理员身份运行cmd</em></strong>）</p>
+<p>启动mysql服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Windows\system32&gt;net start mysql</span><br><span class="line">MySQL 服务正在启动 .</span><br><span class="line">MySQL 服务已经启动成功。</span><br></pre></td></tr></table></figure></p>
+<p>停止mysql服务：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Windows\system32&gt;net stop mysql</span><br><span class="line">MySQL 服务正在停止..</span><br><span class="line">MySQL 服务已成功停止。</span><br></pre></td></tr></table></figure></p>
+<p>窗口服务，找到mysql，启动，停止，重新启动。</p>
+<h2 id="第7步：登录root"><a href="#第7步：登录root" class="headerlink" title="第7步：登录root"></a>第7步：登录root</h2><p>首次登录root用户<br>由于初始化过程结束时root用户密码为空。首次登录时需要设置密码。<br>命令行输入：mysql -u root -p<br>输入需要设置的密码：Enter password:password<br>输出</p>
+<blockquote>
+<p>Welcome to the MySQL monitor.  Commands end with ; or \g.<br>Your MySQL connection id is 5<br>Server version: 5.7.21<br>Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.<br>Oracle is a registered trademark of Oracle Corporation and/or its<br>affiliates. Other names may be trademarks of their respective<br>owners.<br>Type ‘help;’ or ‘\h’ for help. Type ‘\c’ to clear the current input statement.<br>mysql&gt;<br>完成密码设置。</p>
+</blockquote>
+<p>退出mysql登录<br>输入<br>quit<br>exit<br>\q<br>输出</p>
+<blockquote>
+<p>Bye</p>
+</blockquote>
+<h2 id="第8步：重置root密码"><a href="#第8步：重置root密码" class="headerlink" title="第8步：重置root密码"></a>第8步：重置root密码</h2><p>方法一：<br>重置root密码步骤1<br>在my.ini的[mysqld]字段加入：<br>skip-grant-tables<br>如下：</p>
+<blockquote>
+<p>[mysql]<br>//设置mysql客户端默认字符集<br>default-character-set=utf8<br>[mysqld]<br>//设置3306端口<br>port = 3306<br>//设置mysql的安装目录<br>basedir=D:\MySQL\mysql-5.7.21-winx64<br>//设置mysql数据库的数据的存放目录<br>datadir=D:\MySQL\mysql-5.7.21-winx64\data<br>skip-grant-tables<br>//允许最大连接数<br>max_connections=2000<br>//服务端使用的字符集默认为8比特编码的latin1字符集<br>character-set-server=utf8<br>//创建新表时将使用的默认存储引擎<br>default-storage-engine=INNODB</p>
+</blockquote>
+<p>重置root密码步骤2<br>停止mysql服务：net stop mysql。<br>再启动mysql服务：net stop mysql。<br>登录到mysql（此时不需要输入密码，因为跳过了密码检查）：D:>mysql -u root -p</p>
+<p>重置root密码步骤3<br>选择数据库命令： use mysql；<br>重置root密码：update set authtntication_string=password(‘新密码’) where user=’root’;<br>刷新数据库：flush privileges；<br>退出数据库：quit；</p>
+<p>重置root密码步骤4<br>将mysql配置文件my.ini，删除权限检查命令，skip-grant-tables。</p>
+<blockquote>
+<p>[mysql]<br>//设置mysql客户端默认字符集<br>default-character-set=utf8<br>[mysqld]<br>//设置3306端口<br>port = 3306<br>//设置mysql的安装目录<br>basedir=D:\MySQL\mysql-5.7.21-winx64<br>//设置mysql数据库的数据的存放目录<br>datadir=D:\MySQL\mysql-5.7.21-winx64\data<br>//skip-grant-tables##注释掉，或者删除掉<br>//允许最大连接数<br>max_connections=2000<br>//服务端使用的字符集默认为8比特编码的latin1字符集<br>character-set-server=utf8<br>//创建新表时将使用的默认存储引擎<br>default-storage-engine=INNODB</p>
+</blockquote>
+<p>重新启动mysql服务，net restart mysql<br>使用新密码登录到root。</p>
+<p>方法二：<br>不使用修改my.ini重启服务的方法，通过非服务方式加skip-grant-tables运行mysql来修改mysql密码<br>停止mysql服务<br>打开命令行窗口，在bin目录下使用mysqld-nt.exe启动，即在命令行窗口执行: mysqld-nt –skip-grant-tables<br>然后另外打开一个命令行窗口，登录mysql，此时无需输入mysql密码即可进入。<br>按以上方法修改好密码后,关闭命令行运行mysql的那个窗口，此时即关闭了mysql，如果发现mysql仍在运行的话可以结束掉对应进程来关闭。<br>启动mysql服务</p>
+<h2 id="第9步：登录mysql"><a href="#第9步：登录mysql" class="headerlink" title="第9步：登录mysql"></a>第9步：登录mysql</h2><p>mysql用户登录（命令行root最高权限用户）<br>第一步（命令行）：<br>mysql命令行登录语法：<br>mysql -u用户帐号 -p密码<br>mysql -u用户 -p<br>再输入：密码<br>例子：mysql -uroot -p<br>再输入：password<br>输入：mysql -uroot -p<br>显示：ERROR 1045 (28000): Access denied for user ‘root‘@’localhost’ (using password: YES)<br>解决方案1：<br>命令行先停止：net stop MySQL<br>用安全模式打开命令行（正常模式下也ok）：mysqld –skip-grant-tables<br>重新开启另一个命令行窗口：<br>命令行输入：C:>mysql -uroot -p<br>命令行输入：Enter password: password<br>输出：<br>Welcome to the MySQL monitor.  Commands end with ; or \g.<br>Your MySQL connection id is 2<br>Server version: 5.7.21 MySQL Community Server (GPL)<br>Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.<br>Oracle is a registered trademark of Oracle Corporation and/or its<br>affiliates. Other names may be trademarks of their respective<br>owners.<br>Type ‘help;’ or ‘\h’ for help. Type ‘\c’ to clear the current input statement.<br>命令行输入：mysql&gt; use mysql<br>输出：Database changed<br>命令行输入：mysql&gt; update user set authentication_string=password(“android”)where user=”root”;<br>输出：<br>Query OK, 1 row affected, 1 warning (0.00 sec)<br>Rows matched: 1  Changed: 1  Warnings: 1<br>命令行输入：mysql&gt; flush privileges;<br>输出：<br>mysql&gt; flush privileges;<br>Query OK, 0 rows affected (0.01 sec)<br>退出mysql登录：<br>退出命令三种：<br>exit<br>quit<br>\q<br>命令行：mysql&gt; exit<br>输出：Bye<br>重新登录验证一下<br>命令行输入：C:>mysql -uroot -p<br>命令行再输入：Enter password: password<br>输出：<br>Welcome to the MySQL monitor.  Commands end with ; or \g.<br>Your MySQL connection id is 3<br>Server version: 5.7.21<br>Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.<br>Oracle is a registered trademark of Oracle Corporation and/or its<br>affiliates. Other names may be trademarks of their respective<br>owners.<br>Type ‘help;’ or ‘\h’ for help. Type ‘\c’ to clear the current input statement.<br>mysql&gt;光标<br>登录成功。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/20/Mysql/02_DB_MySQL_02_数据表操作/" rel="next" title="02_DB_MySQL_02_数据表操作">
+                <i class="fa fa-chevron-left"></i> 02_DB_MySQL_02_数据表操作
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/20/Mysql/02_DB_MySQL_01_数据库操作/" rel="prev" title="02_DB_MySQL_01_数据库操作">
+                02_DB_MySQL_01_数据库操作 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/jiayou.png"
+                alt="Susy Yang" />
+            
+              <p class="site-author-name" itemprop="name">Susy Yang</p>
+              <p class="site-description motion-element" itemprop="description">today</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/susy-yang-sy" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第1步：官网下载，社区版（community）"><span class="nav-number">1.</span> <span class="nav-text">第1步：官网下载，社区版（community）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第1步：将解压文件夹拷贝到运行目录"><span class="nav-number">2.</span> <span class="nav-text">第1步：将解压文件夹拷贝到运行目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第3步：配置my-ini文件"><span class="nav-number">3.</span> <span class="nav-text">第3步：配置my.ini文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第4步：安装mysql（免安装版本）"><span class="nav-number">4.</span> <span class="nav-text">第4步：安装mysql（免安装版本）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第5步：初始化mysql"><span class="nav-number">5.</span> <span class="nav-text">第5步：初始化mysql</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第6步：启动mysql服务"><span class="nav-number">6.</span> <span class="nav-text">第6步：启动mysql服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第7步：登录root"><span class="nav-number">7.</span> <span class="nav-text">第7步：登录root</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第8步：重置root密码"><span class="nav-number">8.</span> <span class="nav-text">第8步：重置root密码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第9步：登录mysql"><span class="nav-number">9.</span> <span class="nav-text">第9步：登录mysql</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Susy Yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

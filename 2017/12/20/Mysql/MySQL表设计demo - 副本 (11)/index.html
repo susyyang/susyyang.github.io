@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="mysql," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="创建数据库创建数据库:tmall并且将数据库的编码设置为utf8，便于存放中文 DROP DATABASE IF EXISTS tmall; CREATE DATABASE tmall DEFAULT CHARACTER SET utf8; 表结构分析一共需要用到的9张表，以及表之间的关系。接下来，对每张表做介绍，并讲解表与表之间的关系： 这里插入一张表结构图， 各个表的介绍    表名 中文含义">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL表设计demo">
+<meta property="og:url" content="http://yoursite.com/2017/12/20/Mysql/MySQL表设计demo - 副本 (11)/index.html">
+<meta property="og:site_name" content="Mr.Yang">
+<meta property="og:description" content="创建数据库创建数据库:tmall并且将数据库的编码设置为utf8，便于存放中文 DROP DATABASE IF EXISTS tmall; CREATE DATABASE tmall DEFAULT CHARACTER SET utf8; 表结构分析一共需要用到的9张表，以及表之间的关系。接下来，对每张表做介绍，并讲解表与表之间的关系： 这里插入一张表结构图， 各个表的介绍    表名 中文含义">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-02T04:11:25.198Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL表设计demo">
+<meta name="twitter:description" content="创建数据库创建数据库:tmall并且将数据库的编码设置为utf8，便于存放中文 DROP DATABASE IF EXISTS tmall; CREATE DATABASE tmall DEFAULT CHARACTER SET utf8; 表结构分析一共需要用到的9张表，以及表之间的关系。接下来，对每张表做介绍，并讲解表与表之间的关系： 这里插入一张表结构图， 各个表的介绍    表名 中文含义">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/20/Mysql/MySQL表设计demo - 副本 (11)/"/>
+
+
+
+
+
+  <title>MySQL表设计demo | Mr.Yang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Yang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/Java" rel="section">
+            
+            Java基础
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_lang">
+          <a href="/categories/Java-lang" rel="section">
+            
+            Java语法
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_set">
+          <a href="/categories/Java-set" rel="section">
+            
+            Java集合
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_thread">
+          <a href="/categories/Java-thread" rel="section">
+            
+            Java多线程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_net">
+          <a href="/categories/Java-net" rel="section">
+            
+            Java网络
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-spring_boot">
+          <a href="/categories/Spring-boot" rel="section">
+            
+            Springboot
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-git">
+          <a href="/categories/git" rel="section">
+            
+            git
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-other_lang">
+          <a href="/categories/other-lang" rel="section">
+            
+            其他小语种
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sublime">
+          <a href="/categories/Sublime-Text" rel="section">
+            
+            Sublime_Text
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maven">
+          <a href="/categories/Maven" rel="section">
+            
+            Maven
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            时间线
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/20/Mysql/MySQL表设计demo - 副本 (11)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MySQL表设计demo</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T09:28:17+08:00">
+                2017-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB/" itemprop="url" rel="index">
+                    <span itemprop="name">DB</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/DB/MySQL/" itemprop="url" rel="index">
+                    <span itemprop="name">MySQL</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="创建数据库"><a href="#创建数据库" class="headerlink" title="创建数据库"></a>创建数据库</h2><p>创建数据库:tmall<br>并且将数据库的编码设置为utf8，便于存放中文</p>
+<pre><code>DROP DATABASE IF EXISTS tmall;
+CREATE DATABASE tmall DEFAULT CHARACTER SET utf8;
+</code></pre><h2 id="表结构分析"><a href="#表结构分析" class="headerlink" title="表结构分析"></a>表结构分析</h2><p>一共需要用到的9张表，以及表之间的关系。接下来，对每张表做介绍，并讲解表与表之间的关系：</p>
+<pre><code>这里插入一张表结构图，
+</code></pre><p>各个表的介绍</p>
+<table>
+<thead>
+<tr>
+<th>表名</th>
+<th>中文含义</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Category</td>
+<td>分类表</td>
+<td>存放分类信息，如女装，平板电视，沙发等</td>
+</tr>
+<tr>
+<td>Property</td>
+<td>属性表</td>
+<td>存放属性信息，如颜色，重量，品牌，厂商，型号等</td>
+</tr>
+<tr>
+<td>Product</td>
+<td>产品表</td>
+<td>存放产品信息，如LED40EC平板电视机，海尔EC6005热水器</td>
+</tr>
+<tr>
+<td>PropertyValue</td>
+<td>属性值表</td>
+<td>存放属性值信息，如重量是900g,颜色是粉红色</td>
+</tr>
+<tr>
+<td>ProductImage</td>
+<td>产品图片表</td>
+<td>存放产品图片信息，如产品页显示的5个图片</td>
+</tr>
+<tr>
+<td>Review</td>
+<td>评论表</td>
+<td>存放评论信息，如买回来的蜡烛很好用，么么哒</td>
+</tr>
+<tr>
+<td>User</td>
+<td>用户表</td>
+<td>存放用户信息，如斩手狗，千手小粉红</td>
+</tr>
+<tr>
+<td>Order</td>
+<td>订单表</td>
+<td>存放订单信息，包括邮寄地址，电话号码等信息</td>
+</tr>
+<tr>
+<td>OrderItem</td>
+<td>订单项列表</td>
+<td>存放订单项信息，包括购买产品种类，数量等</td>
+</tr>
+</tbody>
+</table>
+<p>正确的分析表与表之间的关系的方法</p>
+<blockquote>
+<p>表与表之间的关系，基本上是3种<br>一对一<br>一对多<br>多对一<br>那么怎么判断关系到底是什么呢？<br>以分类和产品为例子，分类表里有多条数据，产品表里也有多条数据，那么他们的关系是多对多吗？ 从经验上讲，我们知道这个结果是不正确的。<br>正确的分析表与表之间的关系的方法是这样：<br>一个分类对应 多个 产品<br>一个产品对应 一个 分类<br>所以分类和产品之间的关系是一对多</p>
+</blockquote>
+<p>表关系<br>从最上面的表关系图中可以看到，有关系的表之间，都是一对多关系(反过来就是多对一关系)，并没有一对一关系，和多对多关系。<br>所以本表列出了所有的一对多关系<br>最后确定表关系如下：<br>| 一           | 多                 |<br>| ———– | —————– |<br>| Category-分类 | Product-产品        |<br>| Category-分类 | Property-属性       |<br>| Property-属性 | PropertyValue-属性值 |<br>| Product-产品  | PropertyValue-属性值 |<br>| Product-产品  | ProductImage-产品图片 |<br>| Product-产品  | Review-评价         |<br>| User-用户     | Order-订单          |<br>| Product-产品  | OrderItem-订单项     |<br>| User-用户     | OrderItem-订单项     |<br>| Order-订单    | OrderItem-订单项     |<br>| User-用户     | User-评价           |<br>| 等等          | ———–       |<br>| 等等          | ———–       |</p>
+<h2 id="建表create-table"><a href="#建表create-table" class="headerlink" title="建表create table"></a>建表create table</h2><p>建表顺序</p>
+<blockquote>
+<p>在建表过程中，会设置外键约束，所以表和表之间有依赖关系。 因此会先建立被外键指向的表，比如User,Category，然后再是其他表。</p>
+</blockquote>
+<p>建立用户表user</p>
+<pre><code>CREATE TABLE user (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) DEFAULT NULL,
+  password varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id) --设置主键
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre><p>建立分类表category</p>
+<pre><code>CREATE TABLE category (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) DEFAULT NULL, --用户名
+  PRIMARY KEY (id) --设置主键
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立属性表<br>注意：外键约束</p>
+<pre><code>CREATE TABLE property (
+  id int(11) NOT NULL AUTO_INCREMENT,
+  cid int(11) DEFAULT NULL,--属性所属的分类的id，category id
+  name varchar(255) DEFAULT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_property_category FOREIGN KEY (cid) REFERENCES category (id) --绑定外键
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre><p>建立产品表<br>注意：外键约束</p>
+<pre><code>CREATE TABLE product (
+
+  id int(11) NOT NULL AUTO_INCREMENT,
+  name varchar(255) DEFAULT NULL, --名字
+  subTitle varchar(255) DEFAULT NULL, --标题
+  orignalPrice float DEFAULT NULL, --原价
+  promotePrice float DEFAULT NULL, --售价，现价
+  stock int(11) DEFAULT NULL, --库存
+  cid int(11) DEFAULT NULL, --产品所属分类
+  createDate datetime DEFAULT NULL, --创建日期
+  PRIMARY KEY (id), --id主键
+  CONSTRAINT fk_product_category FOREIGN KEY (cid) REFERENCES category (id) --绑定
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立属性值表<br>注意：两个外键</p>
+<pre><code>CREATE TABLE propertyvalue (
+  id int(11) NOT NULL AUTO_INCREMENT, --id
+  pid int(11) DEFAULT NULL, --属性值 所属 属性表的id
+  ptid int(11) DEFAULT NULL, --属性值 所属 产品表的id
+  value varchar(255) DEFAULT NULL, --属性值
+  PRIMARY KEY (id),--id主键
+  CONSTRAINT fk_propertyvalue_property FOREIGN KEY (ptid) REFERENCES property (id),--绑定
+  CONSTRAINT fk_propertyvalue_product FOREIGN KEY (pid) REFERENCES product (id)--绑定
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立产品图片表<br>type表示类型，产品图片分单个图片和详情图片两种<br>本表的外键pid，指向产品表的id字段</p>
+<pre><code>CREATE TABLE productimage (
+  id int(11) NOT NULL AUTO_INCREMENT,--id
+  pid int(11) DEFAULT NULL,--产品图片 所属 产品的id
+  type varchar(255) DEFAULT NULL, --类型
+  PRIMARY KEY (id),--id主键
+  CONSTRAINT fk_productimage_product FOREIGN KEY (pid) REFERENCES product (id)--绑定
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+</code></pre><p>评价表<br>外键pid，指向产品表的id字段<br>外键uid，指向用户表的id字段</p>
+<pre><code>CREATE TABLE review (
+  id int(11) NOT NULL AUTO_INCREMENT,--id
+  content varchar(4000) DEFAULT NULL,--评论的内容
+  uid int(11) DEFAULT NULL,--评论 所属 用户的id
+  pid int(11) DEFAULT NULL,--评论 所属 产品的id
+  createDate datetime DEFAULT NULL, --评论创建时间
+  PRIMARY KEY (id), --id主键
+  CONSTRAINT fk_review_product FOREIGN KEY (pid) REFERENCES product (id),--绑定外键约束
+  CONSTRAINT fk_review_user FOREIGN KEY (uid) REFERENCES user (id) --绑定外键约束
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立订单表，字段比较多</p>
+<pre><code>CREATE TABLE order_ (
+  id int(11) NOT NULL AUTO_INCREMENT,--id
+  orderCode varchar(255) DEFAULT NULL,--订单号
+  address varchar(255) DEFAULT NULL,--收货地址
+  post varchar(255) DEFAULT NULL,--邮编
+  receiver varchar(255) DEFAULT NULL,--收件人
+  mobile varchar(255) DEFAULT NULL,--联系手机
+  userMessage varchar(255) DEFAULT NULL,--订单留言message
+  createDate datetime DEFAULT NULL,--订单创建日期
+  payDate datetime DEFAULT NULL,--支付日期
+  deliveryDate datetime DEFAULT NULL,--发货日期
+  confirmDate datetime DEFAULT NULL,--确认收货日期
+  uid int(11) DEFAULT NULL,--订单所属用户的id
+  status varchar(255) DEFAULT NULL,--订单状态
+  PRIMARY KEY (id),--id主键
+  CONSTRAINT fk_order_user FOREIGN KEY (uid) REFERENCES user (id)--绑定外键约束
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre><p>建立订单项表</p>
+<pre><code>CREATE TABLE orderitem (
+  id int(11) NOT NULL AUTO_INCREMENT,--id
+  pid int(11) DEFAULT NULL,--该订单项 所属 产品的id
+  oid int(11) DEFAULT NULL,--该订单项，所属 订单的id
+  uid int(11) DEFAULT NULL,---该订单项，所属 用户的id
+  number int(11) DEFAULT NULL,--该订单项的数量，比如买了5台苹果6，x土豪。
+  PRIMARY KEY (id),--id主键
+  CONSTRAINT fk_orderitem_user FOREIGN KEY (uid) REFERENCES user (id),--绑定
+  CONSTRAINT fk_orderitem_product FOREIGN KEY (pid) REFERENCES product (id)--绑定
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/20/Mysql/MySQL表设计demo - 副本 (12)/" rel="next" title="MySQL表设计demo">
+                <i class="fa fa-chevron-left"></i> MySQL表设计demo
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/20/Mysql/MySQL表设计demo - 副本 (10)/" rel="prev" title="MySQL表设计demo">
+                MySQL表设计demo <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/jiayou.png"
+                alt="Susy Yang" />
+            
+              <p class="site-author-name" itemprop="name">Susy Yang</p>
+              <p class="site-description motion-element" itemprop="description">today</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/susy-yang-sy" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#创建数据库"><span class="nav-number">1.</span> <span class="nav-text">创建数据库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#表结构分析"><span class="nav-number">2.</span> <span class="nav-text">表结构分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#建表create-table"><span class="nav-number">3.</span> <span class="nav-text">建表create table</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Susy Yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

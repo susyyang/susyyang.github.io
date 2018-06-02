@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Java,概述," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="欢迎访问我的博客！">
+<meta name="keywords" content="Java,概述">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05Java_IO_体系_O_Writer02_BufferedWriter01_使用">
+<meta property="og:url" content="http://yoursite.com/2018/01/11/Java_IO/05Java_IO_体系_O_Writer02_BufferedWriter01_使用/index.html">
+<meta property="og:site_name" content="Mr.Yang">
+<meta property="og:description" content="欢迎访问我的博客！">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-01T11:44:10.907Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="05Java_IO_体系_O_Writer02_BufferedWriter01_使用">
+<meta name="twitter:description" content="欢迎访问我的博客！">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/01/11/Java_IO/05Java_IO_体系_O_Writer02_BufferedWriter01_使用/"/>
+
+
+
+
+
+  <title>05Java_IO_体系_O_Writer02_BufferedWriter01_使用 | Mr.Yang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Yang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/Java" rel="section">
+            
+            Java基础
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_lang">
+          <a href="/categories/Java-lang" rel="section">
+            
+            Java语法
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_set">
+          <a href="/categories/Java-set" rel="section">
+            
+            Java集合
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_thread">
+          <a href="/categories/Java-thread" rel="section">
+            
+            Java多线程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_net">
+          <a href="/categories/Java-net" rel="section">
+            
+            Java网络
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-spring_boot">
+          <a href="/categories/Spring-boot" rel="section">
+            
+            Springboot
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-git">
+          <a href="/categories/git" rel="section">
+            
+            git
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-other_lang">
+          <a href="/categories/other-lang" rel="section">
+            
+            其他小语种
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sublime">
+          <a href="/categories/Sublime-Text" rel="section">
+            
+            Sublime_Text
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maven">
+          <a href="/categories/Maven" rel="section">
+            
+            Maven
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            时间线
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/01/11/Java_IO/05Java_IO_体系_O_Writer02_BufferedWriter01_使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">05Java_IO_体系_O_Writer02_BufferedWriter01_使用</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-11T10:24:15+08:00">
+                2018-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-IO/" itemprop="url" rel="index">
+                    <span itemprop="name">Java_IO</span>
+                  </a>
+                </span>
+
+                
+                
+                   > 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java-IO/Writer/" itemprop="url" rel="index">
+                    <span itemprop="name">Writer</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<div id="security">
+  <div class="input-container">
+  <input type="password" class="form-control" id="pass" placeholder="需要阅读请联系110！" />
+    <label for="pass">需要阅读请联系110！</label>
+    <div class="bottom-line"></div>
+  </div>
+</div>
+<div id="decryptionError" style="display: none;">Incorrect Password!</div>
+<div id="noContentError" style="display: none;">No content to display!</div>
+<div id="encrypt-blog" style="display:none">
+U2FsdGVkX19WQKRG0J0EXaA01flqh/rlVbVi7lR5+9CARsXXtxBE31LuzEajaaTDv5chnA4aFKdWWl95aqI9mUbuPAHJl/lsin9P/s/jp4TFYcjVP6As2JGO5bIJ8sKtpyFR4PJudd4BUysRBtsS9DKM+BLRCKmg/FCfqhmNeGt6N4URA/FBQXBfmoXBFzq8/4/wtIC9imyifYB5sZVC0Zb590MzZ+qyTUHk+bwHw7/z8jT/hNRnujjVoHgH6UrGQ6IcLYR9h4RcJwXtY14WVDlkWw0/caMJgqvXS+eCzb2p1XgYW2BXSZQKmmYxDKp/PyWEw3DVQ8QZoyOOucJMXZdJtZii8bc5ygaiRhAdIA6HPhs2Iul3IBFh3a2T06WEqCqJOaxGZNhfOhxP5LeZVuXD3+VBPeHx2f16jDYRPnPLm8Ubx/pxLv9l4w4f8rNPZdsk0DBTv10MwzcjPstoZaixwL80NQp2eyyGS9uM8nx7KH5tEDXL2cKVvch7WjuzX8AOyuMDRmibWqBLBET9rkajObIiVIFeT3ql5pgTPZXnXOR/p/xv96lQh4wTptrpRUxv/fZISJstqR26RNHHThfmmTijIWIxgUKqtedfFBBlgG4kN7SiWWARfO9fiNqhRND9Ba9Yq/prUQZJnk/hESFd5o+coCkcNJujKhhJhQY8497rKluN0qmmMFSTN9CNnp/IkyWzqew9zW2ORwubd0RBCMbek5js76jDPpwzbIAUf63qyI36jINXALjGNF+q1CPAW/ujChxPtL8uTQzrbpHezfXTcAanzU3+csIwNimBS28aNyW8P9u845R3LyLO0D0XKRUPWmJHZ4Rt2UPfMisSGwFMBKe7KIfuEYqrZW4x8/4+ao3CE+c0nFMMKam4dOyzxmX1zLxJUmVTitI5yqc+CC/Xj5EkfOYBdk33mMaC75dRYT0Zs7fRak6i/eaHB2670Ft/i1sEPWUUqf4R7MMSSqkBtk9ENtlbm98WabaXjxamyX7+NlL86iibZsZguT+E+snxDifqNRnKDe/JkWCLdf19VpqvH+J978K+3/YlVRgyLnDxXqxLQtxtkf9uveG30Xi97Pg0Bw2B0wBwm8TumVPNxXkasWVqrRIs74ndCHEvZCX6zFfzVZkEbAPgxmg+NEGh/paLeCacJNVr88H8j2m8QqqKRZIJkAhwogf9njK5TsCaIs0FozdrbD5/6GzpUnXoc0FwkdIqym60U5Pf3aYNHzxiB1I7vila1OGNcVbjGJkBzBnwX88+LdWQywGIKfioIM6eJ/w0cKdSpmAkRpq1A5+Gm41rDkAq5aSFACWn0HVpHsuZmENhNbs97uI9ojMoQ9wJJj+L8iCMNYq3MYNPkgZqqwP/l3EMySpr0HTWbXVpxTmYSCPbqdWPZ3U+SFsj0BQYdFLOn6ri3N4hDYE//rlVqwgucPQIzZsJflNgJq2mIDgmQmAVTEnPRtlg9TLjz/Vow6gfE+yxyI7G2MuksTeRnEsJMFgFIhkz6fkRlTDwGYSGK/2VzsICm4AyY1hAJciN86f6s7pl0SecwTVEHN3Te+ubiDFqD93Y6SLdcWD1eB7r0V+O41c5ZVEIli57yyvEwOPb5ndVgQO9mwqvipM5JrHbBq6IffhKOW1UFWXMyHxQKLSiR1tfRa9OWT6n7bq5MDtRIPJYhexXFdXGcVGd/JkgwKRPrPW6ikoyaH0PMPTLcA0/wop6irEO4Uu6R8Y/obk6mvO1IzKNz9am2wL3Tyk65tDFFLNITR50fQ85+VuxdPdgXo7X+644ioS3pFSRv4iJI6n9yle8+pt1JO1fKgCx4Ytdh/TpDylRnQFSfOrACvqwtgsgnRz/ftP9SciBktWtI+ysI+RIUH4uEHjnu36pt9VI8BXEpjxARiqWOkFBAzWZbrRloGAuqsmb8YLa/4t24+JEl9yZCtj3jOPiEXlcDR37D0uiSTD46rhNVK3VsRiC3hB4gOU5mqIMrJeKuntNSEXBa1om41M4zx5/AClkKNxPpU/P909iZjUNghLPcqBR0WSc/qSwElwtYqC8DUVtum+iRlC/lVNrtOVJf3LGVGe0CXr1sDhyqm1Pb6JKSGfdn8U0Z2UxXBAfk03A5+Ggr33QqalANLIPHqtuEWXVLATGaJXOPa0izVgE5kB71gozxl25LqnimA46D6uB7GyMCobibeLCZxk6tawKZ99LW3RCrc7UVuMLaLLFRTIBlzO4cMK4qt8L/Qj2ARERkKcWaiA0VQScfkCD5AiKi+m5Yv0o/yJKDcqrbuzhxZeBiKciuKrLEH7kW+5A7+v9P1icL9s4z01Y7sFuZynyy2PdZewQQRmREzRB+cVY0ALaFOVclwpIT3TOvJsvhA3CQdYC+SsrBIfvphEyOMkgQ5CMImtH6ELPdHc3XifSp65VP0XNBJvrVzX8oQ5tnmhDjB6bMMEkS3frUgU1vHAilfgBGbEJqTtGVHfWEPrJEtz5o1YBbHN21wrUKQqTohPLYwKu/z5C6GB/4WtQUZR/WIdanX5CLJqhBQtmBWri4CYK0LGCwnpn+7Kc5heM3MmvgMabiD0khlIiuSOb89MbDfE/gigEuN5ZR+aEZ+hyyC1gAh6y+DDpBqx2/EWnw2oaXd5bvQO2ek/ySVwZu8sepGqIUYoTKjgWtA0ZMcnwEbSJ+xcYgckemaLSN3ur4ODxiyF+MZtAvEoqlbMqoKXKMAoLtq1YM3WRC3B1al106iW2EzYr37laT8u32IoKCZkIiysS40IIuuA1cHNwDmnBfHdsk20I7cCZgEngwhGgcB5wYZoGdVVwpaaqjlHts8nbNH81PE2wBOPxHCubJylL41IHQ2I0TF4VkJZuj3qMa0uPHbYE54y2WwautTnHvb8eM6YPrbBy2AOo5eVJkjDlR6LshEvxC7GT5eLBwM0vUQvAMEIq1Gp1rkN8t8O4gtIKMfXvwsH5kOu1w5DulbV7HIiSJ23HO3qOUnQ1KjDRAYU6Ee9hdEmz6ixFMntyf143L5OprJg5YDqB5/utIN30mMzDGyzqgzBAr2BtVOWPd3lQ+sPgVeOCfoh5NBYz5BPakkI5qLLIl8mGzJRPdvny7pwlw2Fet5qVnkDkQt+nxqT5EZOwrZ7wvsFUVqjBzmUC+/MY46e2zPTWbC75uAYhvuUgroOCPJxhqZBVjyjz0xtFMoKAKO9NaP82ELRxaLcIvUoBRITSyvf3ZKHZ5M2Ke+S87ie3w4r5Ktab2lRKfzuNjf8oLXEfv3mdll9fRB85XscFMyGcTK2NNSmb24JNK3vD6dvuCPMiVavto5KJ3eGDwvdoq+epF7Dlsh2CLP7QZ/bX8QL/6PB6KYe91bCI/S+GoXU5Q6zKDw4bcJsV2PZ24HMyaKB6sHipYwXdDCx5uuU8OViwNrBNA85CPDG/6yagp08QiSUuYtsCUw9OzA9Vc9dT2rsJ49EIwT9ZQt1f+FPGLdYjERE0aRwPrAMiEQshZa3kxkZJNLGdKGUfRMuBkqAMoDMoWeXhA0+kjbxumPiS6qww6JyD5gqkSk494rmXUYHtBKUb3XAfzcQl1HXSyt9Ib3EcIVDAiLvrfSPoNnXMECWeSFcc2jtPCoZtjLgO2dEP9sAnS5HURv8vZ2EhNqdUkxX8Rpc4JZ6/I2eJeFnHe9fF4y2fTu23egUkXkjlL++XWdMBOaS9/9Uw+/2AXWh/JT0Pxogmo1HnxhO+2/dAGj+JkHfX/6zT/f97aY9x5LwRHD5Qs/UXAv7LXOkGqO/RSf5wsFxFignnbH3lx/0rqdjP0Z/XcS2JjZOwF3apQqOXVtC8P2OZT1wJd5r/MM72+KyWGlFCNCbX0czrxYn1c0O/v5++YAnJaQk0Qp+Wo+gbedP/2i5TzTc+K96vcTM9m2cLjt4+Rw4H5DAvB2mV/lCT5WBVb5hhhiD65F7ipUhEsFlCY42OOLWFw1B/4qNt1zKURs7ayqN9RwVnvhjG8EhTBrc8t0eOh1S6O6rpDVbFrnI3A+3o8Ya5yD5qXrHFIQyMGaH8K8e3gnDZIJPgKFA7WpazRCXUkV1d92eMgv+zz9e8pflPJOidPI624XsXzCvGefeoYUe9lg2JFh74RtUcqakmkbD7vTq3qa7BZhT28j/ZSlxSlwbIwltAOKotmMXP6fNxBX1M3XU8QeMQxk98IIZJyPifUu3nQfms2TnZ7tleFTQPQAzh9LZyTc4O12oBorBZstyLoA5PsFmIDd5CaIEcpyvr5odDK5n9ND3rvtwS0wpVXQC4tDW/ojvlvGg8OHSblq9sTCeRJx89B40hD/uZl0SwTZjv0STlJ8e3ayLoT443WKE7tUzi91bT0TG35CUu2Rn06b72dfq782ahXt0BYFOyzsQg+sCOA6awDWwCSTSmvYVV8jYdEW2CSv4HSbahjrK0v1aPAPPsqtCCKrXg/nUeKyBIjxRrYyar0qSbIgu3NL9h2iR9GglX6/abnihY4UcOEJfbZd+LFHrKGZTfdODy6i6IyiTx3U/ERb57vqy5d9A4g6mKHYTuan+W2f64kaFvhdBXIw9MVqoRBf9ZJzwX+uSLRyZZJ1swLgbnZsxL+LXs37DG6Rt+Sdu6Gtk1eMBLAHn38iGe6PozUVh9Zz8+jEkVr3aJuz9DPY7z9PFKh0Jp3FqYnNzwwD+2M39tJ7crs7kv3z6z9V8pLX3w19aOHuK31fOY2EfLq2a0H5Jd2kstlpFzfRnz3OSdTiTU/GEYS3rJc9AwcIDS5mRyrkvH4jiDfawu4NwwphUzfIjKCASTWkb5MLvCGYMZtsKgNi6U+Zxeiq2TkYGFYjw06YA01+g+YHYm7Jig25Nf/yw2sjs3LImo+HKUs/l7M3hyda8k6z9mon0VfHvKHs0mQI6cK1lhu4ExdWJulfFDQD6xoxOa7FQWcy7V0TUVFu+tlUZZqc83VcBtaW6OZ+JEE0WZq0kmFzyUIZjsoD6DMfIQFaFhrsg5r6yCFZL+U2VfpUIY6MiEDrXSZd1kwpVlYuLWwsyTFcyG72qtGteAP7Y5qa1uKr64EF3Eg+vzrytuMINw8hYoIotdOSm3k4msGnAhZ6ucPsVlIJ2PvVkBbTBzMOTuy1olF967kq7eFnjW87W8CRZSJ8fcwUJlVbnLmJPBVOz+c5qD8QnH4/rQsO74tiVatayFfEWlXZNUdLoCzA3hsXRwjasf22lh4TOeQbqp7IBR8ooPDfy/X1nOvCxp3vgKBJ8ek8V+IGE9Aq0Cm8oQKjOd3OoqytC2VwbnQg6RMG1yBv5uoiS6VWg+QkTfWYfzQtODWYVihlUeFkFADuL7p7j51P22LTv8bwQALFPrs3GZV3aKNXRNnvxA0f0MvEiaqUHe1p2mgACBGqjmPoXKhR0gkKz5GRNRofdYqiAN9I1R8Rp2HvvK1zWaqhySXErxI0WXYVeUPd2U3oBqC3yh1Y4Krb9o8YkRBfeNZa25Mrub9Gl9gw4WCglCd+qSn/wq2/K6TNM4YSEqwfjP1b7/itoWl2pLGuiNvumU6GwgqEPK0Odg++gyJnYzWFnvNHDz8BT9Lge3jUzZnsNbCrCvVLosgOy1mZbfRXh/kBy95p5B+fF3O/iGClp0nTJbBjbWTC263KMDyrDIyxHiEMI/j1SB+Xh+MH/Zo4xor2gTc0EmpSGXE9/++o4QJD9J3IgYkmWbRTdVCrtA5ON7btNQ8PV6w16WXX/XYBmI3OeXhQEiMaEynkjKtgCYql/H5RFC5k24VUQO+4DszYh1rKPgz16UqNaMaqfrqEuKDGXIHLWP1OS5R6sMejMp7fte0mtXj4JkvYQaDZl5JUcljx2awi2mhYP2Z3UBOilp+Ed8ttouN5Ec0y/9bbt4pJd+ZvoW0T2RyeogB3IrREnjlyCLV6Sg+FULHtGM9C4vHnv91pnLixe0TRIh+KDP+MMgyavYeDH7yQKKE5PuLZvcIG8YV3LQfurSEhgtJHAokX9Z92gQaFONOMRJ44vVSRNM2T/QYX+diz9ri3PLltCOKZ7T4BOUl2VmpTesP8huMJeD1FpPdXPL6aDj6sYyRrIhrwZ+aTZhSBrkPVRSH9Taer+KTqyxEOU/aRDyLzNocWfRnOH2OG8xscpgEzhcMkr9617ftZ3Wkm4rkjK8a9B+iZ42/lpSZgwWD3MoyQ6r/jwdibKCa72hoCPS4l9HGfoMaN1X0/NdZhH3AnKdICvS6ePrwpvk/Dwqd1aNL1iqNmavfG995cL/pCnPWDVa9GJ50nifYZnUwonWhQSljWyOB95o2KScHd30IXYTr0WzbYZ0bVopbjc9RrW4UT4lBei2TLJUaMs4NK/CJ6IWyx92Rom8g+PULy2c5T9W+g==
+</div>
+<script src="/lib/crypto-js.js"></script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/概述/" rel="tag"># 概述</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/11/Java_IO/05Java_IO_体系_O_Writer02_BufferedWriter03_源码/" rel="next" title="05Java_IO_体系_O_Writer02_BufferedWriter03_源码">
+                <i class="fa fa-chevron-left"></i> 05Java_IO_体系_O_Writer02_BufferedWriter03_源码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/11/Java_IO/05Java_IO_体系_O_Writer01_FileWriter03/" rel="prev" title="09_IO实践2FileWriterdemo_write2">
+                09_IO实践2FileWriterdemo_write2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/jiayou.png"
+                alt="Susy Yang" />
+            
+              <p class="site-author-name" itemprop="name">Susy Yang</p>
+              <p class="site-description motion-element" itemprop="description">today</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/susy-yang-sy" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Susy Yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

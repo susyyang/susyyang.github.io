@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="欢迎访问我的博客！">
+<meta name="keywords" content="Hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05_Hexo主题next之头像图片等">
+<meta property="og:url" content="http://yoursite.com/2018/03/09/git/05_Hexo主题next之头像图片等/index.html">
+<meta property="og:site_name" content="Mr.Yang">
+<meta property="og:description" content="欢迎访问我的博客！">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-30T12:13:29.876Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="05_Hexo主题next之头像图片等">
+<meta name="twitter:description" content="欢迎访问我的博客！">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"right","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/09/git/05_Hexo主题next之头像图片等/"/>
+
+
+
+
+
+  <title>05_Hexo主题next之头像图片等 | Mr.Yang</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-right page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Mr.Yang</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java">
+          <a href="/categories/Java" rel="section">
+            
+            Java基础
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_lang">
+          <a href="/categories/Java-lang" rel="section">
+            
+            Java语法
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_set">
+          <a href="/categories/Java-set" rel="section">
+            
+            Java集合
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_thread">
+          <a href="/categories/Java-thread" rel="section">
+            
+            Java多线程
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-java_net">
+          <a href="/categories/Java-net" rel="section">
+            
+            Java网络
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-spring_boot">
+          <a href="/categories/Spring-boot" rel="section">
+            
+            Springboot
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-git">
+          <a href="/categories/git" rel="section">
+            
+            git
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-other_lang">
+          <a href="/categories/other-lang" rel="section">
+            
+            其他小语种
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sublime">
+          <a href="/categories/Sublime-Text" rel="section">
+            
+            Sublime_Text
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-maven">
+          <a href="/categories/Maven" rel="section">
+            
+            Maven
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+            时间线
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/git/05_Hexo主题next之头像图片等/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Susy Yang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/uploads/jiayou.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Mr.Yang">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">05_Hexo主题next之头像图片等</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T17:56:18+08:00">
+                2018-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/pages/" itemprop="url" rel="index">
+                    <span itemprop="name">pages</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
+<div id="security">
+  <div class="input-container">
+  <input type="password" class="form-control" id="pass" placeholder="需要阅读请联系110！" />
+    <label for="pass">需要阅读请联系110！</label>
+    <div class="bottom-line"></div>
+  </div>
+</div>
+<div id="decryptionError" style="display: none;">Incorrect Password!</div>
+<div id="noContentError" style="display: none;">No content to display!</div>
+<div id="encrypt-blog" style="display:none">
+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
+</div>
+<script src="/lib/crypto-js.js"></script><script src="/lib/blog-encrypt.js"></script><link href="/css/blog-encrypt.css" rel="stylesheet" type="text/css">
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/09/git/github个人博客绑定域名/" rel="next" title="github个人博客绑定域名">
+                <i class="fa fa-chevron-left"></i> github个人博客绑定域名
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/12/git/git_coding/01_coding创建项目/" rel="prev" title="01_coding创建项目">
+                01_coding创建项目 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/uploads/jiayou.png"
+                alt="Susy Yang" />
+            
+              <p class="site-author-name" itemprop="name">Susy Yang</p>
+              <p class="site-description motion-element" itemprop="description">today</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">141</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">63</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.zhihu.com/people/susy-yang-sy" target="_blank" title="zhihu">
+                      
+                        <i class="fa fa-fw fa-globe"></i>zhihu</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Susy Yang</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
